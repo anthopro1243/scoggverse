@@ -25,7 +25,7 @@ func _ready() -> void:
 	var title := BotStyle.label("Custom Night", 80)
 	title.position = Vector2(80, 50)
 	add_child(title)
-	var hint := BotStyle.label("Pick each robot's AI level: 0 = stays put, 20 = relentless.", 32, Color(0.75, 0.75, 0.75))
+	var hint := BotStyle.label("Pick each robot's AI level. 0 means it doesn't move, 20 means it's coming.", 32, Color(0.75, 0.75, 0.75))
 	hint.position = Vector2(80, 160)
 	add_child(hint)
 

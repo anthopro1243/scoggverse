@@ -1,7 +1,17 @@
 name: Site
 on:
-  push:
   pull_request:
+    paths:
+      - "site/**"
+      - "web/**"
+      - "scogg-boy-girl/**"
+      - "flappy-scogg/**"
+      - "tools/playtest/**"
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   site:
     env:
@@ -41,4 +51,4 @@ jobs:
         with:
           name: site-playwright-report
           path: site/playwright-report/
-          retention-days: 7
+          retention-days: 1

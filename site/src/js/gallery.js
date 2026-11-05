@@ -2,7 +2,7 @@
 // the class-goal counter, and a lightbox with prev/next, keys, swipe and #/scogg/<page> links.
 import memesUrl from "../data/memes.json?url";
 import deck from "../data/deck.json";
-import { selectMemes, fileNo } from "./text.js";
+import { selectMemes, fileNo, tilt } from "./text.js";
 
 const CHUNK = 48;
 const $ = (sel) => document.querySelector(sel);
@@ -39,6 +39,7 @@ function card(m, i) {
   const b = document.createElement("button");
   b.type = "button";
   b.className = "card__btn";
+  b.style.setProperty("--tilt", tilt(m.page));
   b.dataset.index = String(i);
   b.setAttribute("aria-label", `${m.title}, file ${m.page}`);
   const img = document.createElement("img");

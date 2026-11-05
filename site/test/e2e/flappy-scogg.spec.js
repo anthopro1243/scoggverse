@@ -119,26 +119,17 @@ test("dist/flappy-scogg is a byte-for-byte copy of the game's own build", async 
   for (const f of list) expect(sha(readFileSync(`dist/flappy-scogg/${f}`)), f).toBe(sha(readFileSync(`${GAME}/dist/${f}`)));
 });
 
-test("Home and the Play page link to it; the other two games stay where they were", async ({ page, isMobile }) => {
+test("Home and the Play page link to it; the other two games stay where they were", async ({ page }) => {
   await page.goto("/");
-  const line = page.locator(".hero__also");
-  await expect(line).toHaveText("Also new: Flappy Scogg, and it works on your phone.");
-  await expect(line.locator("a")).toHaveAttribute("href", "/play/flappy-scogg/");
+  await expect(page.locator(".games__tile", { hasText: "Flappy Scogg" })).toHaveAttribute("href", "/play/flappy-scogg/");
   await page.goto("/play/");
   await expect(page.locator("h1")).toHaveText("Five Nights at Scoggy's");
-  await expect(page.locator(".case2__card")).toHaveAttribute("href", "/play/scogg-boy-girl/");
-  const card = page.locator(".case3__card");
+  await expect(page.locator(".games__tile", { hasText: "Scogg Boy" })).toHaveAttribute("href", "/play/scogg-boy-girl/");
+  const card = page.locator(".games__tile", { hasText: "Flappy Scogg" });
   await expect(card).toHaveAttribute("href", "/play/flappy-scogg/");
-  await expect(card).toContainText("Tap to flap. It's just his face. Works on phones.");
-  // on a phone it's right under the heading, so nobody has to scroll past the FNAF game to find it
-  const pick = page.locator(".phone-pick");
-  if (isMobile) {
-    await expect(pick).toBeVisible();
-    const box = await pick.boundingBox();
-    expect(box.y + box.height).toBeLessThan(812);
-  } else {
-    await expect(pick).toBeHidden();
-  }
+  // the only phone line on the site is the one under the FNAF game box
+  await expect(page.locator(".phone-pick")).toHaveCount(0);
+  await expect(page.locator(".phone-note")).toHaveCount(1);
   await card.click();
   await expect(page).toHaveURL(/\/play\/flappy-scogg\/$/);
 });

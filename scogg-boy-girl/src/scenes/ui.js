@@ -1,7 +1,7 @@
 // The HUD, the pause menu and the end card: gold on dark stone, the engraved serif for titles and
 // the plain face for small text. Buttons have real hover and keyboard-focus states.
 
-import { PAL, css, FONT, SERIF } from "../art/palette.js";
+import { PAL, css, FONT, SERIF, SERIF_SCALE } from "../art/palette.js";
 import { DEPTH } from "../art/archive.js";
 import { PROP_RES, stampTexture } from "../art/textures.js";
 import { WORLD_W, WORLD_H } from "../logic/config.js";
@@ -11,7 +11,7 @@ import { audio } from "../audio/audio.js";
 const money = (v) => `$${v.toFixed(2)}`;
 
 export function text(scene, x, y, str, { size = 11, serif = false, color = PAL.gold, align = "left", origin = [0, 0.5] } = {}) {
-  return scene.label(x, y, str, { fontFamily: serif ? SERIF : FONT, fontStyle: "700", fontSize: `${size}px`, color: css(color), align })
+  return scene.label(x, y, str, { fontFamily: serif ? SERIF : FONT, fontStyle: "700", fontSize: `${serif ? Math.round(size * SERIF_SCALE) : size}px`, color: css(color), align })
     .setOrigin(...origin);
 }
 

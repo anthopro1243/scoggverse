@@ -82,7 +82,8 @@ export class CreditsPanel extends Panel {
     const lines = [
       ["Faces from the class deck The Scogg Files", PAL.goldBright],
       ["Built with Phaser (MIT License)", PAL.text],
-      ["Fonts: Noto Sans and Cinzel (SIL Open Font License 1.1)", PAL.text],
+      ["Tiles and pixel font by Kenney, kenney.nl (CC0)", PAL.text],
+      ["Noto Sans font (SIL Open Font License 1.1)", PAL.text],
       ["", PAL.text],
       ["Unofficial fan parody. Not affiliated with Fireboy and Watergirl or its makers.", PAL.textDim],
       ["Made with Dr. Scoggins' permission, for fun.", PAL.textDim],

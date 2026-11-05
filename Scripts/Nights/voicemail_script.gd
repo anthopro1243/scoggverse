@@ -12,7 +12,7 @@ const RECORDING := "res://assets/voice/night%d.ogg"
 const CALLS: Dictionary[int, Array] = {
 	1: [
 		"Hello? Hello, hello! Okay, good. It's Dr. Scoggins. Welcome to your first night shift.",
-		"Quick Quiz before we start. ...Kidding. Mostly. Here's tonight's roadmap.",
+		"Quick quiz before we start. ...Kidding. Okay, tonight:",
 		"Remember the cardboard standees from the slide project? At night they get... restless. They wander the halls.",
 		"You've got two doors. A and D shut them. Q and E switch on the hall lights, so you can see who's standing in the doorway.",
 		"Doors and lights use power, and you don't get much of it. Unlimited wants, limited resources. We went over this the first week.",

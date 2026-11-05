@@ -1,6 +1,6 @@
 // Home: a strip of 8 random file cards from the deck, with a Shuffle button.
 import memesUrl from "../data/memes.json?url";
-import { fileNo } from "./text.js";
+import { fileNo, tilt } from "./text.js";
 
 const strip = document.querySelector("[data-strip]");
 let memes = [];
@@ -18,6 +18,7 @@ function render() {
     const a = document.createElement("a");
     a.className = "card__btn";
     a.href = `/gallery/#/scogg/${m.page}`;
+    a.style.setProperty("--tilt", tilt(m.page));
     a.innerHTML = `<span class="card__cap"><span class="card__file">${fileNo(m.page)}</span><span class="card__title"></span></span><img alt="" loading="lazy" decoding="async">`;
     a.querySelector(".card__title").textContent = m.title;
     const img = a.querySelector("img");

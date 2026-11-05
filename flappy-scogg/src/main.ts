@@ -5,6 +5,9 @@
 import "./fonts.css";
 import "./page.css";
 import faceA from "../assets/faces/face-a.png";
+import kenneyTiles from "../assets/kenney/tilemap_packed.png";
+import kenneyBg from "../assets/kenney/tilemap-backgrounds_packed.png";
+import { initKenney } from "./art/kenney.ts";
 import { createAudio, VOLUME } from "./audio/audio.ts";
 import { measure, SOUNDS, type SoundName } from "./audio/recipes.ts";
 import { createRenderer } from "./art/render.ts";
@@ -47,13 +50,16 @@ async function boot(): Promise<void> {
   const creditsLink = $<HTMLButtonElement>("credits-link");
   const credits = $<HTMLDivElement>("credits");
   const creditsClose = $<HTMLButtonElement>("credits-close");
-  const [img] = await Promise.all([
+  const [img, tiles, bg] = await Promise.all([
     loadImage(faceA),
-    document.fonts.load('700 40px "Cinzel"'),
+    loadImage(kenneyTiles),
+    loadImage(kenneyBg),
+    document.fonts.load('40px "Kenney Pixel"'),
     document.fonts.load('400 16px "Noto Sans"'),
     document.fonts.load('600 16px "Noto Sans"'),
   ]);
 
+  initKenney(tiles, bg);
   let g: Game = createGame({ seed, face: FACE, best: loadBest() });
   let saved = g.best;
   let pending = 0; // taps since the last step

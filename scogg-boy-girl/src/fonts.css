@@ -8,7 +8,8 @@
   font-family: "Noto Sans"; font-style: normal; font-weight: 700; font-display: swap;
   src: url("../node_modules/@fontsource/noto-sans/files/noto-sans-latin-700-normal.woff2") format("woff2");
 }
+/* Kenney Pixel (CC0, kenney.nl), cut down to Latin: titles, signs and the HUD numbers. */
 @font-face {
-  font-family: "Cinzel"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("../node_modules/@fontsource/cinzel/files/cinzel-latin-700-normal.woff2") format("woff2");
+  font-family: "Kenney Pixel"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("../assets/kenney/kenney-pixel.woff2") format("woff2");
 }

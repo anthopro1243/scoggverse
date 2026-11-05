@@ -11,7 +11,7 @@ const CONTROLS: Array[String] = [
 	"[b]Lights[/b]: click LIGHT (or Q / E) to see who's standing in that doorway. One light at a time.",
 	"[b]Cameras[/b]: move the mouse onto the bar at the bottom (or press Space) to raise the tablet. Pick a CAM button (or keys 1–9). Lower it the same way.",
 	"You can't use doors or lights while the tablet is up.",
-	"[b]Power[/b]: every door, light and the tablet adds a bar of usage (bottom left). At 0% the doors open and the lights die. Nobody wants that.",
+	"[b]Power[/b]: every door, light and the tablet adds a bar of usage (bottom left). At 0% the doors open and the lights die.",
 	"[b]Esc[/b] pauses the game. [b]F[/b] switches full screen on and off.",
 ]
 

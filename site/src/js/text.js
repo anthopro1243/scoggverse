@@ -16,3 +16,9 @@ export function selectMemes(memes, query, sort) {
 export function fileNo(page) {
   return `FILE ${String(page).padStart(4, "0")}`;
 }
+
+/** How far a file card leans, picked from its page number so it's the same on every load: -0.9 to 0.9 degrees. */
+export function tilt(page) {
+  const r = (Math.imul(page, 2654435761) >>> 0) / 2 ** 32;
+  return `${(r * 1.8 - 0.9).toFixed(2)}deg`;
+}

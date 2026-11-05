@@ -33,7 +33,7 @@ html, body {
   background: #120e0a; border: 2px solid #6e5428; border-radius: 8px; box-shadow: 0 10px 30px rgb(0 0 0 / 0.6);
   color: #e8dcc0; font: 400 15px/1.45 "Noto Sans", system-ui, sans-serif;
 }
-#credits h2 { margin: 0 0 12px; font: 700 26px/1.1 "Cinzel", Georgia, serif; color: #f3d58b; }
+#credits h2 { margin: 0 0 12px; font: 36px/1 "Kenney Pixel", monospace; color: #fee481; }
 #credits p { margin: 0 0 10px; }
 #credits .fine { color: #9d927f; font-size: 13px; }
 #credits-close { margin-top: 6px; padding: 10px 26px; }

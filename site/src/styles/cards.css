@@ -1,9 +1,6 @@
 /* Paper file cards (gallery grid and the home strip). */
 
-.card:nth-child(4n+1) .card__btn { --tilt: -0.6deg; }
-.card:nth-child(4n+2) .card__btn { --tilt: 0.4deg; }
-.card:nth-child(4n+3) .card__btn { --tilt: -0.2deg; }
-.card:nth-child(4n) .card__btn { --tilt: 0.7deg; }
+/* each card leans its own way; --tilt is set from the slide's page number (text.js tilt) */
 .card__btn {
   display: flex; flex-direction: column; width: 100%; padding: var(--s-2) var(--s-2) var(--s-3);
   text-align: left; cursor: zoom-in; font: inherit;

@@ -1,7 +1,13 @@
 name: Flappy Scogg
 on:
-  push:
   pull_request:
+    paths:
+      - "flappy-scogg/**"
+      - ".github/workflows/flappy-scogg.yml"
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   game:
     runs-on: ubuntu-latest
@@ -29,4 +35,4 @@ jobs:
         with:
           name: flappy-scogg-playwright-report
           path: flappy-scogg/playwright-report/
-          retention-days: 7
+          retention-days: 1

@@ -1,6 +1,6 @@
-// One palette for the whole game: the Scoggins Archive at night. Near-black blues for the sky and
-// the far buildings, cool marble for the columns, bronze for every cap, trim and lamp, and the
-// same gold-on-dark as the platformer's menus for text.
+// Colors for the parts drawn in code (text, panels, the face's outline). The scenery and columns are
+// Kenney tiles (see kenney.ts); the night-scene colors below are no longer drawn and only kept
+// for the page around the field. Menus use Kenney's slate, white and coin gold, like the platformer.
 
 export const PAL = {
   page: "#120f0d", // the site's background, shown beside the field on wide screens
@@ -26,7 +26,7 @@ export const PAL = {
 
   floorTop: "#c08a42",
   floorTrim: "#6b4a1f",
-  floor: "#1a1f29",
+  floor: "#cb815e", // Kenney's dirt, under the ground tiles on a tall phone
   floorLit: "#252c38",
   floorJoint: "#10141b",
   floorVein: "rgba(150, 160, 180, 0.07)",
@@ -46,15 +46,16 @@ export const PAL = {
   faceLine: "rgba(14, 10, 8, 0.85)",
   faceShadow: "rgba(0, 0, 0, 0.45)",
 
-  gold: "#d9b45a",
-  goldBright: "#f3d58b",
-  goldDim: "#8a6d34",
-  text: "#e8dcc0",
-  textDim: "#9d927f",
-  tablet: "rgb(18, 14, 10)",
-  tabletEdge: "#6e5428",
-  outline: "#0b0906",
+  gold: "#f4b41b",
+  goldBright: "#ffffff",
+  goldDim: "#cb815e",
+  text: "#ffffff",
+  textDim: "#dce1e7",
+  tablet: "#2b2d3c",
+  tabletEdge: "#434a5f",
+  outline: "#2a2433",
 };
 
-export const SERIF = '"Cinzel", Georgia, serif'; // engraved titles, the score, grades
+export const SERIF = '"Kenney Pixel", monospace'; // the title, the score, grades (Kenney's pixel font)
+export const SERIF_SCALE = 1.5; // the pixel font runs small: sizes were set for a serif
 export const FONT = '"Noto Sans", system-ui, sans-serif'; // small text

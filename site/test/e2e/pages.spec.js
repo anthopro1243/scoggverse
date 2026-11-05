@@ -89,22 +89,50 @@ test("Home has no add-your-slide note at the bottom", async ({ page }) => {
   await expect(page.locator(".note--deck")).toHaveCount(0);
   await expect(page.locator("main .add-scogg")).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText("Add yours to the end");
-  await expect(page.locator(".note--game")).toBeVisible();
+  await expect(page.locator(".games__tile")).toHaveCount(3);
 });
 
-test("Home: Play button, counter and 8 random files", async ({ page }) => {
+test("Home: one Play button, one plain line, 8 random files and the three games", async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto("/");
-  await expect(page.getByRole("link", { name: /Play Five Nights at Scoggy's/ })).toHaveAttribute("href", "/play/");
-  await expect(page.locator(".hero__count")).toContainText(/\d+ Scoggs on file\. Goal: 1,000\./);
-  // the counter and the gallery link use the same number
-  const count = (await page.locator(".hero__count strong").textContent()).trim();
-  await expect(page.locator(".section-head__link")).toHaveText(`All ${count}`);
+  // human pass H2: no label over the title, one button, no stats line, no "All N" link
+  await expect(page.locator("main .eyebrow")).toHaveCount(0);
+  await expect(page.locator(".hero .btn")).toHaveCount(1);
+  await expect(page.locator("main").getByRole("link", { name: /^Play$/ })).toHaveAttribute("href", "/play/");
+  await expect(page.locator(".hero__new")).toHaveText("3 games now. The newest one works on your phone.");
+  await expect(page.locator("main")).not.toContainText("Scoggs on file");
+  await expect(page.locator(".section-head a")).toHaveCount(0);
   await page.waitForSelector("html[data-home-ready]");
   await expect(page.locator("[data-strip] .card__btn")).toHaveCount(8);
   const first = await page.locator("[data-strip] .card__btn").first().getAttribute("href");
   expect(first).toMatch(/^\/gallery\/#\/scogg\/\d+$/);
+  const tiles = page.locator(".games__tile");
+  await expect(tiles).toHaveCount(3);
+  expect(await tiles.evaluateAll((as) => as.map((a) => a.getAttribute("href")))).toEqual(["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]);
   expect(errors).toEqual([]);
+});
+
+test("only the poster and the file cards lean; the rest sits straight", async ({ page }) => {
+  for (const path of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/404.html"]) {
+    await page.goto(path);
+    const leaning = await page.evaluate(() => [...document.querySelectorAll("main *")]
+      .filter((el) => !el.closest(".poster, .card__btn") && /matrix\((?!1, 0, 0, 1,)/.test(getComputedStyle(el).transform))
+      .map((el) => el.className || el.tagName));
+    expect(leaning, path).toEqual([]);
+  }
+  await page.goto("/");
+  await page.waitForSelector("html[data-home-ready]");
+  // each card picks its own lean from its page number, so they aren't all the same
+  const tilts = await page.locator("[data-strip] .card__btn").evaluateAll((bs) => bs.map((b) => b.style.getPropertyValue("--tilt")));
+  expect(new Set(tilts).size).toBeGreaterThan(2);
+});
+
+test("no red labels left except the case-file ones (FILE numbers)", async ({ page }) => {
+  for (const path of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]) {
+    await page.goto(path);
+    await expect(page.locator(".eyebrow, .note__label, .case2__label, .case3__label"), path).toHaveCount(0);
+    await expect(page.locator("main"), path).not.toContainText(/Case file|The other game|The phone one/i);
+  }
 });
 
 test("404 page in the same style", async ({ page }) => {

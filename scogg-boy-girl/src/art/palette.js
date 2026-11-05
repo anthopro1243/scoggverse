@@ -4,8 +4,9 @@
 export const PAL = {
   // shared darks and UI
   void: 0x07080b, ink: 0x0b0906, outline: 0x0b0906,
-  tablet: 0x15110d, tabletEdge: 0x3a2e20, gold: 0xd9b45a, goldBright: 0xf3d58b, goldDim: 0x8a6d34,
-  text: 0xe8dcc0, textDim: 0x9d927f,
+  // menus in Kenney's colors: slate panels, white text, coin gold
+  tablet: 0x2b2d3c, tabletEdge: 0x959ab1, gold: 0xf4b41b, goldBright: 0xfee481, goldDim: 0xcb815e,
+  text: 0xffffff, textDim: 0xdce1e7,
 
   // Macro wing: basalt and treasury bronze
   macro: {
@@ -47,5 +48,6 @@ export const css = (hex, a = 1) => {
 };
 export const rgba = ([r, g, b], a) => `rgba(${r},${g},${b},${a})`;
 
-export const SERIF = '"Cinzel", Georgia, serif';          // engraved titles and carvings
+export const SERIF = '"Kenney Pixel", monospace';         // titles, signs and numbers (Kenney's pixel font)
+export const SERIF_SCALE = 1.6;                            // the pixel font runs small: sizes were set for a serif
 export const FONT = '"Noto Sans", system-ui, sans-serif';  // small text

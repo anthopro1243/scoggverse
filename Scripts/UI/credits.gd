@@ -10,15 +10,14 @@ A free, non-commercial fan parody of [i]Five Nights at Freddy's[/i] by Scott Caw
 [color=#ffd95a]Made with[/color]
 •  [b]Godot Engine[/b] (MIT license), godotengine.org
 •  [b]Cupcakes Framework[/b] by [b]Oplexitie[/b] (MIT license): the office, tablet and camera systems
-•  [b]GUT[/b], Godot Unit Test, by Butch Wesley (MIT license): the tests
-•  [b]Blender[/b] (GPL): every room, prop and light was modeled and rendered by our own scripts
+•  [b]Blender[/b] (GPL): the rooms
 •  Fonts: Open Sans (Godot's built-in font, SIL Open Font License) and DejaVu (free license)
 
 [color=#ffd95a]Pictures[/color]
-The characters, posters and chalk drawings come from the class's "Scogg Files" slides, cut out with ordinary image tools. No AI images.
+The cutouts are from the class's Scogg Files slides.
 
 [color=#ffd95a]Sound and music[/color]
-Every sound is synthesized from scratch by our own code: no recordings, no samples, no AI voices. The nightly call is captions over a phone-line sound.
+Every sound is made in code, no recordings. The nightly call is captions over a phone-line sound.
 The power-out march is [b]The Stars and Stripes Forever[/b] by John Philip Sousa (1896, public domain), played on a synthesized music box from the notes of the Mutopia Project's public-domain edition.
 
 Don't deny yourself an education."""

@@ -64,8 +64,6 @@
   padding: var(--s-5) var(--s-5) var(--s-4);
 }
 .paper h2 { color: var(--ink); }
-.controls { transform: rotate(-0.4deg); }
-.survive { transform: rotate(0.5deg); }
 
 .keys { margin: 0; display: grid; gap: var(--s-2); }
 .keys div { display: grid; grid-template-columns: 9.5rem 1fr; gap: var(--s-3); align-items: baseline; padding-bottom: var(--s-2); border-bottom: 1px dashed var(--paper-edge); }
@@ -79,9 +77,7 @@ kbd {
 }
 @media (max-width: 30rem) { .keys div { grid-template-columns: 1fr; gap: var(--s-1); } }
 
-.survive ol { margin: 0; padding-left: var(--s-5); display: grid; gap: var(--s-3); }
-.survive li { padding-left: var(--s-1); }
-.survive li::marker { font-family: var(--font-type); color: var(--red); }
+.survive p { margin: 0; }
 
 /* ---------- cast ---------- */
 .cast { margin-top: var(--s-8); }
@@ -91,8 +87,6 @@ kbd {
   display: flex; flex-direction: column; background: var(--paper); color: var(--ink);
   border-radius: 2px; box-shadow: var(--paper-shadow); padding: var(--s-3) var(--s-3) var(--s-4);
 }
-.cast__card:nth-child(odd) { transform: rotate(-0.7deg); }
-.cast__card:nth-child(even) { transform: rotate(0.6deg); }
 .cast__card img {
   width: 100%; height: 13rem; object-fit: contain; object-position: center bottom;
   background: radial-gradient(ellipse at 50% 100%, #3a2f27 0%, #1c1714 70%); padding-top: var(--s-3);
@@ -102,33 +96,10 @@ kbd {
 @media (max-width: 40rem) { .cast__card img { height: 9.5rem; } .cast__card p { font-size: 0.85rem; } }
 .cast__secret { margin-top: var(--s-5); font-family: var(--font-type); color: var(--text-faint); text-align: center; }
 
-/* ---------- case file 2: the other game ---------- */
-.case2, .case3 { margin-top: var(--s-8); }
-.case2__card, .case3__card {
-  display: flex; flex-direction: column; overflow: hidden; text-decoration: none;
-  background: var(--paper); color: var(--ink); border-radius: 2px; box-shadow: var(--paper-shadow);
-  transform: rotate(0.5deg); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
-}
-.case2__card:hover, .case3__card:hover { transform: rotate(0deg) translateY(-3px); box-shadow: 0 1px 0 var(--paper-edge), 0 18px 32px rgb(0 0 0 / 0.55); color: var(--ink); }
-.case2__card:focus-visible, .case3__card:focus-visible { box-shadow: var(--focus); }
-.case2__card img, .case3__card img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
-.case2__body, .case3__body { display: flex; flex-direction: column; gap: var(--s-1); padding: var(--s-4) var(--s-5) var(--s-5); }
-.case2__label, .case3__label { font-family: var(--font-type); color: var(--red); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; }
-.case2__title, .case3__title { font-family: var(--font-type); font-size: var(--t-xl); line-height: 1.15; }
-.case2__text, .case3__text { margin: 0; color: var(--ink-soft); }
-@media (min-width: 52rem) {
-  .case2__card, .case3__card { flex-direction: row; align-items: center; }
-  .case2__card img, .case3__card img { width: 55%; flex: none; }
-  .case2__body, .case3__body { padding: var(--s-5) var(--s-6); }
-}
+/* ---------- the three games ---------- */
+.play-games { margin-top: var(--s-8); }
 
-/* Flappy Scogg: on phones a shortcut sits right under the heading (it's the one phone game), and
-   its case file card shows a band of the tall cover picture */
-.phone-pick { display: none; margin-top: var(--s-3); padding: var(--s-3) var(--s-4); border: 1px solid var(--line-strong); border-radius: var(--radius); background: rgb(255 217 90 / 0.08); color: var(--text); text-decoration: none; }
-.phone-pick strong { color: var(--gold); }
-.phone-pick:hover { border-color: var(--gold); }
-@media (hover: none) and (pointer: coarse), (max-width: 40rem) { .phone-pick { display: block; } }
-.case3__card { transform: rotate(-0.4deg); }
-.case3__card img { object-position: 50% 21%; }
+.play-how { margin-top: var(--s-7); }
+.play-how p { margin: 0; max-width: 44rem; }
 
 .fnaf-fine { margin-top: var(--s-7); color: var(--text-faint); font-size: var(--t-sm); text-align: center; }

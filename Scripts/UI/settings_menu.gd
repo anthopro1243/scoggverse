@@ -8,7 +8,7 @@ signal closed
 const SLIDERS: Array[Array] = [["Master volume", "master"], ["Music", "music"], ["Sound effects", "sfx"]]
 const TOGGLES: Array[Array] = [
 	["Screen shake", "screen_shake", "Jumpscares shake the screen."],
-	["Reduce flashing", "reduce_flashing", "No red flash or feed flicker; scare flashes fade in softly."],
+	["Reduce flashing", "reduce_flashing", "Less flashing."],
 ]
 const LEFT := 460.0
 
@@ -60,7 +60,7 @@ func _ready() -> void:
 		add_child(note)
 		y += 130.0
 	var check := Button.new()
-	check.text = "Sound check…"
+	check.text = "Sound test"
 	check.position = Vector2(LEFT, y + 10)
 	check.size = Vector2(360, 80)
 	check.focus_mode = Control.FOCUS_NONE

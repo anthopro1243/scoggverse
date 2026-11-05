@@ -1,4 +1,4 @@
-// Replaces <!--@header--> and <!--@footer--> in every page with the shared partials, marks the
+// Replaces <!--@header-->, <!--@footer--> and <!--@games--> in every page with the shared partials, marks the
 // current page's nav link with aria-current, and fills in build-time values (%SHOWN_COUNT%,
 // %SHOWN_NUM%, <!--@addscogg-->) from src/data/deck.json and src/config.json. No runtime JS needed.
 import { readFileSync } from "node:fs";
@@ -33,6 +33,10 @@ export function renderFooter() {
   return readFileSync(resolve(dir, "footer.html"), "utf8");
 }
 
+export function renderGames() {
+  return readFileSync(resolve(dir, "games.html"), "utf8");
+}
+
 /** Link-preview and privacy tags for a page, from its own <title> and description. */
 export function headTags(html, path, config = readJson("../src/config.json", {})) {
   const site = (config.siteUrl || "").replace(/\/$/, "");
@@ -51,7 +55,7 @@ export function headTags(html, path, config = readJson("../src/config.json", {})
     `<meta property="og:image:type" content="image/jpeg">`,
     `<meta property="og:image:width" content="1200">`,
     `<meta property="og:image:height" content="630">`,
-    `<meta property="og:image:alt" content="The Scoggverse: three Scoggs from the class deck on a desk">`,
+    `<meta property="og:image:alt" content="The Uncle Scogg poster: I want you to not deny yourself an education">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${title}">`,
     `<meta name="twitter:description" content="${desc}">`,
@@ -62,7 +66,7 @@ export function headTags(html, path, config = readJson("../src/config.json", {})
 export function addScogg(config = readJson("../src/config.json", {})) {
   return config.addScoggUrl
     ? `<a class="btn btn--gold add-scogg" href="${esc(config.addScoggUrl)}" target="_blank" rel="noopener">Add a Scogg</a>`
-    : `<span class="add-scogg"><button type="button" class="btn" disabled>Add a Scogg</button><span class="add-scogg__note">Ask in class for the deck link</span></span>`;
+    : "";
 }
 
 export function fillValues(html, deck = readJson("../src/data/deck.json", {}), config = readJson("../src/config.json", {})) {
@@ -78,7 +82,7 @@ export function partials() {
       order: "pre",
       handler(html, ctx) {
         const current = pagePath(ctx.filename);
-        const filled = fillValues(html.replace("<!--@header-->", renderHeader(current)).replace("<!--@footer-->", renderFooter()));
+        const filled = fillValues(html.replace("<!--@header-->", renderHeader(current)).replace("<!--@footer-->", renderFooter()).replace("<!--@games-->", renderGames()));
         return filled.replace("</head>", `${headTags(filled, current)}\n</head>`);
       },
     },

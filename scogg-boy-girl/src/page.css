@@ -9,7 +9,7 @@ canvas { display: block; }
 }
 #phone[hidden] { display: none; }
 #phone .card { max-width: 26rem; padding: 1.4rem 1.4rem 1.2rem; border: 1px solid #8a6d34; border-radius: 0.6rem; background: #15110d; }
-#phone h1 { margin: 0 0 0.6rem; font: 700 1.3rem/1.2 "Cinzel", Georgia, serif; color: #f3d58b; }
+#phone h1 { margin: 0 0 0.6rem; font: 1.6rem/1.1 "Kenney Pixel", monospace; color: #f3d58b; }
 #phone p { margin: 0 0 1rem; }
 #phone .dim { color: #9d927f; font-size: 0.92rem; }
 #phone .row { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }

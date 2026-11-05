@@ -3,13 +3,7 @@
  "name": "Layer Cake / Marble Cake Bakery",
  "subject": "gov",
  "wings": "gov",
- "signs": [
-  {
-   "x": 150,
-   "y": 60,
-   "text": "CHECKS AND BALANCES"
-  }
- ],
+ "signs": [],
  "objects": [
   {
    "type": "scale",

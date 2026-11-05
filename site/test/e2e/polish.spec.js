@@ -62,12 +62,12 @@ test("every shown slide has a share page and no hidden slide does", async ({ req
   for (const m of memes.slice(0, 20)) expect((await request.get(`/s/${m.page}/`)).status()).toBe(200);
 });
 
-test("Add a Scogg: disabled with the class note while the deck link is empty", async ({ page }) => {
+test("Add a Scogg: no button while the deck link is empty, but the goal note stays", async ({ page }) => {
   test.skip(!!config.addScoggUrl, "link is set");
   await page.goto("/gallery/");
-  const add = page.locator(".add-scogg").first();
-  await expect(add.getByRole("button", { name: "Add a Scogg" })).toBeDisabled();
-  await expect(add).toContainText("Ask in class for the deck link");
+  await expect(page.locator(".add-scogg")).toHaveCount(0);
+  await expect(page.locator("main")).not.toContainText("Ask in class for the deck link");
+  await expect(page.locator("[data-goal-note]")).toContainText("Add yours at the end of the slideshow and keep it appropriate.");
 });
 
 test("viewer copy-link points at the share page", async ({ page, context, isMobile, browserName }) => {

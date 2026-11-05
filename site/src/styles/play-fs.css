@@ -34,6 +34,6 @@
 .tower__own:hover { text-decoration: underline; }
 
 .fs-side { display: grid; gap: var(--s-4); }
-.fs-how { margin: 0 0 var(--s-4); }
+.fs-how { margin: 0; max-width: 34rem; }
 
 .fs-fine { margin-top: var(--s-7); color: var(--text-faint); font-size: var(--t-sm); text-align: center; }

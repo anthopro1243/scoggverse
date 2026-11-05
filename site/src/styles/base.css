@@ -178,17 +178,20 @@ p { margin: 0 0 var(--s-4); }
 .btn--gold:hover { background: #ffe58a; border-color: #ffe58a; color: #1a1405; }
 .btn--big { min-height: 3.5rem; padding: var(--s-3) var(--s-6); font-size: 1.1rem; }
 
-/* ---------- Add a Scogg (disabled until the deck link is set) ---------- */
+/* ---------- Add a Scogg (only when the deck link is set) ---------- */
 .add-scogg { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); margin-top: var(--s-3); }
-.add-scogg__note { font-family: var(--font-type); font-size: var(--t-sm); color: inherit; opacity: 0.8; }
 
 /* ---------- page shell ---------- */
 .page-head { padding-top: var(--s-7); padding-bottom: var(--s-5); }
 .page-head p { color: var(--text-muted); max-width: 40rem; font-size: 1.05rem; }
-.eyebrow {
-  display: inline-block; font-family: var(--font-type); color: #e2484c;
-  text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.85rem; margin-bottom: var(--s-2);
-}
+
+/* ---------- the three games, a plain row (Home and the Play page) ---------- */
+.games { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 40rem) { .games { grid-template-columns: 1fr; } }
+.games__tile { display: flex; flex-direction: column; gap: var(--s-2); text-decoration: none; color: var(--text); font-weight: 700; }
+.games__tile img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; border: 1px solid var(--line-strong); }
+.games__tile--tall img { object-position: 50% 21%; }
+.games__tile:hover span { text-decoration: underline; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { pickDeck, titleFromBlocks, stripCredits, textSafety, parseTerms, hasCredit, trimTitle } from "../../scripts/lib/deck.js";
 import { parseLayout } from "../../scripts/lib/layout.js";
-import { selectMemes, fold } from "../../src/js/text.js";
+import { selectMemes, fold, tilt } from "../../src/js/text.js";
 
 test("pickDeck: skips Copy of and broken files, most pages wins, ties go newest", () => {
   const d = pickDeck([
@@ -62,4 +62,11 @@ test("selectMemes: search by folded title or #page, sorted newest/oldest", () =>
   assert.deepEqual(selectMemes(memes, "LÍSA", "newest").map((m) => m.page), [9]);
   assert.deepEqual(selectMemes(memes, "#128", "newest").map((m) => m.page), [128]);
   assert.equal(fold("Scoggé"), "scogge");
+});
+
+test("each file card leans its own way, the same on every load, never more than 0.9 degrees", () => {
+  const all = Array.from({ length: 1000 }, (_, i) => tilt(i + 1));
+  assert.equal(tilt(57), tilt(57));
+  for (const t of all) { assert.match(t, /^-?\d\.\d\ddeg$/); assert.ok(Math.abs(parseFloat(t)) <= 0.9, t); }
+  assert.ok(new Set(all.slice(0, 8)).size >= 6, "neighbours differ");
 });

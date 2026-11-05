@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { renderHeader, renderFooter } from "../../scripts/vite-partials.js";
+import { renderHeader, renderFooter, renderGames } from "../../scripts/vite-partials.js";
 
 test("header marks only the current page", () => {
   const html = renderHeader("/gallery/");
@@ -31,19 +31,30 @@ test("head tags: noindex, absolute og:image, the page's own title", () => {
   assert.match(tags, /og:url" content="https:\/\/example\.test\/gallery\/"/);
 });
 
-test("Add a Scogg: disabled note without a link, a real link with one", () => {
-  assert.match(addScogg({ addScoggUrl: "" }), /disabled>Add a Scogg<\/button><span class="add-scogg__note">Ask in class for the deck link/);
+test("Add a Scogg: nothing without a link, a real link with one", () => {
+  assert.equal(addScogg({ addScoggUrl: "" }), "");
   assert.match(addScogg({ addScoggUrl: "https://docs.google.com/x" }), /<a class="btn btn--gold add-scogg" href="https:\/\/docs\.google\.com\/x"/);
 });
 
 
 test("share page: escaped title, the shared JPEG card, redirect into the viewer", () => {
-  const html = sharePage({ page: 9, title: `Scogga "Lisa" <3` }, { siteUrl: "https://example.test", count: "435" });
+  const html = sharePage({ page: 9, title: `Scogga "Lisa" <3` }, { siteUrl: "https://example.test" });
   assert.match(html, /og:title" content="Scogga &quot;Lisa&quot; &lt;3"/);
   assert.match(html, /og:image" content="https:\/\/example\.test\/share-card\.jpg"/);
   assert.match(html, /og:image:width" content="1200"/);
   assert.doesNotMatch(html, /memes\/og\//);
   assert.match(html, /http-equiv="refresh" content="0; url=\/gallery\/#\/scogg\/9"/);
-  assert.match(html, /FILE 0009 from the class deck/);
+  // the description is just the slide's title: no file number, no count
+  assert.match(html, /name="description" content="Scogga &quot;Lisa&quot; &lt;3"/);
+  assert.match(html, /og:description" content="Scogga &quot;Lisa&quot; &lt;3"/);
+  assert.doesNotMatch(html, /Scoggs on file|FILE 0009/);
+  assert.match(html, /og:image:alt" content="The Uncle Scogg poster/);
   assert.doesNotMatch(html, /<script/);
+});
+
+test("the games row: the three games, a picture and the name each, no label or pitch", () => {
+  const html = renderGames();
+  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]), ["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]);
+  assert.equal((html.match(/<img /g) || []).length, 3);
+  assert.doesNotMatch(html, /label|Case file|Two player|Tap to flap|The FNAF one/);
 });

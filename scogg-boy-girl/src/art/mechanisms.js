@@ -1,14 +1,15 @@
-// The level's moving parts, drawn in code in the Archive's style (dark outline, bronze, lit edges):
+// The level's moving parts, drawn in code in Kenney's colors (dark outline, wood, light top edges):
 // element curtains (flame lets only Scogg Boy through, water only Scogg Girl), pressure plates and
 // the bronze gates they open. Animated on the simulation clock, so replays match.
 import Phaser from "phaser";
-import { fitText } from "./fitText.js";
 import { PAL } from "./palette.js";
 import { DEPTH } from "./archive.js";
 import { TILE, LEVEL } from "../logic/config.js";
 import { flicker } from "./poses.js";
 
-const BRONZE = { dark: 0x3a2612, mid: 0x7d5124, lit: 0xd9a35a, edge: 0xf0c27a };
+// Kenney "Pixel Platformer" colors (wood for plates, gates, levers and slabs; greys for the scale)
+const BRONZE = { dark: 0x6f3e43, mid: 0x9f5a52, lit: 0xcb815e, edge: 0xf4ac66 };
+const OUTLINE = 0x434a5f;
 
 /** A curtain of flame or falling water filling a rectangle of tiles. */
 export class Curtain extends Phaser.GameObjects.Graphics {
@@ -92,11 +93,10 @@ export class Plate extends Phaser.GameObjects.Graphics {
 
   draw(down) {
     const g = this.clear(), d = down ? LEVEL.plateDepth : 0;
-    g.fillStyle(PAL.outline, 1).fillRect(0, -7 + d, TILE, 7 - d);
+    g.fillStyle(OUTLINE, 1).fillRect(0, -7 + d, TILE, 7 - d);
     g.fillStyle(BRONZE.mid, 1).fillRect(1, -6 + d, TILE - 2, 6 - d);
     g.fillStyle(down ? BRONZE.edge : BRONZE.lit, 1).fillRect(1, -6 + d, TILE - 2, 1.4);
     g.fillStyle(down ? 0xffd27a : BRONZE.dark, 1).fillCircle(TILE / 2, -3 + d / 2, 2);
-    if (down) g.fillStyle(0xffb040, 0.35).fillCircle(TILE / 2, -3 + d / 2, 5);
     return this;
   }
 }
@@ -122,7 +122,7 @@ export class Gate extends Phaser.GameObjects.Graphics {
     const g = this.clear(), w = this.w, shown = this.h * (1 - this.state.open);
     if (shown < 1) return this;
     if (this.style === "filibuster") return this.drawFilibuster(g, w, shown);
-    g.fillStyle(PAL.outline, 1).fillRect(2, 0, w - 4, shown);
+    g.fillStyle(OUTLINE, 1).fillRect(2, 0, w - 4, shown);
     g.fillStyle(BRONZE.dark, 1).fillRect(3, 0, w - 6, shown);
     g.fillStyle(BRONZE.mid, 1).fillRect(4, 0, w - 8, shown);
     g.fillStyle(BRONZE.lit, 0.35).fillRect(4, 0, 2, shown);                  // light down the left edge
@@ -137,7 +137,7 @@ export class Gate extends Phaser.GameObjects.Graphics {
 
   /** The filibuster wall: a slab of pale marble covered in carved lines of endless speech. */
   drawFilibuster(g, w, shown) {
-    g.fillStyle(PAL.outline, 1).fillRect(1, 0, w - 2, shown);
+    g.fillStyle(OUTLINE, 1).fillRect(1, 0, w - 2, shown);
     g.fillStyle(0x6b7484, 1).fillRect(2, 0, w - 4, shown);
     g.fillStyle(0x8d97a8, 1).fillRect(2, 0, 2, shown);
     for (let y = 6; y < shown - 3; y += 5) g.fillStyle(0x3b4250, 0.8).fillRect(5, y, w - 10 - ((y * 7) % 9), 1.2);
@@ -146,7 +146,7 @@ export class Gate extends Phaser.GameObjects.Graphics {
   }
 }
 
-const MARBLE = { dark: 0x3b4250, mid: 0x5b6475, lit: 0x9aa4b5, edge: 0xc7cfdc };
+const MARBLE = { dark: 0x434a5f, mid: 0x959ab1, lit: 0xdce1e7, edge: 0xffffff };
 
 /**
  * A lever on the floor: a bronze arm on a stone base, leaning left (off) or right (on).
@@ -167,11 +167,11 @@ export class LeverArt extends Phaser.GameObjects.Graphics {
     this.ang += (target - this.ang) * 0.35;
     const a = this.ang, L = 20;
     const tx = Math.sin(a) * L, ty = -6 - Math.cos(a) * L;
-    g.lineStyle(4.2, PAL.outline, 1).lineBetween(0, -6, tx, ty);
+    g.lineStyle(4.2, OUTLINE, 1).lineBetween(0, -6, tx, ty);
     g.lineStyle(2.6, BRONZE.lit, 1).lineBetween(0, -6, tx, ty);
-    g.fillStyle(PAL.outline, 1).fillCircle(tx, ty, 4.2);
+    g.fillStyle(OUTLINE, 1).fillCircle(tx, ty, 4.2);
     g.fillStyle(on ? 0xffd27a : BRONZE.mid, 1).fillCircle(tx, ty, 3);
-    g.fillStyle(PAL.outline, 1).fillRoundedRect(-11, -9, 22, 9, 2);
+    g.fillStyle(OUTLINE, 1).fillRoundedRect(-11, -9, 22, 9, 2);
     g.fillStyle(BRONZE.dark, 1).fillRoundedRect(-10, -8, 20, 8, 2);
     g.fillStyle(BRONZE.lit, 0.6).fillRect(-9, -8, 18, 1);
     const veto = this.rules.on && this.rules.on !== "any";
@@ -195,7 +195,7 @@ export class SlabArt extends Phaser.GameObjects.Graphics {
   draw(glow = 0) {
     const g = this.clear(), w = this.sw, h = this.sh;
     const C = this.style === "pan" ? MARBLE : BRONZE;
-    g.fillStyle(PAL.outline, 1).fillRect(0, 0, w, h);
+    g.fillStyle(OUTLINE, 1).fillRect(0, 0, w, h);
     g.fillStyle(C.mid, 1).fillRect(1, 1, w - 2, h - 2);
     g.fillStyle(C.dark, 1).fillRect(1, h - 4, w - 2, 3);
     g.fillStyle(C.edge, 1).fillRect(1, 1, w - 2, 2);                // the lit top edge
@@ -213,28 +213,20 @@ export class ChainArt extends Phaser.GameObjects.Graphics {
   draw(lines) {
     const g = this.clear();
     for (const [x, y0, y1] of lines) {
-      g.lineStyle(2.2, PAL.outline, 1).lineBetween(x, y0, x, y1);
+      g.lineStyle(2.2, OUTLINE, 1).lineBetween(x, y0, x, y1);
       g.lineStyle(1, MARBLE.lit, 0.9).lineBetween(x, y0, x, y1);
       for (let y = y0 + 2; y < y1; y += 5) g.fillStyle(MARBLE.edge, 0.7).fillRect(x - 1, y, 2, 1.2);
-      g.fillStyle(PAL.outline, 1).fillCircle(x, y0, 4).fillStyle(MARBLE.mid, 1).fillCircle(x, y0, 2.6);
+      g.fillStyle(OUTLINE, 1).fillCircle(x, y0, 4).fillStyle(MARBLE.mid, 1).fillCircle(x, y0, 2.6);
     }
     return this;
   }
 }
 
-/** A surplus crate: heavy wooden crate of unsold goods, banded in iron, "SURPLUS" stencilled on. */
+/** A surplus crate: Kenney's wooden crate tile, stretched to the crate's size. */
 export class CrateArt extends Phaser.GameObjects.Container {
   constructor(scene, w, h) {
     super(scene, 0, 0);
-    const g = scene.add.graphics();
-    g.fillStyle(PAL.outline, 1).fillRect(0, 0, w, h);
-    g.fillStyle(0x6a4523, 1).fillRect(1, 1, w - 2, h - 2);
-    for (let y = 3; y < h - 2; y += 6.5) g.fillStyle(0x553619, 1).fillRect(1, y, w - 2, 1);
-    g.fillStyle(0x8a5f33, 1).fillRect(1, 1, w - 2, 1.5);
-    g.lineStyle(1.6, 0x2b1a0c, 1).lineBetween(2, 2, w - 2, h - 2).lineBetween(w - 2, 2, 2, h - 2);
-    g.fillStyle(0x3a3f47, 1).fillRect(0, 3, w, 2).fillRect(0, h - 5, w, 2);
-    this.add(g);
-    this.add(fitText(scene.add.text(w / 2, h / 2, "SURPLUS", { fontFamily: "Noto Sans", fontStyle: "700", fontSize: "5px", color: "#e0b070", resolution: 8 })).setOrigin(0.5).setAlpha(0.85));
+    this.add(scene.add.image(0, 0, "crate").setOrigin(0).setDisplaySize(w, h));
     this.setDepth(DEPTH.items + 0.3);
     scene.add.existing(this);
   }
@@ -253,7 +245,7 @@ export class HourglassArt extends Phaser.GameObjects.Container {
   draw(frac, secs) {
     const g = this.g.clear();
     const H = 34, W = 18, top = -H - 2;
-    g.fillStyle(PAL.outline, 1).fillRect(-W / 2 - 2, top - 3, W + 4, 4).fillRect(-W / 2 - 2, -3, W + 4, 4);
+    g.fillStyle(OUTLINE, 1).fillRect(-W / 2 - 2, top - 3, W + 4, 4).fillRect(-W / 2 - 2, -3, W + 4, 4);
     g.fillStyle(BRONZE.lit, 1).fillRect(-W / 2 - 1, top - 2, W + 2, 2).fillRect(-W / 2 - 1, -2, W + 2, 2);
     const glass = [{ x: -W / 2, y: top }, { x: W / 2, y: top }, { x: 1.5, y: top + H / 2 }, { x: W / 2, y: -3 }, { x: -W / 2, y: -3 }, { x: -1.5, y: top + H / 2 }];
     g.fillStyle(0x9fc4e8, 0.18).fillPoints(glass, true);

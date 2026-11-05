@@ -1,5 +1,5 @@
 // Scogg Boy & Scogg Girl on the site: its own page at /play/scogg-boy-girl/ (click to load, both
-// players' controls, how to play, the phone notice, no jump scares), the game at /scogg-boy-girl/
+// players' controls, how to play, no jump scares), the game at /scogg-boy-girl/
 // copied in unchanged, every level replayed both on the game's own URL and inside the page's
 // iframe under the site's real headers, and links to it from Home and the Play page.
 import { test, expect } from "@playwright/test";
@@ -32,23 +32,20 @@ test("the page: heading, Play marked in the nav, footer, no sideways scroll, no 
   expect(errors).toEqual([]);
 });
 
-test("the page says what the game needs: both players' keys, three lines of how to play, no jump scares", async ({ page }) => {
+test("the page says what the game needs in one paragraph: both players' keys, the rules, no jump scares", async ({ page }) => {
   await page.goto("/play/scogg-boy-girl/");
-  const controls = page.locator(".controls");
-  await expect(controls).toContainText("Scogg Boy");
-  await expect(controls).toContainText("Scogg Girl");
-  for (const k of ["A", "D", "W", "←", "→", "↑", "Esc", "R"]) await expect(controls.locator("kbd", { hasText: new RegExp(`^${k}$`) }).first()).toBeVisible();
-  await expect(page.locator(".survive li")).toHaveCount(3);
+  const how = page.locator(".play-how p");
+  await expect(how).toHaveCount(1);
+  await expect(how).toContainText("Scogg Boy uses A, D and W. Scogg Girl uses the arrow keys.");
+  for (const word of ["Ink", "Inflation", "Recession", "Esc", "R restarts"]) await expect(how).toContainText(word);
+  await expect(page.locator(".controls, .survive, kbd")).toHaveCount(0);
   await expect(page.locator(".vault__calm")).toContainText("No jump scares.");
   await expect(page.locator(".sbg-fine")).toHaveText("Unofficial fan parody. Not affiliated with Fireboy and Watergirl or its makers. Made with Dr. Scoggins' permission, for fun.");
 });
 
-test("phones get the keyboard note; laptops don't", async ({ page, isMobile }) => {
+test("no phone note on the page (the game shows its own on a phone)", async ({ page }) => {
   await page.goto("/play/scogg-boy-girl/");
-  const note = page.locator(".phone-note");
-  await expect(note).toHaveText("You need a keyboard for this one. It won't work on a phone.");
-  if (isMobile) await expect(note).toBeVisible();
-  else await expect(note).toBeHidden();
+  await expect(page.locator(".phone-note")).toHaveCount(0);
 });
 
 test("nothing from the game downloads until Play; then it runs in the iframe", async ({ page }) => {
@@ -128,16 +125,13 @@ test("dist/scogg-boy-girl is a byte-for-byte copy of the game's own build", asyn
 
 test("Home and the Play page link to it; the FNAF game stays where it was", async ({ page }) => {
   await page.goto("/");
-  const line = page.locator(".hero__new");
-  await expect(line).toHaveText("New game: Scogg Boy & Scogg Girl.");
-  await expect(line.locator("a")).toHaveAttribute("href", "/play/scogg-boy-girl/");
-  await expect(page.getByRole("link", { name: /Play Five Nights at Scoggy's/ })).toHaveAttribute("href", "/play/");
+  await expect(page.locator(".games__tile", { hasText: "Scogg Boy" })).toHaveAttribute("href", "/play/scogg-boy-girl/");
+  await expect(page.locator("main").getByRole("link", { name: /^Play$/ })).toHaveAttribute("href", "/play/");
   await page.goto("/play/");
   await expect(page.locator("h1")).toHaveText("Five Nights at Scoggy's");
   await expect(page.locator("[data-play]")).toHaveCount(1);
-  const card = page.locator(".case2__card");
+  const card = page.locator(".games__tile", { hasText: "Scogg Boy" });
   await expect(card).toHaveAttribute("href", "/play/scogg-boy-girl/");
-  await expect(card).toContainText("Two player. One of you is fire, one is water.");
   await card.click();
   await expect(page).toHaveURL(/\/play\/scogg-boy-girl\/$/);
 });

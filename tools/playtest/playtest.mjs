@@ -586,7 +586,7 @@ scenarios.sound_check = async (g) => {
   await g.waitFor((x) => x.scene === "Title" && x.title_buttons, "title screen", 60000);
   await g.click([275, 992]); // Settings
   await g.page.waitForTimeout(300);
-  await g.click([640, 890]); // Sound check…
+  await g.click([640, 890]); // Sound test
   let s = await g.waitFor((x) => x.sound_check, "sound check page", 5000);
   const files = Object.keys(s.sound_check.rects);
   const loopsOn = [];
@@ -690,7 +690,7 @@ const LABELS = {
   art: "Art follows the night (layers, scares, silence)",
   jumpscares: "Each bot's jumpscare plays its frames",
   sounds: "Every sound fires at the right moment",
-  sound_check: "Settings > Sound check plays every sound",
+  sound_check: "Settings > Sound test plays every sound",
   phone: "Phone: \"best on a laptop\" notice before the download",
   embed: "Embed page: the game plays inside an iframe",
 };

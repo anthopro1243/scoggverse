@@ -8,7 +8,7 @@
 /* ---------- class goal ---------- */
 .goal {
   background: var(--paper); color: var(--ink); border-radius: 2px; box-shadow: var(--paper-shadow);
-  padding: var(--s-4) var(--s-5); transform: rotate(0.5deg);
+  padding: var(--s-4) var(--s-5);
 }
 .goal__label { font-family: var(--font-type); font-size: 1.05rem; margin-bottom: var(--s-2); }
 .goal__label strong { color: var(--red); font-weight: 400; font-size: 1.6rem; }

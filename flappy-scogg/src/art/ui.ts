@@ -1,16 +1,17 @@
 // Text and panels: the score, the title screen, the game-over card and the pause screen.
-// Engraved serif in gold on dark bronze-edged tablets, the same style as the platformer's menus.
+// Kenney's pixel font in white and coin gold on flat slate panels, like the platformer's menus.
 import { CARD_LOCK, CARD_SLIDE, H, W } from "../logic/config.ts";
 import { cardAge, type Game } from "../logic/game.ts";
 import { gradeFor, lineFor } from "../logic/grade.ts";
 import { TEXT } from "../texts.ts";
-import { FONT, PAL, SERIF } from "./palette.ts";
+import { FONT, PAL, SERIF, SERIF_SCALE } from "./palette.ts";
 
 export interface UiOptions { touch: boolean; reduceMotion: boolean }
 
 function label(c: CanvasRenderingContext2D, s: string, x: number, y: number, size: number, opts: { font?: string; weight?: number; color?: string; stroke?: number; align?: CanvasTextAlign; alpha?: number } = {}): void {
   c.save();
-  c.font = `${opts.weight ?? 700} ${size}px ${opts.font ?? SERIF}`;
+  const font = opts.font ?? SERIF;
+  c.font = `${opts.weight ?? 700} ${font === SERIF ? Math.round(size * SERIF_SCALE) : size}px ${font}`;
   c.textAlign = opts.align ?? "center";
   c.textBaseline = "middle";
   c.globalAlpha = opts.alpha ?? 1;
@@ -26,25 +27,10 @@ function label(c: CanvasRenderingContext2D, s: string, x: number, y: number, siz
 }
 
 function tablet(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): void {
-  c.save();
-  c.shadowColor = "rgba(0,0,0,0.5)";
-  c.shadowBlur = 18;
-  c.shadowOffsetY = 6;
+  c.fillStyle = PAL.tabletEdge;
+  c.fillRect(x, y, w, h);
   c.fillStyle = PAL.tablet;
-  c.beginPath();
-  c.roundRect(x, y, w, h, 6);
-  c.fill();
-  c.restore();
-  c.strokeStyle = PAL.tabletEdge;
-  c.lineWidth = 2;
-  c.beginPath();
-  c.roundRect(x + 1, y + 1, w - 2, h - 2, 5);
-  c.stroke();
-  c.strokeStyle = "rgba(217, 180, 90, 0.25)";
-  c.lineWidth = 1;
-  c.beginPath();
-  c.roundRect(x + 6, y + 6, w - 12, h - 12, 3);
-  c.stroke();
+  c.fillRect(x + 3, y + 3, w - 6, h - 6);
 }
 
 /** Wrap a line to a width; returns the lines. */
@@ -65,9 +51,8 @@ export function drawScore(c: CanvasRenderingContext2D, g: Game): void {
 }
 
 export function drawTitle(c: CanvasRenderingContext2D, g: Game, o: UiOptions): void {
-  tablet(c, 46, 104, W - 92, 150);
-  label(c, TEXT.title1, W / 2, 150, 46, { stroke: 5 });
-  label(c, TEXT.title2, W / 2, 206, 58, { stroke: 6 });
+  label(c, TEXT.title1, W / 2, 150, 46, { stroke: 8 });
+  label(c, TEXT.title2, W / 2, 214, 58, { stroke: 9, color: PAL.gold });
   if (g.best > 0) label(c, `${TEXT.best}  ${g.best}`, W / 2, 352, 20, { color: PAL.gold, stroke: 4 });
   const pulse = o.reduceMotion ? 1 : 0.72 + 0.28 * Math.sin(g.frame / 18);
   label(c, o.touch ? TEXT.startTouch : TEXT.startMouse, W / 2, 470, 20, { font: FONT, weight: 600, color: PAL.text, stroke: 4, alpha: pulse });

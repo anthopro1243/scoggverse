@@ -8,23 +8,21 @@ const remote = !!process.env.PLAYWRIGHT_BASE_URL;
 const memes = JSON.parse(readFileSync("src/data/memes.json", "utf8"));
 const lisa = memes.find((m) => m.title === "Scogga Lisa");
 
-test("Home: the Play and Gallery buttons show without scrolling", async ({ page }) => {
+test("Home: the Play button shows without scrolling", async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto("/");
   const view = page.viewportSize();
-  for (const name of [/Play Five Nights at Scoggy's/, /Open the files/]) {
-    const box = await page.getByRole("link", { name }).first().boundingBox();
-    expect(box, String(name)).not.toBeNull();
-    expect(box.y + box.height, `${name} bottom edge`).toBeLessThanOrEqual(view.height);
-  }
+  const box = await page.locator("main").getByRole("link", { name: /^Play$/ }).boundingBox();
+  expect(box).not.toBeNull();
+  expect(box.y + box.height, "Play bottom edge").toBeLessThanOrEqual(view.height);
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
   expect(errors).toEqual([]);
 });
 
-test("Home on a phone: the poster sits under the buttons", async ({ page, isMobile }) => {
+test("Home on a phone: the poster sits under the button", async ({ page, isMobile }) => {
   test.skip(!isMobile, "phone layout");
   await page.goto("/");
-  const play = await page.getByRole("link", { name: /Play Five Nights at Scoggy's/ }).boundingBox();
+  const play = await page.locator("main").getByRole("link", { name: /^Play$/ }).boundingBox();
   const poster = await page.locator(".poster").boundingBox();
   expect(poster.y).toBeGreaterThan(play.y + play.height);
 });
