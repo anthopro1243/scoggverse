@@ -1,0 +1,31 @@
+{
+  "level": "layer-cake-marble-cake",
+  "note": "Both jump on the small scale together so it stays level; Boy jumps from it to the ledge. Then each takes a lane and they cross the big scale side by side, so neither pan sinks into the Recession.",
+  "boy": [
+    ["walk", 150],
+    ["until", "Math.abs(other.x + 10 - 150) < 3"],
+    ["jumpTo", 210, 40, 10],
+    ["walk", 225],
+    ["jump", 0],
+    ["jumpTo", 285, 40, 16],
+    ["walk", 345],
+    ["until", "Math.abs(other.x + 10 - 345) < 3 && other.grounded"],
+    ["walk", 615],
+    ["walk", 795],
+    ["jump", 0],
+    ["walk", 705]
+  ],
+  "girl": [
+    ["walk", 150],
+    ["until", "Math.abs(other.x + 10 - 150) < 3"],
+    ["jumpTo", 90, 40, 10],
+    ["jump", 0],
+    ["until", "other.y + 52 <= 300.5 && other.grounded"],
+    ["walk", 345],
+    ["until", "Math.abs(other.x + 10 - 345) < 3 && other.grounded"],
+    ["walk", 615],
+    ["walk", 765],
+    ["jump", 0],
+    ["walk", 855]
+  ]
+}

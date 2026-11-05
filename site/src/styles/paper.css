@@ -1,0 +1,14 @@
+/* 404: one paper document on the desk. */
+
+.paper {
+  background: var(--paper); color: var(--ink); border-radius: 2px; box-shadow: var(--paper-shadow);
+}
+.paper h1, .paper h2 { color: var(--ink); }
+
+.not-found { padding-top: var(--s-8); display: flex; justify-content: center; }
+.missing { max-width: 30rem; width: 100%; padding: var(--s-6); text-align: center; transform: rotate(1deg); }
+.missing__file { font-family: var(--font-type); color: var(--red); letter-spacing: 0.1em; }
+.missing h1 { font-size: var(--t-xl); margin-top: var(--s-2); }
+.missing__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center; margin: var(--s-5) 0 0; }
+.btn--paper { background: transparent; border-color: var(--ink-soft); color: var(--ink); }
+.btn--paper:hover { background: #e7dec9; border-color: var(--ink); color: var(--ink); }

@@ -1,0 +1,42 @@
+{
+  "level": "cats-in-a-sack",
+  "note": "Both plates at once open the first filibuster wall for good; then Boy holds the plate in his sack (past the flame curtain) while Girl holds hers (past the water curtain).",
+  "boy": [
+    ["walk", 105],
+    ["jump", 0],
+    ["walk", 225],
+    ["until", "s.gates[0] >= 0.95"],
+    ["walk", 435],
+    ["jump", 0],
+    ["walk", 525],
+    ["jumpTo", 570, 40, 10],
+    ["walk", 560],
+    ["jumpTo", 480, 40, 14],
+    ["walk", 315],
+    ["jump", 0],
+    ["walk", 345],
+    ["until", "s.gates[1] >= 0.95"],
+    ["walk", 495],
+    ["jumpTo", 625],
+    ["walk", 705]
+  ],
+  "girl": [
+    ["walk", 195],
+    ["jump", 0],
+    ["walk", 165],
+    ["until", "s.gates[0] >= 0.95"],
+    ["walk", 375],
+    ["jumpTo", 470],
+    ["walk", 855],
+    ["jump", 0],
+    ["walk", 885],
+    ["until", "s.gates[1] >= 0.95"],
+    ["walk", 525],
+    ["jumpTo", 570, 40, 10],
+    ["walk", 585],
+    ["jumpTo", 630, 40, 14],
+    ["walk", 765],
+    ["jump", 0],
+    ["walk", 855]
+  ]
+}

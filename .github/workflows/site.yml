@@ -1,0 +1,44 @@
+name: Site
+on:
+  push:
+  pull_request:
+jobs:
+  site:
+    env:
+      ANON_NAMES: ${{ secrets.ANON_NAMES }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            site/package-lock.json
+            scogg-boy-girl/package-lock.json
+      - run: npm ci
+      - name: Scogg Boy & Scogg Girl's packages (the site build builds it and copies it in)
+        run: npm ci
+        working-directory: scogg-boy-girl
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm test
+        env:
+          CI: "1"
+      - name: Game audio through the Play page's iframe (measured at the speakers)
+        run: |
+          (npx vite preview --port 4173 > /dev/null 2>&1 &)
+          cd ../tools/playtest
+          npm ci --silent
+          sleep 2
+          node audio_output.mjs --play=http://localhost:4173 --gl=swiftshader --no-sweep --out=../../docs/playtest/ci
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-playwright-report
+          path: site/playwright-report/
+          retention-days: 7

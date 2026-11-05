@@ -1,0 +1,34 @@
+{
+  "level": "hamburger-stand-hustle",
+  "note": "Both ride the first elevator up at its trough, wait for the second to bottom out, ride it to the peak, drop onto the third at its trough and ride it up to the doors.",
+  "boy": [
+    ["walk", 195],
+    ["until", "s.mech.movers[0].y <= 300.01"],
+    ["walk", 345],
+    ["until", "s.mech.movers[1].y >= 299.99"],
+    ["jumpTo", 495],
+    ["walk", 495],
+    ["until", "s.mech.movers[1].y <= 180.01"],
+    ["jumpTo", 575],
+    ["until", "s.mech.movers[2].y <= 180.01"],
+    ["jumpTo", 665],
+    ["walk", 765],
+    ["jump", 0],
+    ["walk", 705]
+  ],
+  "girl": [
+    ["walk", 225],
+    ["until", "s.mech.movers[0].y <= 300.01"],
+    ["walk", 315],
+    ["until", "s.mech.movers[1].y >= 299.99"],
+    ["jumpTo", 465],
+    ["walk", 465],
+    ["until", "s.mech.movers[1].y <= 180.01"],
+    ["jumpTo", 560],
+    ["until", "s.mech.movers[2].y <= 180.01"],
+    ["jumpTo", 665],
+    ["walk", 795],
+    ["jump", 0],
+    ["walk", 855]
+  ]
+}

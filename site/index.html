@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Scoggverse</title>
+  <meta name="description" content="All the Scogg memes from class, plus three games with Dr. Scoggins in them.">
+  <meta name="theme-color" content="#120f0d">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/cards.css">
+  <link rel="stylesheet" href="/src/styles/home.css">
+  <script type="module" src="/src/js/home.js"></script>
+</head>
+<body>
+<!--@header-->
+<main id="main">
+  <section class="wrap hero">
+    <div class="hero__text">
+      <span class="eyebrow">Case file: Dr. Scoggins</span>
+      <h1>The Scoggverse</h1>
+      <p class="hero__lede">All the Scogg memes from our class slideshow, plus three games with Dr. Scoggins in them.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary btn--big" href="/play/">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>
+          Play Five Nights at Scoggy's
+        </a>
+        <a class="btn btn--big" href="/gallery/">Open the files</a>
+      </div>
+      <p class="hero__count"><strong>%SHOWN_COUNT%</strong> Scoggs on file. Goal: 1,000.</p>
+      <p class="hero__new">New game: <a href="/play/scogg-boy-girl/">Scogg Boy &amp; Scogg Girl</a>.</p>
+      <p class="hero__also">Also new: <a href="/play/flappy-scogg/">Flappy Scogg</a>, and it works on your phone.</p>
+    </div>
+    <figure class="poster">
+      <img src="/art/poster-uncle.webp" width="640" height="896" alt="Uncle Scogg poster: I want you to not deny yourself an education" fetchpriority="high">
+    </figure>
+  </section>
+
+  <section class="wrap strip-section" aria-labelledby="strip-title">
+    <div class="section-head">
+      <h2 id="strip-title">Pulled from the files</h2>
+      <div class="section-head__actions">
+        <button type="button" class="btn btn--small" data-shuffle>Shuffle</button>
+        <a class="section-head__link" href="/gallery/">All %SHOWN_COUNT%</a>
+      </div>
+    </div>
+    <ul class="strip" data-strip aria-live="polite"></ul>
+    <noscript><p class="strip__noscript"><a href="/gallery/">Go to the gallery</a> to see the slides.</p></noscript>
+  </section>
+
+  <section class="wrap notes">
+    <a class="note note--game" href="/play/">
+      <img src="/art/game-office.webp" width="960" height="540" alt="The office from the game: a desk, two monitors, a fan and the I WANT YOU poster" loading="lazy">
+      <span class="note__body">
+        <span class="note__label">The game</span>
+        <span class="note__title">Five Nights at Scoggy's</span>
+        <span class="note__text">The FNAF one. Make it to 6 AM. Play it on a laptop if you can.</span>
+      </span>
+    </a>
+  </section>
+</main>
+<!--@footer-->
+</body>
+</html>

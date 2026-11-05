@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="robots" content="noindex">
+  <title>Flappy Scogg</title>
+</head>
+<body>
+  <canvas id="game" aria-label="Flappy Scogg. Tap, click or press Space to flap."></canvas>
+  <div id="hud">
+    <button type="button" class="hud-btn" id="pause" aria-label="Pause" hidden>
+      <svg class="i-pause" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg>
+      <svg class="i-play" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg>
+    </button>
+    <button type="button" class="hud-btn" id="mute" aria-label="Sound" aria-pressed="false">
+      <svg class="i-on" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="wave" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+      <svg class="i-off" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="wave" d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+    </button>
+  </div>
+  <button type="button" id="credits-link" hidden>Credits</button>
+  <div id="credits" role="dialog" aria-modal="true" aria-labelledby="credits-title" hidden>
+    <div class="panel">
+      <h2 id="credits-title">Credits</h2>
+      <p>Face from the class deck The Scogg Files.</p>
+      <p>Fonts: Cinzel and Noto Sans (SIL Open Font License 1.1).</p>
+      <p class="fine">Unofficial fan parody. Not affiliated with Flappy Bird or its makers. Made with Dr. Scoggins' permission, for fun.</p>
+      <button type="button" id="credits-close">Back</button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

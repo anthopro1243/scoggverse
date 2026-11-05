@@ -1,0 +1,31 @@
+{
+  "name": "scogg-boy-girl",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Scogg Boy & Scogg Girl: a two-player co-op puzzle platformer for the Scoggverse.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4174 --strictPort",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "size": "node scripts/size-check.mjs",
+    "faces": "python3 scripts/make_faces.py",
+    "look-sheet": "node scripts/look-sheet.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@fontsource/cinzel": "5.3.0",
+    "@fontsource/noto-sans": "5.3.0",
+    "phaser": "4.2.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "vite": "8.3.3",
+    "vitest": "5.0.3"
+  }
+}

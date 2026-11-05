@@ -1,0 +1,38 @@
+{
+  "level": "ovens-and-tee-shirts",
+  "note": "Boy flips the lever to lift Girl up; she pushes the surplus crate onto the plate, which opens Boy's gate; both jump the big shortage.",
+  "boy": [
+    ["jumpTo", 200],
+    ["walk", 225],
+    ["jump", 0],
+    ["walk", 300],
+    ["until", "Math.abs(other.x + 10 - 240) < 3 && other.grounded"],
+    ["walk", 330],
+    ["until", "s.gates[0] >= 0.95"],
+    ["walk", 375],
+    ["jumpTo", 435, 40, 8],
+    ["walk", 470],
+    ["jumpTo", 615],
+    ["walk", 645],
+    ["walk", 765],
+    ["jump", 0],
+    ["walk", 705]
+  ],
+  "girl": [
+    ["wait", 30],
+    ["jumpTo", 200],
+    ["walk", 285],
+    ["jump", 0],
+    ["until", "other.x + 10 > 290 && other.grounded"],
+    ["walk", 240],
+    ["until", "s.mech.movers[0].y <= 270.01"],
+    ["walkUntil", 1, "s.mech.sig.P1"],
+    ["mark", "crate on plate"],
+    ["jumpTo", 435],
+    ["walk", 470],
+    ["jumpTo", 615],
+    ["walk", 645],
+    ["jump", 0],
+    ["walk", 855]
+  ]
+}

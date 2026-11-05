@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Nights at Scoggy's (embedded)</title>
+<!--
+  The game as it sits on another page (the Scoggverse site): copy the <div class="fnas-embed">
+  block below. The iframe keeps 16:9 at any width; "allow" lets the game play sound and go
+  full screen. This page also passes its query string to the game (?test=1 for the playtest).
+-->
+<style>
+body { margin: 0; padding: 1.5rem 1rem; background: #111114; color: #ddd; font-family: Arial, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 1.4rem; margin: 0 0 0.8rem; }
+.fnas-embed { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.fnas-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.fnas-embed-note { color: #888; font-size: 0.85rem; line-height: 1.4; margin-top: 0.6rem; }
+.fnas-embed-note a { color: #ffd95a; }
+</style>
+</head>
+<body>
+<main>
+<h1>Five Nights at Scoggy's</h1>
+
+<div class="fnas-embed">
+  <iframe id="fnas-game" src="https://five-nights-at-scoggies.vercel.app/" title="Five Nights at Scoggy's"
+          allow="autoplay; fullscreen; gamepad" allowfullscreen loading="lazy"></iframe>
+</div>
+<p class="fnas-embed-note">
+  Click the game, then use the mouse and keys (A/D doors, Q/E lights, Space cameras, F full screen). Best on a laptop or desktop.
+  <a href="https://five-nights-at-scoggies.vercel.app/" target="_blank" rel="noopener">Open it on its own page</a>.<br>
+  A free, non-commercial fan parody of <i>Five Nights at Freddy's</i> by Scott Cawthon. Not affiliated with or endorsed by him.
+</p>
+
+</main>
+<script>
+// On our own site (previews and the playtest), point the iframe at this deployment and pass the
+// query string through. Copied onto another site, the iframe's src above is used as written.
+(function () {
+  if (/vercel\.app$|^localhost$|^127\.0\.0\.1$/.test(location.hostname)) {
+    var f = document.getElementById('fnas-game');
+    f.loading = 'eager';
+    f.src = './index.html' + location.search;
+  }
+}());
+</script>
+</body>
+</html>

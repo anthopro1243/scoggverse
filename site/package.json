@@ -1,0 +1,33 @@
+{
+  "name": "scoggverse-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The Scoggverse: the class meme deck and Five Nights at Scoggy's, one site.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && npm --prefix ../scogg-boy-girl run build && npm --prefix ../flappy-scogg run build && node scripts/copy-game.mjs",
+    "preview": "vite preview --port 4173 --strictPort",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test \"test/unit/*.test.js\"",
+    "test:e2e": "playwright test",
+    "import-deck": "node scripts/import-deck.mjs",
+    "hide": "node scripts/hide.mjs",
+    "share-pages": "node scripts/share.mjs",
+    "size": "node scripts/size-report.mjs",
+    "reencode": "node scripts/reencode.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "1.63.0",
+    "sharp": "^0.35.5",
+    "vite": "^8.3.2"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans": "^5.3.0",
+    "@fontsource/special-elite": "^5.3.0"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "level": "factor-market",
+  "note": "Boy passes his veto lever (gate A), Girl passes hers (gate B); they trade sides; each vetoes the other's lever behind them, which opens their own way up.",
+  "boy": [
+    ["jump", 0],
+    ["walk", 630],
+    ["walk", 660],
+    ["until", "s.gates[1] >= 0.95"],
+    ["walk", 495],
+    ["jump", 0],
+    ["until", "other.x + 10 > 590"],
+    ["walk", 255],
+    ["until", "me.grounded && s.gates[2] >= 0.95"],
+    ["jumpTo", 225, 40, 12],
+    ["walk", 210],
+    ["jumpTo", 160, 40, 17],
+    ["walk", 45],
+    ["jump", 0],
+    ["walk", 105]
+  ],
+  "girl": [
+    ["walk", 135],
+    ["jump", 0],
+    ["walk", 330],
+    ["until", "s.gates[0] >= 0.95"],
+    ["walk", 465],
+    ["walk", 690],
+    ["until", "other.x + 10 < 380"],
+    ["walk", 630],
+    ["walk", 690],
+    ["until", "s.gates[3] >= 0.95"],
+    ["jumpTo", 735, 40, 12],
+    ["walk", 750],
+    ["jumpTo", 800, 40, 17],
+    ["walk", 915],
+    ["jump", 0],
+    ["walk", 855]
+  ]
+}

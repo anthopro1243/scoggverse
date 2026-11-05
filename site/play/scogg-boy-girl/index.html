@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play Scogg Boy &amp; Scogg Girl · The Scoggverse</title>
+  <meta name="description" content="Two player. One of you is fire, one is water.">
+  <meta name="theme-color" content="#120f0d">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/play.css">
+  <link rel="stylesheet" href="/src/styles/play-sbg.css">
+  <script type="module" src="/src/js/play-sbg.js"></script>
+</head>
+<body>
+<!--@header-->
+<main id="main">
+  <section class="wrap page-head play-head">
+    <span class="eyebrow">Play · Case file 2</span>
+    <h1>Scogg Boy &amp; Scogg Girl</h1>
+    <p>Two player. One of you is fire, one is water.</p>
+  </section>
+
+  <section class="wrap" aria-label="The game">
+    <div class="vault">
+      <div class="vault__screen" data-screen>
+        <div class="vault__cover" data-cover>
+          <img class="vault__poster" src="/art/sbg-poster.webp" width="1280" height="720" alt="">
+          <div class="vault__overlay">
+            <button type="button" class="btn btn--primary btn--big vault__play" data-play>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>
+              Play
+            </button>
+            <p class="vault__calm"><strong>No jump scares.</strong> Dont worry.</p>
+          </div>
+        </div>
+      </div>
+      <div class="vault__bar">
+        <button type="button" class="btn" data-fullscreen disabled>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Full screen
+        </button>
+        <a class="vault__own" href="/scogg-boy-girl/" target="_blank" rel="noopener">Open the game on its own page</a>
+      </div>
+    </div>
+    <p class="phone-note">You need a keyboard for this one. It won't work on a phone.</p>
+  </section>
+
+  <section class="wrap play-info">
+    <div class="paper controls">
+      <h2>Controls</h2>
+      <dl class="keys">
+        <div><dt>Scogg Boy</dt><dd><kbd>A</kbd> <kbd>D</kbd> to move, <kbd>W</kbd> to jump</dd></div>
+        <div><dt>Scogg Girl</dt><dd><kbd>←</kbd> <kbd>→</kbd> to move, <kbd>↑</kbd> to jump</dd></div>
+        <div><dt><kbd>Esc</kbd></dt><dd>Pause</dd></div>
+        <div><dt><kbd>R</kbd></dt><dd>Restart the chamber</dd></div>
+        <div><dt><kbd>M</kbd></dt><dd>Sound on or off</dd></div>
+        <div><dt><kbd>F</kbd></dt><dd>Full screen</dd></div>
+        <div><dt>Gamepads</dt><dd>Two of them work too</dd></div>
+      </dl>
+    </div>
+    <div class="paper survive">
+      <h2>How to play</h2>
+      <ol>
+        <li>Scogg Boy grabs the Scogg Bucks and Scogg Girl grabs the Gavels. Bucks lose value the longer you take.</li>
+        <li>He can't touch Ink, she can't touch Inflation, and Recession gets you both.</li>
+        <li>Plates, levers and crates open the way, and then you both stand at your own door to get out.</li>
+      </ol>
+    </div>
+  </section>
+
+  <p class="wrap sbg-fine">Unofficial fan parody. Not affiliated with Fireboy and Watergirl or its makers. Made with Dr. Scoggins' permission, for fun.</p>
+</main>
+<!--@footer-->
+</body>
+</html>

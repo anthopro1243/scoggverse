@@ -1,0 +1,39 @@
+/* Flappy Scogg's page: the game is tall like a phone, so it sits in a tall bronze-edged frame with
+   the how-to-play beside it on a laptop and under it on a phone. */
+
+.fs-layout { display: grid; gap: var(--s-5); align-items: start; }
+@media (min-width: 52rem) { .fs-layout { grid-template-columns: auto minmax(0, 1fr); } }
+
+.tower {
+  width: fit-content; max-width: 100%; margin-inline: auto;
+  background: #0d0b09; border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+  padding: var(--s-2); box-shadow: var(--shadow);
+}
+.tower__screen {
+  /* as tall as fits on screen (with the heading above it), never wider than the column */
+  position: relative; aspect-ratio: 9 / 16; width: min(calc(100vw - 2 * var(--s-4) - 2 * var(--s-2) - 2px), 26rem, calc(70vh * 9 / 16)); overflow: hidden;
+  background: #120f0d; border-radius: 2px;
+}
+.tower__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 1; }
+.tower__cover { position: absolute; inset: 0; }
+.tower__cover[hidden] { display: none; }
+.tower__poster { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.62); }
+.tower__overlay {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s-3);
+  text-align: center; padding: var(--s-4);
+  background: radial-gradient(ellipse at center, rgb(7 8 11 / 0.3) 0%, rgb(7 8 11 / 0.7) 100%);
+}
+.tower__play { min-width: 10rem; font-size: 1.2rem; box-shadow: 0 0 0 6px rgb(255 217 90 / 0.18); }
+.tower__play:hover { box-shadow: 0 0 0 9px rgb(255 217 90 / 0.24); }
+.tower__calm { margin: 0; max-width: 18rem; color: var(--text); text-shadow: 0 1px 2px #000; }
+.tower__calm strong { color: var(--gold); }
+
+.tower__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-2) var(--s-1) var(--s-1); }
+.tower__own { font-weight: 700; text-decoration: none; }
+.tower__own:hover { text-decoration: underline; }
+
+.fs-side { display: grid; gap: var(--s-4); }
+.fs-how { margin: 0 0 var(--s-4); }
+
+.fs-fine { margin-top: var(--s-7); color: var(--text-faint); font-size: var(--t-sm); text-align: center; }

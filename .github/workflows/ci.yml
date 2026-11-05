@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  GODOT_VERSION: 4.6.3
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: ~/godot
+          key: godot-${{ env.GODOT_VERSION }}
+
+      - name: Download Godot
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/godot && cd ~/godot
+          curl -fsSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip && rm godot.zip
+          mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 godot
+
+      - name: Install xvfb and Mesa
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb libgl1-mesa-dri libglx-mesa0
+
+      - name: Import project
+        run: ~/godot/godot --headless --import
+
+      - name: Unit tests (GUT)
+        run: ~/godot/godot --headless -s addons/gut/gut_cmdln.gd
+
+      - name: Night simulator (Nights 1-6, 1,000 each)
+        run: GODOT=~/godot/godot tools/sim_report.sh 1000
+
+      - name: Screenshot sheet
+        run: GODOT=~/godot/godot tools/screenshots.sh
+
+      - name: Browser controls check (committed web build)
+        run: |
+          cd tools/playtest
+          npm ci --silent
+          npx playwright install --with-deps chromium > /dev/null
+          (python3 -m http.server 8060 -d ../../web > /dev/null 2>&1 &)
+          sleep 1
+          node playtest.mjs --url=http://localhost:8060 --speed=4 --only=controls --gl=swiftshader --out=../../docs/playtest/ci
+
+      - name: Audio output check (committed web build, measured at the speakers)
+        run: |
+          cd tools/playtest
+          node audio_output.mjs --url=http://localhost:8060 --gl=swiftshader --out=../../docs/playtest/ci
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-and-sim
+          path: |
+            docs/screens/
+            docs/sim/
+            docs/playtest/ci/

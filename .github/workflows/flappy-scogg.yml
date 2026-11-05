@@ -1,0 +1,32 @@
+name: Flappy Scogg
+on:
+  push:
+  pull_request:
+jobs:
+  game:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: flappy-scogg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: flappy-scogg/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:unit
+      - run: npm run build
+      - run: npm run size
+      - run: npm run test:e2e
+        env:
+          CI: "1"
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flappy-scogg-playwright-report
+          path: flappy-scogg/playwright-report/
+          retention-days: 7

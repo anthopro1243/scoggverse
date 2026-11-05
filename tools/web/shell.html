@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+		<title>$GODOT_PROJECT_NAME</title>
+		<meta name="description" content="Five Nights at Scoggy's: a free, non-commercial fan parody of Five Nights at Freddy's starring Dr. Scoggins. Survive five nights at school. Best on a laptop or desktop.">
+		<meta property="og:title" content="Five Nights at Scoggy's">
+		<meta property="og:description" content="A free fan parody of Five Nights at Freddy's starring Dr. Scoggins. Don't deny yourself an education.">
+		<meta property="og:image" content="https://five-nights-at-scoggies.vercel.app/og.png">
+		<meta name="twitter:card" content="summary_large_image">
+		<style>
+html, body, #canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	color: white;
+	background-color: black;
+	overflow: hidden;
+	touch-action: none;
+}
+
+#canvas {
+	display: block;
+}
+
+#canvas:focus {
+	outline: none;
+}
+
+#status, #status-splash, #status-progress {
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
+#status, #status-splash {
+	top: 0;
+	bottom: 0;
+}
+
+#status {
+	background-color: $GODOT_SPLASH_COLOR;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+#status-splash {
+	max-height: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+#status-splash.show-image--false {
+	display: none;
+}
+
+#status-splash.fullsize--true {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+#status-splash.use-filter--false {
+	image-rendering: pixelated;
+}
+
+#status-progress, #status-notice {
+	display: none;
+}
+
+/* Five Nights at Scoggy's: the loading screen and the phone notice. */
+#status {
+	background: radial-gradient(ellipse at 50% 60%, #1a1214 0%, #070708 70%);
+	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#status-splash {
+	display: none;
+}
+
+.fnas-title {
+	color: #d9d9d9;
+	font-size: clamp(1.4rem, 5vw, 3.4rem);
+	font-weight: bold;
+	letter-spacing: 0.06em;
+	text-align: center;
+	margin: 0 1rem;
+}
+
+.fnas-title span {
+	color: #e0262a;
+	display: block;
+	font-size: 1.6em;
+}
+
+.fnas-tagline {
+	color: #8a8a8a;
+	font-size: clamp(0.85rem, 2.4vw, 1.1rem);
+	margin: 0.6rem 1rem 2rem;
+	text-align: center;
+}
+
+#status-progress {
+	position: static;
+	-webkit-appearance: none;
+	appearance: none;
+	width: min(32rem, 80vw);
+	height: 0.8rem;
+	border: 2px solid #3e3e42;
+	background: #141416;
+}
+
+#status-progress::-webkit-progress-bar {
+	background: #141416;
+}
+
+#status-progress::-webkit-progress-value {
+	background: #d8262a;
+}
+
+#status-progress::-moz-progress-bar {
+	background: #d8262a;
+}
+
+#status-bytes {
+	color: #9a9a9a;
+	font-size: 0.95rem;
+	margin-top: 0.7rem;
+	min-height: 1.3em;
+}
+
+.fnas-disclaimer {
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+	right: 1rem;
+	color: #6c6c6c;
+	font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+	line-height: 1.35;
+	text-align: center;
+}
+
+#phone-notice {
+	display: none;
+	max-width: 30rem;
+	margin: 0 1.2rem;
+	padding: 1.2rem 1.4rem;
+	border: 1px solid #5a2a2c;
+	border-radius: 0.6rem;
+	background: #1b1113;
+	color: #e2e2e2;
+	line-height: 1.45;
+	text-align: center;
+	z-index: 2;
+}
+
+#phone-notice h2 {
+	margin: 0 0 0.5rem;
+	font-size: 1.25rem;
+	color: #ffd95a;
+}
+
+#phone-notice p {
+	margin: 0 0 1rem;
+	color: #c8c8c8;
+}
+
+#phone-play {
+	font: inherit;
+	font-weight: bold;
+	padding: 0.7rem 1.6rem;
+	border: 0;
+	border-radius: 0.4rem;
+	background: #d8262a;
+	color: white;
+	cursor: pointer;
+}
+
+#status-notice {
+	background-color: #5b3943;
+	border-radius: 0.5rem;
+	border: 1px solid #9b3943;
+	color: #e0e0e0;
+	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+	line-height: 1.3;
+	margin: 0 2rem;
+	overflow: hidden;
+	padding: 1rem;
+	text-align: center;
+	z-index: 1;
+}
+		</style>
+		$GODOT_HEAD_INCLUDE
+	</head>
+	<body>
+		<canvas id="canvas">
+			Your browser does not support the canvas tag.
+		</canvas>
+
+		<noscript>
+			Your browser does not support JavaScript.
+		</noscript>
+
+		<div id="status">
+			<img id="status-splash" class="$GODOT_SPLASH_CLASSES" src="$GODOT_SPLASH" alt="">
+			<div class="fnas-title">FIVE NIGHTS AT<span>SCOGGY'S</span></div>
+			<div class="fnas-tagline">Don't deny yourself an education.</div>
+			<div id="phone-notice">
+				<h2>Best on a laptop</h2>
+				<p>This game is made for a laptop or desktop with a mouse and keyboard. On a phone the screen is small, the controls are fiddly, and the download is about 53 MB. If you play anyway, turn your phone sideways.</p>
+				<button id="phone-play" type="button">Play anyway</button>
+			</div>
+			<progress id="status-progress"></progress>
+			<div id="status-bytes"></div>
+			<div id="status-notice"></div>
+			<div class="fnas-disclaimer">A free, non-commercial fan parody of <i>Five Nights at Freddy's</i> by Scott Cawthon. Not affiliated with or endorsed by him. Starring Dr. Scoggins, who approved it.</div>
+		</div>
+
+		<script src="$GODOT_URL"></script>
+		<script>
+const GODOT_CONFIG = $GODOT_CONFIG;
+const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
+const engine = new Engine(GODOT_CONFIG);
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusNotice = document.getElementById('status-notice');
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		const lines = text.split('\n');
+		lines.forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		if (err instanceof Error) {
+			setStatusNotice(err.message);
+		} else if (typeof err === 'string') {
+			setStatusNotice(err);
+		} else {
+			setStatusNotice('An unknown error occurred.');
+		}
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+			let serviceWorkerRegistrationPromise;
+			try {
+				serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
+			} catch (err) {
+				serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed.'));
+			}
+			// There's a chance that installing the service worker would fix the issue
+			Promise.race([
+				serviceWorkerRegistrationPromise.then((registration) => {
+					if (registration != null) {
+						return Promise.reject(new Error('Service worker already exists.'));
+					}
+					return registration;
+				}).then(() => engine.installServiceWorker()),
+				// For some reason, `getRegistration()` can stall
+				new Promise((resolve) => {
+					setTimeout(() => resolve(), 2000);
+				}),
+			]).then(() => {
+				// Reload if there was no error.
+				window.location.reload();
+			}).catch((err) => {
+				console.error('Error while registering service worker:', err);
+			});
+		} else {
+			// Display the message as usual
+			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
+			displayFailureNotice(missingMsg + missing.join('\n'));
+		}
+	} else {
+		// Five Nights at Scoggy's: phones see a "best on a laptop" notice before the 53 MB
+		// download starts, with "Play anyway" (remembered on this device). ?phone=1 forces the
+		// notice (for testing), ?phone=0 skips it.
+		const query = new URLSearchParams(window.location.search);
+		const coarseOnly = window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(any-pointer: fine)').matches;
+		const smallScreen = Math.min(window.screen.width, window.screen.height) < 820;
+		let phoneOk = false;
+		try { phoneOk = localStorage.getItem('fnas_phone_ok') === '1'; } catch (e) { /* storage blocked */ }
+		const isPhone = query.get('phone') === '1' || (query.get('phone') !== '0' && coarseOnly && smallScreen && !phoneOk);
+		if (isPhone) {
+			statusOverlay.style.visibility = 'visible';
+			const notice = document.getElementById('phone-notice');
+			notice.style.display = 'block';
+			document.getElementById('phone-play').addEventListener('click', function () {
+				try { localStorage.setItem('fnas_phone_ok', '1'); } catch (e) { /* storage blocked */ }
+				notice.style.display = 'none';
+				startLoading();
+			}, { once: true });
+		} else {
+			startLoading();
+		}
+	}
+
+	function startLoading() {
+		setStatusMode('progress');
+		// Five Nights at Scoggy's: a download watchdog. Now and then the engine download freezes
+		// partway (no error, the progress just stops). If no bytes arrive for STALL_MS while the
+		// download is unfinished, reload the page (finished files come from the cache), up to
+		// MAX_RETRIES times per tab session.
+		// It also catches a trickle: now and then one connection crawls along at ~150 KB/s (a
+		// 5-minute load) while a fresh one takes 2 s. SLOW_CHECK_MS in, if the last SLOW_WINDOW_MS
+		// of progress puts the finish more than SLOW_ETA_MS away, reload once (SLOW_KEY), so a
+		// genuinely slow connection loses at most those first seconds and then just waits.
+		const STALL_MS = 12000;
+		const MAX_RETRIES = 3;
+		const RETRY_KEY = 'fnas_load_retries';
+		const SLOW_CHECK_MS = 15000;
+		const SLOW_WINDOW_MS = 10000;
+		const SLOW_ETA_MS = 90000;
+		const SLOW_KEY = 'fnas_load_slow_retry';
+		const started = Date.now();
+		const samples = []; // [ms, bytes], one per second
+		let slowChecked = false;
+		let lastBytes = -1;
+		let lastTotal = 0;
+		let lastChange = Date.now();
+		let downloaded = false;
+		function getCount(key) {
+			try { return Number(sessionStorage.getItem(key) || 0); } catch (e) { return 0; /* storage blocked */ }
+		}
+		function retryLoad(key, why) {
+			try { sessionStorage.setItem(key, String(getCount(key) + 1)); } catch (e) { /* storage blocked */ }
+			console.warn('load watchdog: ' + why + ' at ' + lastBytes + ' bytes, reloading');
+			setStatusNotice('Download ' + (key === SLOW_KEY ? 'slow' : 'stalled') + ', retrying...');
+			setStatusMode('notice');
+			window.location.reload();
+		}
+		const watchdog = setInterval(function () {
+			if (!initializing || downloaded) {
+				clearInterval(watchdog);
+				return;
+			}
+			const now = Date.now();
+			samples.push([now, Math.max(lastBytes, 0)]);
+			if (now - lastChange > STALL_MS) {
+				clearInterval(watchdog);
+				if (getCount(RETRY_KEY) >= MAX_RETRIES) {
+					displayFailureNotice('The game download stalled. Check your connection and reload the page.');
+					return;
+				}
+				retryLoad(RETRY_KEY, 'download stalled');
+				return;
+			}
+			if (!slowChecked && now - started >= SLOW_CHECK_MS && lastTotal > 0) {
+				slowChecked = true;
+				const old = samples.find((x) => now - x[0] <= SLOW_WINDOW_MS) || samples[0];
+				const rate = (lastBytes - old[1]) / Math.max(now - old[0], 1); // bytes per ms
+				const eta = rate > 0 ? (lastTotal - lastBytes) / rate : Infinity;
+				if (eta > SLOW_ETA_MS && getCount(SLOW_KEY) < 1) {
+					clearInterval(watchdog);
+					retryLoad(SLOW_KEY, 'download too slow (about ' + Math.round(eta / 1000) + ' s left)');
+				}
+			}
+		}, 1000);
+		engine.startGame({
+			'onProgress': function (current, total) {
+				if (current !== lastBytes) {
+					lastBytes = current;
+					lastChange = Date.now();
+				}
+				if (current > 0 && total > 0) {
+					lastTotal = total;
+					document.getElementById('status-bytes').textContent =
+						'Loading ' + Math.floor(current / 1e6) + ' of ' + Math.round(total / 1e6) + ' MB';
+					statusProgress.value = current;
+					statusProgress.max = total;
+					if (current >= total) {
+						downloaded = true;
+					}
+				} else {
+					statusProgress.removeAttribute('value');
+					statusProgress.removeAttribute('max');
+				}
+			},
+		}).then(() => {
+			try { sessionStorage.removeItem(RETRY_KEY); sessionStorage.removeItem(SLOW_KEY); } catch (e) { /* storage blocked */ }
+			setStatusMode('hidden');
+		}, displayFailureNotice);
+	}
+}());
+		</script>
+	</body>
+</html>

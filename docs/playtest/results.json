@@ -1,0 +1,560 @@
+[
+  {
+    "name": "well",
+    "label": "Full Night 1 played well",
+    "pass": true,
+    "detail": "Survived to 6 AM with 41% power (57 camera checks)",
+    "seconds": 276,
+    "speed": 2,
+    "errors": [],
+    "log": [
+      "5 AM: Scoggcrates at the left door, shutting it",
+      "5 AM: left doorway clear, opening",
+      "ended: win at 6 AM, power 41%, 57 camera checks"
+    ]
+  },
+  {
+    "name": "idle",
+    "label": "Doing nothing at all",
+    "pass": true,
+    "detail": "Killed by Scoggis Khan at 5 AM; Retry and Quit to title worked",
+    "seconds": 120,
+    "speed": 4,
+    "errors": [],
+    "log": []
+  },
+  {
+    "name": "open_door",
+    "label": "Door left open with a bot at it",
+    "pass": true,
+    "retry": false,
+    "detail": "Night 3: Scogga Lisa seen at 1 AM; jumpscared by Scogga Lisa at 1 AM",
+    "seconds": 51,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "1 AM: Scogga Lisa at the right door, leaving it open"
+    ]
+  },
+  {
+    "name": "doors_shut",
+    "label": "Both doors shut all night",
+    "pass": true,
+    "detail": "Power ran out at 4 AM, doors opened, Uncle Scogg's eyes appeared, then Uncle Scogg (power out) at 4 AM",
+    "seconds": 116,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "both doors shut, usage 3",
+      "power out at 4 AM; doors open: true"
+    ]
+  },
+  {
+    "name": "curtain",
+    "label": "Curtain camera ignored",
+    "pass": true,
+    "retry": false,
+    "detail": "Scoggis Khan sprinted in at 1 AM",
+    "seconds": 30,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "12 AM: Scoggis Khan stage 1 (hidden from player)",
+      "12 AM: Scoggis Khan stage 2 (hidden from player)",
+      "12 AM: Scoggis Khan stage 3 (hidden from player)"
+    ]
+  },
+  {
+    "name": "flow",
+    "label": "Menus, cards, Scogg Bucks and saving",
+    "pass": true,
+    "detail": "fresh title: New Game / How to Play / Settings / Credits; New Game showed the '12 AM / Night 1' card; 6 AM card: 28 Scogg Bucks, Continue moved to Night 2; Next Night showed the Night 2 card; after a page reload the save kept Night 2 and 28 bucks; Continue started Night 2; New Game restarted at Night 1 and kept the bucks",
+    "seconds": 7,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "fresh title: New Game / How to Play / Settings / Credits",
+      "New Game showed the '12 AM / Night 1' card",
+      "6 AM card: 28 Scogg Bucks, Continue moved to Night 2",
+      "Next Night showed the Night 2 card",
+      "after a page reload the save kept Night 2 and 28 bucks",
+      "Continue started Night 2",
+      "New Game restarted at Night 1 and kept the bucks"
+    ]
+  },
+  {
+    "name": "unlocks",
+    "label": "Night 6 and Custom Night unlocks",
+    "pass": true,
+    "detail": "beating Night 5 unlocked Night 6 (Custom Night still locked); beating Night 6 unlocked Custom Night; Custom Night sliders set to {\"leader\":3,\"left_hall\":0,\"right_hall\":0,\"sprinter\":15}; Custom Night started with those levels; surviving Custom Night paid out (total 250 bucks)",
+    "seconds": 7,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "beating Night 5 unlocked Night 6 (Custom Night still locked)",
+      "beating Night 6 unlocked Custom Night",
+      "Custom Night sliders set to {\"leader\":3,\"left_hall\":0,\"right_hall\":0,\"sprinter\":15}",
+      "Custom Night started with those levels",
+      "surviving Custom Night paid out (total 250 bucks)"
+    ]
+  },
+  {
+    "name": "controls",
+    "label": "Every button, key and camera",
+    "pass": true,
+    "detail": "49/49 controls responded",
+    "checks": [
+      [
+        "Title: How to Play opens",
+        true
+      ],
+      [
+        "Title: How to Play Back",
+        true
+      ],
+      [
+        "Title: New Game shows the Night 1 card",
+        true
+      ],
+      [
+        "Intro card: click starts the night",
+        true
+      ],
+      [
+        "left DOOR button shuts",
+        true
+      ],
+      [
+        "left DOOR button opens",
+        true
+      ],
+      [
+        "left LIGHT button on",
+        true
+      ],
+      [
+        "left LIGHT button off",
+        true
+      ],
+      [
+        "right DOOR button shuts",
+        true
+      ],
+      [
+        "right DOOR button opens",
+        true
+      ],
+      [
+        "right LIGHT button on",
+        true
+      ],
+      [
+        "right LIGHT button off",
+        true
+      ],
+      [
+        "key A shuts door",
+        true
+      ],
+      [
+        "key A opens door",
+        true
+      ],
+      [
+        "key D shuts door",
+        true
+      ],
+      [
+        "key D opens door",
+        true
+      ],
+      [
+        "key Q light on",
+        true
+      ],
+      [
+        "key Q light off",
+        true
+      ],
+      [
+        "key E light on",
+        true
+      ],
+      [
+        "key E light off",
+        true
+      ],
+      [
+        "II button pauses",
+        true
+      ],
+      [
+        "Pause: How to Play opens",
+        true
+      ],
+      [
+        "Pause: How to Play Back",
+        true
+      ],
+      [
+        "Pause: Resume",
+        true
+      ],
+      [
+        "Esc pauses",
+        true
+      ],
+      [
+        "Esc resumes",
+        true
+      ],
+      [
+        "Space raises tablet",
+        true
+      ],
+      [
+        "key 1 -> CAM 1",
+        true
+      ],
+      [
+        "key 2 -> CAM 2",
+        true
+      ],
+      [
+        "key 3 -> CAM 3",
+        true
+      ],
+      [
+        "key 4 -> CAM 4",
+        true
+      ],
+      [
+        "key 5 -> CAM 5",
+        true
+      ],
+      [
+        "key 6 -> CAM 6",
+        true
+      ],
+      [
+        "key 7 -> CAM 7",
+        true
+      ],
+      [
+        "key 8 -> CAM 8",
+        true
+      ],
+      [
+        "key 9 -> CAM 9",
+        true
+      ],
+      [
+        "doors locked while tablet up",
+        true
+      ],
+      [
+        "Space lowers tablet",
+        true
+      ],
+      [
+        "hovering the bar raises tablet",
+        true
+      ],
+      [
+        "CAM 9 button",
+        true
+      ],
+      [
+        "CAM 8 button",
+        true
+      ],
+      [
+        "CAM 7 button",
+        true
+      ],
+      [
+        "CAM 6 button",
+        true
+      ],
+      [
+        "CAM 5 button",
+        true
+      ],
+      [
+        "CAM 4 button",
+        true
+      ],
+      [
+        "CAM 3 button",
+        true
+      ],
+      [
+        "CAM 2 button",
+        true
+      ],
+      [
+        "CAM 1 button",
+        true
+      ],
+      [
+        "hovering the bar lowers tablet",
+        true
+      ]
+    ],
+    "seconds": 5,
+    "speed": 4,
+    "errors": [],
+    "log": []
+  },
+  {
+    "name": "art",
+    "label": "Art follows the night (layers, scares, silence)",
+    "pass": true,
+    "detail": "14/14 art checks passed",
+    "checks": [
+      [
+        "office shows the rendered office",
+        true
+      ],
+      [
+        "left door shut shows its shutter",
+        true
+      ],
+      [
+        "right light shows the lit doorway",
+        true
+      ],
+      [
+        "left light with Scoggcrates there shows his standee",
+        true
+      ],
+      [
+        "CAM 3 shows Scoggcrates's standee layer",
+        true
+      ],
+      [
+        "CAM 8 shows Scogga Lisa's standee layer",
+        true
+      ],
+      [
+        "CAM 2 shows Uncle Scogg's standee layer",
+        true
+      ],
+      [
+        "the blank poster shows once Uncle Scogg has left the stage",
+        true
+      ],
+      [
+        "an empty camera shows no standee",
+        true
+      ],
+      [
+        "the Scoggipede crawls across CAM 7",
+        true
+      ],
+      [
+        "a hallucination flashes over the office",
+        true
+      ],
+      [
+        "the rare scare flashes Absolute Scoggema",
+        true
+      ],
+      [
+        "the hum plays while nothing is inside",
+        true
+      ],
+      [
+        "silence once a bot is inside (before the scare)",
+        true
+      ]
+    ],
+    "seconds": 7,
+    "speed": 4,
+    "errors": [],
+    "log": []
+  },
+  {
+    "name": "jumpscares",
+    "label": "Each bot's jumpscare plays its frames",
+    "pass": true,
+    "detail": "Scoggcrates: rush 8/8 frames; Scoggis Khan: rush 8/8 frames; Scogga Lisa: flat 8/8 frames; Uncle Scogg: flat 8/8 frames",
+    "seconds": 26,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "Scoggcrates: rush 8/8 frames",
+      "Scoggis Khan: rush 8/8 frames",
+      "Scogga Lisa: flat 8/8 frames",
+      "Uncle Scogg: flat 8/8 frames"
+    ]
+  },
+  {
+    "name": "sounds",
+    "label": "Every sound fires at the right moment",
+    "pass": true,
+    "detail": "31/31 sound checks passed",
+    "checks": [
+      [
+        "room tone and fan start with the night",
+        true
+      ],
+      [
+        "the phone rings after the night starts",
+        true
+      ],
+      [
+        "the call picks up after the ringing",
+        true
+      ],
+      [
+        "the phone line plays under the captions",
+        true
+      ],
+      [
+        "Mute call hangs up",
+        true
+      ],
+      [
+        "A slams the left door (left speaker)",
+        true
+      ],
+      [
+        "A opens it again",
+        true
+      ],
+      [
+        "D slams the right door (right speaker)",
+        true
+      ],
+      [
+        "Q turns on the left light with its buzz",
+        true
+      ],
+      [
+        "Q again turns it off",
+        true
+      ],
+      [
+        "no door or light sounds when nothing is pressed",
+        true
+      ],
+      [
+        "raising the tablet flips it up",
+        true
+      ],
+      [
+        "the camera room tone takes over on the tablet",
+        true
+      ],
+      [
+        "switching cameras clicks",
+        true
+      ],
+      [
+        "a bot walking into the watched room garbles the feed",
+        true
+      ],
+      [
+        "a glitch frame crackles",
+        true
+      ],
+      [
+        "the Scoggipede scuttles on CAM 7",
+        true
+      ],
+      [
+        "lowering the tablet flips it down",
+        true
+      ],
+      [
+        "a bot in the left corner: loud footstep on the left",
+        true
+      ],
+      [
+        "a bot in the cafeteria: quiet muffled footstep",
+        true
+      ],
+      [
+        "a hallucination whispers",
+        true
+      ],
+      [
+        "Absolute Scoggema stings",
+        true
+      ],
+      [
+        "Scoggis Khan gallops when he runs",
+        true
+      ],
+      [
+        "he bangs on the shut left door",
+        true
+      ],
+      [
+        "the power dies with a power-down sound",
+        true
+      ],
+      [
+        "the march starts when Uncle Scogg is in the dark doorway",
+        true
+      ],
+      [
+        "the march slows and sags before he attacks",
+        true
+      ],
+      [
+        "a full second of silence before the scream",
+        true
+      ],
+      [
+        "the scream is Uncle Scogg's, in sync with the jumpscare",
+        true
+      ],
+      [
+        "6 AM chimes",
+        true
+      ],
+      [
+        "no scream on a win",
+        true
+      ]
+    ],
+    "seconds": 20,
+    "speed": 4,
+    "errors": [],
+    "log": [
+      "power out: march 3.1 s after the power died, lowest pitch 0.67, silence 983 ms"
+    ]
+  },
+  {
+    "name": "sound_check",
+    "label": "Settings > Sound check plays every sound",
+    "pass": true,
+    "detail": "37/37 buttons played their sound; 8 loops toggled on (march ✓, menu ✓); Stop all ✓; Back ✓",
+    "seconds": 6,
+    "speed": 4,
+    "errors": [],
+    "log": []
+  },
+  {
+    "name": "phone",
+    "label": "Phone: \"best on a laptop\" notice before the download",
+    "pass": true,
+    "detail": "phone saw \"Best on a laptop\" with no download started (0 engine requests); Play anyway loaded the title; after a reload the notice stayed away (remembered)",
+    "seconds": 6,
+    "speed": 4,
+    "errors": [],
+    "log": []
+  },
+  {
+    "name": "embed",
+    "label": "Embed page: the game plays inside an iframe",
+    "pass": true,
+    "detail": "embed page: the game loaded in a 1100x619 iframe, New Game and the intro took clicks, the A key shut the door; it stayed in its box until F went full screen and F came back; no phone notice on a desktop",
+    "seconds": 4,
+    "speed": 4,
+    "errors": [],
+    "log": []
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "fnas-playtest",
+  "private": true,
+  "type": "module",
+  "description": "Real-browser playtests for Five Nights at Scoggie's",
+  "scripts": {
+    "playtest": "node playtest.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

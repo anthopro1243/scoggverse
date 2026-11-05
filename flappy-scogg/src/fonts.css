@@ -1,0 +1,14 @@
+/* The self-hosted fonts (from @fontsource), WOFF2 only, the same files as Scogg Boy & Scogg Girl:
+   Cinzel for the title, score and grades, Noto Sans for small text. */
+@font-face {
+  font-family: "Noto Sans"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../node_modules/@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Noto Sans"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("../node_modules/@fontsource/noto-sans/files/noto-sans-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Cinzel"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../node_modules/@fontsource/cinzel/files/cinzel-latin-700-normal.woff2") format("woff2");
+}

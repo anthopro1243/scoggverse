@@ -1,0 +1,38 @@
+/* Scogg Boy & Scogg Girl's page: the game in a dark stone frame instead of the night camera. */
+
+.vault {
+  background: #0d0b09; border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+  padding: var(--s-2); box-shadow: var(--shadow);
+}
+.vault__screen {
+  position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; background: #07080b;
+  border-radius: 2px;
+}
+.vault__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 1; }
+
+.vault__cover { position: absolute; inset: 0; }
+.vault__cover[hidden] { display: none; }
+.vault__poster { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+.vault__overlay {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s-3);
+  text-align: center; padding: var(--s-4);
+  background: radial-gradient(ellipse at center, rgb(7 8 11 / 0.35) 0%, rgb(7 8 11 / 0.7) 100%);
+}
+.vault__play { min-width: 12rem; font-size: 1.25rem; box-shadow: 0 0 0 6px rgb(255 217 90 / 0.18); }
+.vault__play:hover { box-shadow: 0 0 0 9px rgb(255 217 90 / 0.24); }
+.vault__calm { margin: 0; max-width: 30rem; text-shadow: 0 1px 2px #000; }
+.vault__calm { color: var(--text); }
+.vault__calm strong { color: var(--gold); }
+
+.vault__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-2) var(--s-1) var(--s-1); }
+.vault__own { font-weight: 700; text-decoration: none; }
+.vault__own:hover { text-decoration: underline; }
+
+@media (max-width: 40rem) {
+  .vault__overlay { gap: var(--s-2); }
+  .vault__play { min-width: 0; font-size: 1.05rem; min-height: 3rem; padding: var(--s-2) var(--s-5); }
+  .vault__calm { font-size: var(--t-sm); }
+}
+
+.sbg-fine { margin-top: var(--s-7); color: var(--text-faint); font-size: var(--t-sm); text-align: center; }

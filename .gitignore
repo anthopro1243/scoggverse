@@ -1,0 +1,35 @@
+# Godot 4+ specific ignores
+.godot/
+.import/
+export.cfg
+*.translation
+*.tmp
+test_results.xml
+docs/screens/raw/
+tools/playtest/node_modules/
+assets/reference/slides/
+art/renders/test/
+art/renders/look/
+__pycache__/
+art/cache/
+docs/media/*.webm
+
+# Playtest / recording leftovers (videos are turned into GIFs; stall screenshots are diagnostics)
+docs/media/*.avi
+docs/playtest/*_stall*.png
+*.log
+*.pyc
+# Movie Maker / ffmpeg temp output and editor junk
+*.avi.tmp
+.DS_Store
+.vscode/
+
+# Scoggverse site (site/)
+site/node_modules/
+site/dist/
+site/test-results/
+site/playwright-report/
+site/blob-report/
+
+# The class deck stays private (tools/art/slides.py reads it when it's here locally)
+assets/reference/
