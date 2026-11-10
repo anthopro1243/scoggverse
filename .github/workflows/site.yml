@@ -30,10 +30,14 @@ jobs:
           cache-dependency-path: |
             site/package-lock.json
             scogg-boy-girl/package-lock.json
+            flappy-scogg/package-lock.json
       - run: npm ci
       - name: Scogg Boy & Scogg Girl's packages (the site build builds it and copies it in)
         run: npm ci
         working-directory: scogg-boy-girl
+      - name: Flappy Scogg's packages (the site build builds it too)
+        run: npm ci
+        working-directory: flappy-scogg
       - run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: npm test
