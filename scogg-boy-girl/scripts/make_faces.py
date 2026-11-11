@@ -21,7 +21,7 @@ ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "assets", "faces")
 DECKS = [
     os.path.join(ROOT, "..", "assets", "reference", "the_scogg_files_copy.pdf"),
-    os.path.expanduser("~/scoggverse-hq/assets/scogg-files-curated.pdf"),
+    os.path.expanduser("~/scoggverse/hq/scoggverse-hq/assets/scogg-files-curated.pdf"),
 ]
 PAGE = 20
 TITLE = "Scoggboy and Scoggirl"
