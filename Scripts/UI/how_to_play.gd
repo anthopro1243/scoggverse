@@ -21,7 +21,7 @@ const BOTS: Array[Array] = [
 	["Scogga Lisa", "right_hall", "Does the same on the right side and comes to your RIGHT door.",
 		"Same trick with the right light. Don't leave the door shut longer than you need; it drains power."],
 	["Scoggis Khan", "sprinter", "Hides in the yurt on CAM 5 and creeps out when you don't look. Once the yurt is empty, it sprints down the left hall (CAM 6).",
-		"Peek at CAM 5 now and then. Yurt empty? Shut the left door right away."],
+		"Peek at CAM 5 now and then. If the yurt is empty, shut the left door right away."],
 	["Uncle Scogg", "leader", "The boss. Leaves the stage last and only moves while nobody watches it. From the right corner (CAM 9) it sneaks in while you look at other cameras.",
 		"Check CAM 9 first. If it's there, drop the tablet and shut the right door."],
 ]
