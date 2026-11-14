@@ -48,6 +48,8 @@ export class LevelSelect extends BaseScene {
     this.heroes[1].facing = -1;
     for (const h of this.heroes) { h.setDepth(DEPTH.heroes); h.play("idle"); }
 
+    // the two hint lines sit on a dark label so they read over the bright sky
+    this.add.graphics().setDepth(d).fillStyle(PAL.tablet, 0.92).fillRoundedRect(WORLD_W / 2 - 250, 411, 500, 44, 6);
     text(this, WORLD_W / 2, 424, "Arrow keys or the mouse to choose  ·  Enter to play  ·  Esc title", { size: 11, color: PAL.text, origin: [0.5, 0.5] }).setDepth(d);
     this.note = text(this, WORLD_W / 2, 444, "", { size: 10, color: PAL.textDim, origin: [0.5, 0.5] }).setDepth(d);
     this.note.setText("Escape a chamber to open the next one.");

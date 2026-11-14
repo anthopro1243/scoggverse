@@ -38,8 +38,8 @@ export class HowToPanel extends Panel {
       this.add(text(s, x, y0, name, { size: 14, serif: true, color, origin: [0.5, 0.5] }));
       lines.forEach((l, i) => this.add(text(s, x, y0 + 24 + i * 19, l, { size: 11, color: i === 1 ? PAL.goldBright : PAL.text, origin: [0.5, 0.5] })));
     };
-    col(CX - 150, "SCOGG BOY", 0xffb35c, ["AP Macro, made of fire", "W jump   A D move", "Grabs the Scogg Bucks", "Ink kills him"]);
-    col(CX + 150, "SCOGG GIRL", 0x9fd2ff, ["AP Gov, made of water", "Up jump   Left Right move", "Grabs the Gavels", "Inflation kills her"]);
+    col(CX - 150, "SCOGG BOY", 0xffb35c, ["AP Macro", "W jump   A D move", "Grabs the Scogg Bucks", "Ink kills him"]);
+    col(CX + 150, "SCOGG GIRL", 0x9fd2ff, ["AP Gov", "Up jump   Left Right move", "Grabs the Gavels", "Inflation kills her"]);
     this.add(s.add.rectangle(CX, y0 + 108, this.w - 80, 1, PAL.goldDim, 0.7));
     [
       "Recession takes anyone. Plates, levers, crates and scales open the way,",

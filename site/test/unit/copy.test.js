@@ -11,8 +11,8 @@ test("slogan runs: three short verb-first sentences in a row fail", () => {
 
 test("must-not: plain sentences, two in a row, or long ones pass", () => {
   assert.equal(sloganRun("The FNAF one. Make it to 6 AM."), null);
-  assert.equal(sloganRun("Two player. One of you is fire, one is water."), null);
-  assert.equal(sloganRun("Tap to flap. It's just his face."), null);
+  assert.equal(sloganRun("Two player. He grabs the Scogg Bucks, she grabs the Gavels."), null);
+  assert.equal(sloganRun("Tap to flap. Works on your phone."), null);
   assert.equal(sloganRun("Fan-made, Dr. Scoggins said it's ok. Want something taken down? Ask him."), null);
   assert.equal(sloganRun("Basically FNAF but with Dr. Scoggins. Play it on a laptop if you can."), null);
   assert.equal(sloganRun("Close the doors. Watch your power."), null);

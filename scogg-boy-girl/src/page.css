@@ -1,20 +1,20 @@
-/* The page around the game: full window, dark, the canvas centered. And the phone notice. */
+/* The page around the game: full window, dark, the canvas centered. And the phone and no-WebGL notices. */
 html, body { margin: 0; height: 100%; background: #07080b; overflow: hidden; }
 #game { width: 100vw; height: 100vh; display: grid; place-items: center; }
 canvas { display: block; }
 
-#phone {
+#phone, #nowebgl {
   position: fixed; inset: 0; display: grid; place-items: center; padding: 1.2rem;
   background: #07080b; color: #e8dcc0; font: 16px/1.45 "Noto Sans", system-ui, sans-serif; text-align: center;
 }
-#phone[hidden] { display: none; }
-#phone .card { max-width: 26rem; padding: 1.4rem 1.4rem 1.2rem; border: 1px solid #8a6d34; border-radius: 0.6rem; background: #15110d; }
-#phone h1 { margin: 0 0 0.6rem; font: 1.6rem/1.1 "Kenney Pixel", monospace; color: #f3d58b; }
-#phone p { margin: 0 0 1rem; }
-#phone .dim { color: #9d927f; font-size: 0.92rem; }
-#phone .row { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
-#phone a, #phone button {
+#phone[hidden], #nowebgl[hidden] { display: none; }
+#phone .card, #nowebgl .card { max-width: 26rem; padding: 1.4rem 1.4rem 1.2rem; border: 1px solid #8a6d34; border-radius: 0.6rem; background: #15110d; }
+#phone h1, #nowebgl h1 { margin: 0 0 0.6rem; font: 1.6rem/1.1 "Kenney Pixel", monospace; color: #f3d58b; }
+#phone p, #nowebgl p { margin: 0 0 1rem; }
+#phone .dim, #nowebgl .dim { color: #9d927f; font-size: 0.92rem; }
+#phone .row, #nowebgl .row { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
+#phone a, #phone button, #nowebgl a, #nowebgl button {
   font: 700 1rem/1 "Noto Sans", system-ui, sans-serif; padding: 0.75rem 1.2rem; border-radius: 0.4rem; cursor: pointer;
   border: 1px solid #8a6d34; background: #2a2016; color: #f3d58b; text-decoration: none;
 }
-#phone a { background: #f3d58b; color: #15110d; border-color: #f3d58b; }
+#phone a, #nowebgl a { background: #f3d58b; color: #15110d; border-color: #f3d58b; }

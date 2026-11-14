@@ -51,8 +51,17 @@ function boot(extra = []) {
   window.__sbg.game = game;
 }
 
+function hasWebGL() {
+  try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; }
+}
+
 // The G0 look sheet (?scene=look) is only in the dev server; the shipped build leaves it out.
 function start() {
+  if (!hasWebGL()) { // the game draws with WebGL; say so plainly instead of leaving a black box
+    document.getElementById("nowebgl").hidden = false;
+    window.__sbg = { ready: false, noWebGL: true };
+    return;
+  }
   if (import.meta.env.DEV) import("./scenes/LookSheet.js").then((m) => boot([m.LookSheet]));
   else boot();
 }
