@@ -33,7 +33,7 @@ export function sharePage(m, { siteUrl }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} - The Scogg Files</title>
+<title>${title} - The Scoggverse</title>
 <meta name="description" content="${desc}">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">

@@ -42,7 +42,7 @@ test("share page: escaped title, the slide as the picture with the JPEG card aft
   const html = sharePage({ page: 9, title: `Scogga "Lisa" <3`, full: "/memes/full/9-abc-v2.webp", w: 1280, h: 720 }, { siteUrl: "https://example.test" });
   const images = [...html.matchAll(/og:image" content="([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(images, ["https://example.test/memes/full/9-abc-v2.webp", "https://example.test/share-card.jpg"]);
-  assert.match(html, /<title>Scogga &quot;Lisa&quot; &lt;3 - The Scogg Files<\/title>/);
+  assert.match(html, /<title>Scogga &quot;Lisa&quot; &lt;3 - The Scoggverse<\/title>/);
   assert.match(html, /og:title" content="Scogga &quot;Lisa&quot; &lt;3"/);
   assert.match(html, /og:image" content="https:\/\/example\.test\/share-card\.jpg"/);
   assert.match(html, /og:image:width" content="1280"/);
