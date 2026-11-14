@@ -12,6 +12,7 @@ const NAV = ["/", "/gallery/", "/play/"];
 function pagePath(filename) {
   const rel = filename.replace(/\\/g, "/").split("/").slice(-3).join("/");
   if (rel.endsWith("play/scogg-boy-girl/index.html")) return "/play/scogg-boy-girl/";
+  if (rel.endsWith("play/five-nights-at-scoggies-2/index.html")) return "/play/five-nights-at-scoggies-2/";
   if (rel.endsWith("play/flappy-scogg/index.html")) return "/play/flappy-scogg/";
   if (rel.endsWith("gallery/index.html")) return "/gallery/";
   if (rel.endsWith("play/index.html")) return "/play/";

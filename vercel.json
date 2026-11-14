@@ -28,6 +28,12 @@
       "permanent": false
     }
   ],
+  "rewrites": [
+    {
+      "source": "/fnas2/:path*",
+      "destination": "https://FNAS2_HOST/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -47,7 +53,7 @@
       ]
     },
     {
-      "source": "/((?!game/).*)",
+      "source": "/((?!game/|fnas2/).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -79,6 +85,15 @@
     },
     {
       "source": "/game/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/fnas2/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

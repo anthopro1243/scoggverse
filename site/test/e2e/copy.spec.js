@@ -3,7 +3,7 @@
 import { test, expect } from "@playwright/test";
 import { BANNED, ARROWS, MOTTO, sloganRun } from "../../scripts/lib/copy.js";
 
-export const PAGES = ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/404.html"];
+export const PAGES = ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/", "/404.html"];
 
 for (const path of PAGES) {
   test(`copy on ${path} reads human`, async ({ page, isMobile }) => {

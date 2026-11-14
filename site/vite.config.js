@@ -33,6 +33,7 @@ export default defineConfig({
         gallery: resolve(root, "gallery/index.html"),
         play: resolve(root, "play/index.html"),
         playSbg: resolve(root, "play/scogg-boy-girl/index.html"),
+        playFnas2: resolve(root, "play/five-nights-at-scoggies-2/index.html"),
         playFs: resolve(root, "play/flappy-scogg/index.html"),
         notFound: resolve(root, "404.html"),
       },

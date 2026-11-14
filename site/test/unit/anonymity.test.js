@@ -69,6 +69,8 @@ test("the built site and game name nobody: no names, emails, team, home paths or
     for (const [label] of scan(buf, opts)) problems.push(`${name}: ${label}`);
   }
   assert.ok(files.some((f) => rel(f) === "game/index.pck"), "the game is part of the scanned files");
+  assert.ok(files.some((f) => rel(f) === "play/five-nights-at-scoggies-2/index.html"), "the game 2 page is part of the scanned files");
+  assert.ok(files.some((f) => rel(f) === "art/fnas2-title.webp"), "the game 2 poster is part of the scanned files");
   assert.deepEqual(problems, []);
 });
 

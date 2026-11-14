@@ -1,5 +1,6 @@
-// Play page: the game loads only when Play is pressed (it's ~53 MB), into an iframe of /game/.
+// Play page: the game loads only when Play is pressed (it's ~53 MB), into an iframe of /game/ (or the page's data-src).
 // ?test=1 and ?speed=N are passed through to the game so the playtests can drive it from here.
+const cam = document.querySelector("[data-cam]");
 const screen = document.querySelector("[data-screen]");
 const cover = document.querySelector("[data-cover]");
 const fullBtn = document.querySelector("[data-fullscreen]");
@@ -11,14 +12,14 @@ function gameUrl() {
   const pass = new URLSearchParams();
   for (const k of ["test", "speed"]) if (here.has(k)) pass.set(k, here.get(k));
   const q = pass.toString();
-  return `/game/${q ? `?${q}` : ""}`;
+  return `${cam.dataset.src || "/game/"}${q ? `?${q}` : ""}`;
 }
 
 document.querySelector("[data-play]").addEventListener("click", () => {
   if (frame) return;
   frame = document.createElement("iframe");
   frame.className = "cam__frame";
-  frame.title = "Five Nights at Scoggy's";
+  frame.title = cam.dataset.title || "Five Nights at Scoggy's";
   frame.allow = "autoplay; fullscreen; gamepad";
   frame.allowFullscreen = true;
   frame.src = gameUrl();

@@ -46,6 +46,30 @@ test("Play: the game loads and plays from the Play page", async ({ page, isMobil
   await until((x) => x.observe.doors[0], "A to shut the left door", 10_000);
 });
 
+test("Game 2 page: header, nothing downloads until Play, then the frame loads /fnas2/", async ({ page }) => {
+  const errors = watchErrors(page);
+  const requests = [];
+  page.on("request", (r) => { if (new URL(r.url()).pathname.startsWith("/fnas2/")) requests.push(r.url()); });
+  // the game's files are hosted apart from this build, so answer the frame with a blank page here
+  await page.route("**/fnas2/**", (route) => route.fulfill({ contentType: "text/html", body: "<!doctype html><title>game</title>" }));
+  await page.goto("/play/five-nights-at-scoggies-2/");
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator("h1")).toHaveText("Five Nights at Scoggy's 2");
+  await expect(page.locator(".site-nav a")).toHaveCount(3);
+  await expect(page.locator('.site-nav a[href="/play/"]')).toHaveAttribute("aria-current", "page");
+  await expect(page.locator(".site-footer")).toContainText("Don't deny yourself an education.");
+  await expect(page.locator(".cast__card")).toHaveCount(4);
+  await expect(page.locator(".keys kbd")).toContainText(["A", "D", "Q", "W", "O", "P", "Space", "1", "2", "L"]);
+  await expect(page.locator(".cam__warn")).toContainText("50 MB");
+  await expect(page.locator(".phone-note a")).toHaveAttribute("href", "/play/flappy-scogg/");
+  expect(requests).toEqual([]);
+  await expect(page.locator("[data-fullscreen]")).toBeDisabled();
+  await page.locator("[data-play]").click();
+  await expect(page.locator("iframe.cam__frame")).toHaveAttribute("src", "/fnas2/");
+  await expect(page.locator("[data-fullscreen]")).toBeEnabled();
+  expect(errors).toEqual([]);
+});
+
 test("Play: phones get the best-on-a-laptop note and a link to the phone game", async ({ page, isMobile }) => {
   await page.goto("/play/");
   if (isMobile) {
@@ -66,7 +90,7 @@ test("no About page; every footer has the fan-made note and the takedown line", 
 });
 
 test("each game's fan-parody line is only on its own Play page", async ({ page }) => {
-  const lines = { "/play/": "Scott Cawthon", "/play/scogg-boy-girl/": "Fireboy and Watergirl", "/play/flappy-scogg/": "Flappy Bird" };
+  const lines = { "/play/": "Scott Cawthon", "/play/five-nights-at-scoggies-2/": "Scott Cawthon", "/play/scogg-boy-girl/": "Fireboy and Watergirl", "/play/flappy-scogg/": "Flappy Bird" };
   for (const [path, who] of Object.entries(lines)) {
     await page.goto(path);
     await expect(page.locator("body")).toContainText(`Not affiliated with ${who}`);
@@ -92,7 +116,7 @@ test("Home has no add-your-slide note at the bottom", async ({ page }) => {
   await expect(page.locator(".note--deck")).toHaveCount(0);
   await expect(page.locator("main .add-scogg")).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText("Add yours to the end");
-  await expect(page.locator(".games__tile")).toHaveCount(3);
+  await expect(page.locator(".games__tile")).toHaveCount(4);
 });
 
 test("Home: one Play button, one plain line, 8 random files and the three games", async ({ page }) => {
@@ -102,7 +126,7 @@ test("Home: one Play button, one plain line, 8 random files and the three games"
   await expect(page.locator("main .eyebrow")).toHaveCount(0);
   await expect(page.locator(".hero .btn")).toHaveCount(1);
   await expect(page.locator("main").getByRole("link", { name: /^Play$/ })).toHaveAttribute("href", "/play/");
-  await expect(page.locator(".hero__new")).toHaveText("3 games now. The newest one works on your phone.");
+  await expect(page.locator(".hero__new")).toHaveText("4 games now. Flappy Scogg works on your phone.");
   await expect(page.locator("main")).not.toContainText("Scoggs on file");
   await expect(page.locator(".section-head a")).toHaveCount(0);
   await page.waitForSelector("html[data-home-ready]");
@@ -110,13 +134,13 @@ test("Home: one Play button, one plain line, 8 random files and the three games"
   const first = await page.locator("[data-strip] .card__btn").first().getAttribute("href");
   expect(first).toMatch(/^\/gallery\/#\/scogg\/\d+$/);
   const tiles = page.locator(".games__tile");
-  await expect(tiles).toHaveCount(3);
-  expect(await tiles.evaluateAll((as) => as.map((a) => a.getAttribute("href")))).toEqual(["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]);
+  await expect(tiles).toHaveCount(4);
+  expect(await tiles.evaluateAll((as) => as.map((a) => a.getAttribute("href")))).toEqual(["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/"]);
   expect(errors).toEqual([]);
 });
 
 test("only the poster and the file cards lean; the rest sits straight", async ({ page }) => {
-  for (const path of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/404.html"]) {
+  for (const path of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/", "/404.html"]) {
     await page.goto(path);
     const leaning = await page.evaluate(() => [...document.querySelectorAll("main *")]
       .filter((el) => !el.closest(".poster, .card__btn") && /matrix\((?!1, 0, 0, 1,)/.test(getComputedStyle(el).transform))
@@ -131,7 +155,7 @@ test("only the poster and the file cards lean; the rest sits straight", async ({
 });
 
 test("no red labels left except the case-file ones (FILE numbers)", async ({ page }) => {
-  for (const path of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]) {
+  for (const path of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/"]) {
     await page.goto(path);
     await expect(page.locator(".eyebrow, .note__label, .case2__label, .case3__label"), path).toHaveCount(0);
     await expect(page.locator("main"), path).not.toContainText(/Case file|The other game|The phone one/i);

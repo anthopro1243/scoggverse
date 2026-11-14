@@ -55,10 +55,10 @@ test("share page: escaped title, the slide as the picture with the JPEG card aft
   assert.doesNotMatch(html, /<script/);
 });
 
-test("the games row: the three games, a picture and the name each, no label or pitch", () => {
+test("the games row: the four games, a picture and the name each, no label or pitch", () => {
   const html = renderGames();
-  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]), ["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]);
-  assert.equal((html.match(/<img /g) || []).length, 3);
+  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]), ["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/"]);
+  assert.equal((html.match(/<img /g) || []).length, 4);
   assert.doesNotMatch(html, /label|Case file|Two player|Tap to flap|The FNAF one/);
 });
 

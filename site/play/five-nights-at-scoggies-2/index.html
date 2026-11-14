@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play Five Nights at Scoggy's 2 - The Scoggverse</title>
+  <meta name="description" content="The sequel. Two floors, two doors. Play it on a laptop.">
+  <meta name="theme-color" content="#120f0d">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/play.css">
+  <script type="module" src="/src/js/play.js"></script>
+</head>
+<body>
+<!--@header-->
+<main id="main">
+  <section class="wrap page-head play-head">
+    <h1>Five Nights at Scoggy's 2</h1>
+    <p>The sequel. Two floors, two doors. Make it to 6 AM.</p>
+  </section>
+
+  <section class="wrap" aria-label="The game">
+    <div class="cam" data-cam data-src="/fnas2/" data-title="Five Nights at Scoggy's 2">
+      <div class="cam__screen" data-screen>
+        <div class="cam__cover" data-cover>
+          <img class="cam__poster" src="/art/fnas2-title.webp" width="1280" height="720" alt="">
+          <div class="cam__overlay">
+            <button type="button" class="btn btn--primary btn--big cam__play" data-play>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>
+              Play
+            </button>
+            <p class="cam__warn"><strong>Heads up:</strong> jump scares, and it gets loud. It's about a 50 MB download.</p>
+          </div>
+        </div>
+        <span class="cam__rec" aria-hidden="true"><span class="cam__dot"></span>REC</span>
+        <span class="cam__stamp" aria-hidden="true" data-stamp>CAM 00 · 12:00 AM</span>
+      </div>
+      <div class="cam__bar">
+        <button type="button" class="btn" data-fullscreen disabled>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Full screen
+        </button>
+        <a class="cam__own" href="/fnas2/" target="_blank" rel="noopener">Open the game on its own page</a>
+      </div>
+    </div>
+    <p class="phone-note">This one needs a keyboard, so it won't work on a phone. On a phone? Play <a href="/play/flappy-scogg/">Flappy Scogg</a> instead.</p>
+  </section>
+
+  <section class="wrap play-info">
+    <div class="paper controls">
+      <h2>Controls</h2>
+      <dl class="keys">
+        <div><dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>Look left and right (or move the mouse to the screen edges)</dd></div>
+        <div><dt><kbd>Q</kbd></dt><dd>Back door</dd></div>
+        <div><dt><kbd>W</kbd></dt><dd>Back door light</dd></div>
+        <div><dt><kbd>O</kbd></dt><dd>Hall door light</dd></div>
+        <div><dt><kbd>P</kbd></dt><dd>Hall door</dd></div>
+        <div><dt><kbd>Space</kbd></dt><dd>Cameras</dd></div>
+        <div><dt><kbd>1</kbd> <kbd>2</kbd></dt><dd>Floors</dd></div>
+        <div><dt><kbd>L</kbd></dt><dd>Hall lights</dd></div>
+        <div><dt>Mouse</dt><dd>Drag the picture to turn a camera</dd></div>
+      </dl>
+    </div>
+    <div class="paper survive">
+      <h2>How to survive</h2>
+      <p>Check the light before you shut a door, since shut doors cost you. Scoggcrates and Scogga Lisa come up different stairs, so watch both. If Scoggis Khan is gone from the computer lab, shut the back door. Uncle Scogg only moves when you're not looking at him.</p>
+    </div>
+  </section>
+
+  <section class="wrap cast" aria-labelledby="cast-title">
+    <h2 id="cast-title">The Scoggatronics</h2>
+    <ul class="cast__list">
+      <li class="cast__card">
+        <img src="/art/cast/scoggcrates.webp" width="527" height="520" alt="Scoggcrates standee" loading="lazy">
+        <h3>Scoggcrates</h3>
+        <p>Comes up Stairs 1 to the hall door.</p>
+      </li>
+      <li class="cast__card">
+        <img src="/art/cast/scogga_lisa.webp" width="376" height="520" alt="Scogga Lisa standee" loading="lazy">
+        <h3>Scogga Lisa</h3>
+        <p>Comes up Stairs 2 to the back door.</p>
+      </li>
+      <li class="cast__card">
+        <img src="/art/cast/scoggis_khan.webp" width="357" height="520" alt="Scoggis Khan standee" loading="lazy">
+        <h3>Scoggis Khan</h3>
+        <p>Hides in the computer lab. If he's gone, shut the back door.</p>
+      </li>
+      <li class="cast__card">
+        <img src="/art/cast/uncle_scogg.webp" width="226" height="520" alt="Uncle Scogg standee" loading="lazy">
+        <h3>Uncle Scogg</h3>
+        <p>Moves when you're not watching.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="wrap play-games" aria-labelledby="games-title">
+    <h2 id="games-title">All four</h2>
+<!--@games-->
+  </section>
+
+  <p class="wrap fnaf-fine">Unofficial fan parody. Not affiliated with Scott Cawthon or Five Nights at Freddy's. Made with Dr. Scoggins' permission, for fun.</p>
+</main>
+<!--@footer-->
+</body>
+</html>

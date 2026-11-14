@@ -46,8 +46,17 @@ test("Flappy Scogg: its hashed assets cache for a year, its page revalidates", (
   assert.match(cacheControl("/flappy-scogg/index.html") || "", REVALIDATE);
 });
 
+test("game 2 (/fnas2/): every file revalidates, and it has no CSP of its own", () => {
+  for (const p of ["/fnas2/", "/fnas2/index.html", "/fnas2/index.wasm", "/fnas2/index.pck"]) assert.match(cacheControl(p) || "", REVALIDATE, p);
+  const csp = (p) => rules.some((r) => r.re.test(p) && r.headers.some((h) => h.key === "Content-Security-Policy"));
+  assert.ok(csp("/play/five-nights-at-scoggies-2/"));
+  assert.ok(!csp("/fnas2/index.html"));
+  assert.ok(!csp("/game/index.html"));
+  assert.ok(vercel.rewrites.some((r) => r.source === "/fnas2/:path*" && r.destination.endsWith("/:path*")));
+});
+
 test("must-not: nothing without a hash in its name gets a long cache", () => {
-  for (const p of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/scogg-boy-girl/", "/scogg-boy-girl/index.html", "/play/flappy-scogg/", "/flappy-scogg/", "/flappy-scogg/index.html", "/art/fs-poster.webp", "/404.html", "/s/57/", "/share-card.jpg", "/favicon.svg", "/og.png", "/art/poster-uncle.webp", "/game/index.wasm", "/game/index.pck", "/game/index.js", "/game/og.png"]) {
+  for (const p of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/scogg-boy-girl/", "/scogg-boy-girl/index.html", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/", "/flappy-scogg/", "/flappy-scogg/index.html", "/art/fs-poster.webp", "/404.html", "/s/57/", "/share-card.jpg", "/favicon.svg", "/og.png", "/art/poster-uncle.webp", "/game/index.wasm", "/game/index.pck", "/game/index.js", "/game/og.png", "/fnas2/index.wasm", "/fnas2/index.pck"]) {
     assert.doesNotMatch(cacheControl(p) || "", /max-age=[1-9]/, p);
   }
 });

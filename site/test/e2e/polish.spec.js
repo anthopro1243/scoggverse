@@ -6,7 +6,7 @@ import { watchErrors } from "./helpers.js";
 const memes = JSON.parse(readFileSync("src/data/memes.json", "utf8"));
 const config = JSON.parse(readFileSync("src/config.json", "utf8"));
 const lisa = memes.find((m) => m.title === "Scogga Lisa");
-const PAGES = ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"];
+const PAGES = ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/"];
 const local = (u) => u.replace(config.siteUrl, "");
 
 for (const path of PAGES) {
