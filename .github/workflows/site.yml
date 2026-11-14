@@ -1,5 +1,14 @@
 name: Site
 on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "web/**"
+      - "scogg-boy-girl/**"
+      - "flappy-scogg/**"
+      - "tools/playtest/**"
+      - ".github/workflows/site.yml"
   pull_request:
     paths:
       - "site/**"
@@ -16,6 +25,7 @@ jobs:
   site:
     env:
       ANON_NAMES: ${{ secrets.ANON_NAMES }}
+      ANON_CLASS_NAMES: ${{ secrets.ANON_CLASS_NAMES }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:

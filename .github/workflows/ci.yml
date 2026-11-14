@@ -69,7 +69,7 @@ jobs:
           node audio_output.mjs --url=http://localhost:8060 --gl=swiftshader --out=../../docs/playtest/ci
 
       - name: Upload screenshots
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: screenshots-and-sim
