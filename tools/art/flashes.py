@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""2D helpers for the flashes (ordinary image ops, no AI): fitting a slide picture to the
+"""2D helpers for the flashes (ordinary image ops): fitting a slide picture to the
 screen, camera static, scanlines, and a preview of a hallucination frame. The pictures are only
 scaled, blended and overlaid; the faces in them are never torn or warped."""
 import random

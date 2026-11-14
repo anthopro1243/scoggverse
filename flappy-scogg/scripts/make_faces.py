@@ -2,7 +2,7 @@
 """Cut the three stretched-face candidates out of page 40 of the class deck.
 
 Ordinary tools only: poppler renders the page, Pillow crops it and adds an alpha mask.
-No AI, no retouching, no stretching of our own. On p. 40 ("The Virtuous Economic Scyggle")
+No retouching, no stretching of our own. On p. 40 ("The Virtuous Economic Scyggle")
 a classmate stretched his face wide and clipped it to an oval three times; we read each
 face's clip shapes (the oval and Slides' crop box) straight from the PDF (pdftocairo -svg),
 render the page at the face photo's native resolution and use those shapes as the alpha mask.

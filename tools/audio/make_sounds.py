@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Every sound in the game, synthesized from scratch with numpy (oscillators, noise, filters and
-a synthetic reverb; no recordings, no samples, no AI voices). Writes Audio/*.ogg (Vorbis).
+a synthetic reverb; no recordings, no samples). Writes Audio/*.ogg (Vorbis).
 
   python3 tools/audio/make_sounds.py            # all sounds
   python3 tools/audio/make_sounds.py march fan  # just these

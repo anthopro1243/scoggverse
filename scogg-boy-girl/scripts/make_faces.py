@@ -2,7 +2,7 @@
 """Cut Scogg Boy's and Scogg Girl's faces out of page 20 of the class deck.
 
 Ordinary tools only: poppler renders the page, Pillow crops it and adds an alpha mask.
-No AI, no retouching. The faces are cut exactly where the classmate placed them on the
+No retouching. The faces are cut exactly where the classmate placed them on the
 slide: the slide clips the photo to an oval, and we read that oval's geometry straight
 from the PDF (pdftocairo -svg), then use it as the alpha mask.
 

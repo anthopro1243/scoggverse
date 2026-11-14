@@ -1,5 +1,4 @@
-// Every piece of text the game shows, in one place. The full list for the owner is in
-// ~/scoggverse/hq/scoggverse-hq/games/flappy-scogg/TEXTS.md; keep the two in step.
+// Every piece of text the game shows, in one place.
 export const TEXT = {
   title1: "FLAPPY",
   title2: "SCOGG",

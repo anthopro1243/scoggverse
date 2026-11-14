@@ -1,5 +1,5 @@
 // Every sound in the game, synthesized from oscillators, noise and filters (no recordings, no
-// samples, no AI). Each recipe plays into an OfflineAudioContext once, through a long stone-room
+// samples). Each recipe plays into an OfflineAudioContext once, through a long stone-room
 // echo, and the result is kept as a buffer: deep, echoing and low-key. Nothing starts hard and no
 // sound peaks above SOUND.maxPeak.
 import { createRng } from "../logic/rng.js";

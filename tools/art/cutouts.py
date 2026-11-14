@@ -4,7 +4,7 @@
 Each figure is cut out of its slide picture (tools/art/slides.py) along a hand-traced outline
 (a lasso polygon in config.json "cutouts", in 0-1 picture coordinates), then given a die-cut
 margin of worn dark cardboard (white for the Absolute Scoggema meme). Ordinary image tools only
-(polygon mask, magic wand, dilate, blur); no AI tools, and the faces are never altered.
+(polygon mask, magic wand, dilate, blur); the faces are never altered.
 
   python3 tools/art/cutouts.py            -> art/cutouts/<name>.png (RGBA) + <name>.json
   python3 tools/art/cutouts.py --preview  -> also art/cache/cutout_preview.png

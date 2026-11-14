@@ -4,7 +4,7 @@
 //   npm run import-deck                 (auto-detects the newest full deck in ~/Downloads)
 //   npm run import-deck -- <path.pdf>
 // Idempotent: re-running with a newer PDF updates everything and removes stale images.
-// Ordinary tools only (poppler renders the pages, sharp resizes and compresses). No AI.
+// Ordinary tools only (poppler renders the pages, sharp resizes and compresses).
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { createHash } from "node:crypto";

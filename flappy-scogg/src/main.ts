@@ -18,7 +18,7 @@ import { replayChunks, type Replay } from "./logic/replay.ts";
 import { loadBest, saveBest } from "./storage.ts";
 import { TEXT } from "./texts.ts";
 
-// the owner's pick from the F0 look sheet ("go" on face A). Only this face ships, to keep the
+// face A, picked from the F0 look sheet. Only this face ships, to keep the
 // site inside its size budget; the other two crops stay in assets/faces/ for the record.
 const FACE = DEFAULT_FACE;
 

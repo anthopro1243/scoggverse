@@ -4,7 +4,7 @@
 
 Each page is rendered whole at high resolution (the slides are composites: a picture with the
 face pasted on as separate layers, so rendering the page keeps every face exactly as the
-classmate made it) and cropped to its picture. Ordinary image tools only, no AI.
+classmate made it) and cropped to its picture. Ordinary image tools only.
 
   python3 tools/art/slides.py 2 3 61     -> art/cache/deck/p02.png ... (picture crops)
 """

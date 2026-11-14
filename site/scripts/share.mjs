@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Link previews for group chats, built with ordinary tools (sharp; no AI, faces untouched):
+// Link previews for group chats, built with ordinary tools (sharp; faces untouched):
 //   public/share-card.jpg            1200x630 card: the Uncle Scogg poster on the dark background + the site name
 //   public/s/<page>/index.html       a tiny page per slide with the slide's title, using the share
 //                                    card as its picture, that sends people on to the gallery

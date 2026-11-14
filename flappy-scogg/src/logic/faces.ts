@@ -4,7 +4,7 @@ import { FACE_H, FACE_MAX_W } from "./config.ts";
 
 export type FaceId = "a" | "b" | "c";
 export const FACE_IDS: readonly FaceId[] = ["a", "b", "c"];
-export const DEFAULT_FACE: FaceId = "a"; // used in the game until the owner picks one
+export const DEFAULT_FACE: FaceId = "a"; // the face the game ships
 
 export const FACE_PNG: Record<FaceId, { w: number; h: number }> = {
   a: { w: 166, h: 72 },

@@ -1,5 +1,5 @@
 // Image settings for the gallery, shared by the deck import and the re-encode script.
-// Ordinary tools only (sharp: resize, trim plain white margins, compress). No AI; faces untouched.
+// Ordinary tools only (sharp: resize, trim plain white margins, compress). Faces untouched.
 import { writeFileSync } from "node:fs";
 import sharp from "sharp";
 
