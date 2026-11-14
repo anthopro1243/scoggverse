@@ -79,6 +79,8 @@ A change is done only when every check below passes:
    Add scenarios for new features.
 6. FNAF-feel review: compare what the playtest showed against FNAF 1's rules in this file and list every difference. Fix anything clearly wrong; for judgment calls pick the option closest to FNAF 1.
 
+Gate for every commit: import + tests + web export all pass. CI also runs the simulator, the screenshot sheet and the browser controls check on the committed web build.
+
 # The Scoggverse site (`site/`)
 
 - **The game must not change.** `web/` stays byte for byte as exported; the site build only copies it (`site/scripts/copy-game.mjs`), and a test compares every file. All game tests, CI and browser playtests must keep passing.
