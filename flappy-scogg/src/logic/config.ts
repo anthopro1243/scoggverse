@@ -16,6 +16,7 @@ export const FACE_X = 118; // its center never moves sideways; the world scrolls
 export const FACE_START_Y = 300;
 export const FACE_H = 36; // drawn height in field units (scaled evenly from the slide crop)
 export const FACE_MAX_W = 92; // a very wide crop is scaled down evenly until it fits this width
+export const FACE_DRAW_SCALE = 1.2; // the art is drawn this much bigger (evenly) so his face reads on a phone; the hitbox stays on FACE_H
 
 // Hitbox: an ellipse a little smaller than the drawn face, so a near miss is a miss
 export const HIT_RX = 0.42; // of the drawn width, from the center

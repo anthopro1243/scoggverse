@@ -1,7 +1,7 @@
 // Draws a frame. The 405x720 field is scaled evenly to fit the screen: on a wide screen it sits in
 // the middle with the site's dark background either side; on a tall phone it fills the width and
 // the terrace carries on down to the bottom edge. Layers are redrawn only when the size changes.
-import { FACE_START_Y, FACE_X, FLOOR_Y, H, PARALLAX_FAR, PARALLAX_MID, W } from "../logic/config.ts";
+import { FACE_DRAW_SCALE, FACE_START_Y, FACE_X, FLOOR_Y, H, PARALLAX_FAR, PARALLAX_MID, W } from "../logic/config.ts";
 import { cardAge, type Game } from "../logic/game.ts";
 import { drawFace, drawFaceArt, type FaceArt } from "./face.ts";
 import { PAL } from "./palette.ts";
@@ -80,12 +80,13 @@ export function createRenderer(canvas: HTMLCanvasElement, faceImgOf: (g: Game) =
       const size = g.size;
       const faceImg = faceImgOf(g);
       const key = `${g.face}:${k}`;
-      if (!face || faceKey !== key) { face = drawFaceArt(faceImg, size, k); faceKey = key; }
+      const drawn = { w: size.w * FACE_DRAW_SCALE, h: size.h * FACE_DRAW_SCALE, scale: size.scale * FACE_DRAW_SCALE };
+      if (!face || faceKey !== key) { face = drawFaceArt(faceImg, drawn, k); faceKey = key; }
       // with reduce motion on, the title face holds still instead of bobbing
       const still = ui.reduceMotion && g.phase === "title";
       const fy = still ? FACE_START_Y : g.body.y, fa = still ? 0 : g.body.angle;
       drawFace(ctx, face, FACE_X, fy, fa);
-      r.lastFace = { x: FACE_X, y: fy, angle: fa, w: size.w, h: size.h, srcW: faceImg.naturalWidth, srcH: faceImg.naturalHeight };
+      r.lastFace = { x: FACE_X, y: fy, angle: fa, w: drawn.w, h: drawn.h, srcW: faceImg.naturalWidth, srcH: faceImg.naturalHeight };
 
       if (g.phase === "title") drawTitle(ctx, g, ui);
       if (g.phase === "playing" || (g.phase === "over" && cardAge(g) < 0)) drawScore(ctx, g);

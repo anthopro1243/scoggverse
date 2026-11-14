@@ -43,7 +43,7 @@ export const PAL = {
   engrave: "rgba(26, 16, 4, 0.55)",
   engraveLit: "rgba(255, 220, 150, 0.22)",
 
-  faceLine: "rgba(14, 10, 8, 0.85)",
+  faceLine: "rgba(246, 239, 224, 0.95)", // a light ring so the dark photo stands off the dirt and the columns
   faceShadow: "rgba(0, 0, 0, 0.45)",
 
   gold: "#f4b41b",

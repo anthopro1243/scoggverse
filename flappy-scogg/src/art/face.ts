@@ -1,11 +1,11 @@
-// The face sprite: the slide crop scaled evenly, with a thin dark outline and a soft shadow drawn
+// The face sprite: the slide crop scaled evenly, with a thin light outline and a soft shadow drawn
 // behind it. The face itself is drawn last, untouched: never stretched, tinted, faded or flipped.
 import type { FaceSize } from "../logic/faces.ts";
 import { PAL } from "./palette.ts";
 import { makeLayer, type Layer } from "./scenery.ts";
 
 const PAD = 7; // room around the face for the outline and the shadow (field units)
-const LINE = 1.4; // outline thickness
+const LINE = 1.6; // outline thickness
 
 export interface FaceArt extends Layer { pad: number; faceW: number; faceH: number }
 
