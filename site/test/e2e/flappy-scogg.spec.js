@@ -38,9 +38,9 @@ test("the page says how to play in one line, that it isn't scary, and the fan no
 
 test("no extra helper line about phones or its own page (the description already says it works on phones)", async ({ page }) => {
   await page.goto("/play/flappy-scogg/");
-  await expect(page.locator(".play-head p")).toHaveText("Tap to flap. It's just his face.");
+  await expect(page.locator(".play-head p")).toHaveText("Tap to flap. Works on your phone.");
   await expect(page.locator("main")).not.toContainText("best on its own page");
-  await expect(page.locator(".tower__own")).toHaveText("Own page");
+  await expect(page.locator(".tower__own")).toHaveText("Open the game on its own page");
 });
 
 test("nothing from the game downloads until Play; then it runs in the iframe", async ({ page }) => {

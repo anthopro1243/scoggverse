@@ -46,9 +46,12 @@ test("Play: the game loads and plays from the Play page", async ({ page, isMobil
   await until((x) => x.observe.doors[0], "A to shut the left door", 10_000);
 });
 
-test("Play: phones get the best-on-a-laptop note", async ({ page, isMobile }) => {
+test("Play: phones get the best-on-a-laptop note and a link to the phone game", async ({ page, isMobile }) => {
   await page.goto("/play/");
-  if (isMobile) await expect(page.locator(".phone-note")).toBeVisible();
+  if (isMobile) {
+    await expect(page.locator(".phone-note")).toBeVisible();
+    await expect(page.locator(".phone-note a")).toHaveAttribute("href", "/play/flappy-scogg/"); // the game that works on a phone
+  }
   else await expect(page.locator(".phone-note")).toBeHidden();
 });
 
@@ -70,7 +73,7 @@ test("each game's fan-parody line is only on its own Play page", async ({ page }
     for (const other of Object.values(lines).filter((w) => w !== who)) await expect(page.locator("body")).not.toContainText(`Not affiliated with ${other}`);
   }
   await page.goto("/play/");
-  await expect(page.locator(".fnaf-fine")).toHaveText("Unofficial fan parody. Not affiliated with Scott Cawthon or Five Nights at Freddy's.");
+  await expect(page.locator(".fnaf-fine")).toHaveText("Unofficial fan parody. Not affiliated with Scott Cawthon or Five Nights at Freddy's. Made with Dr. Scoggins' permission, for fun.");
   for (const path of ["/", "/gallery/", "/404.html"]) {
     await page.goto(path);
     await expect(page.locator("body")).not.toContainText("Not affiliated");
