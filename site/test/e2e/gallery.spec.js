@@ -82,6 +82,30 @@ test("lightbox: open, keyboard prev/next, Esc closes, focus stays inside", async
   await expect(page).not.toHaveURL(/#\/scogg\//);
 });
 
+test("lightbox: on a slow connection the old picture never shows under the new title", async ({ page }) => {
+  await ready(page);
+  // let the first slide through, hold every other full-size slide until we say so
+  let first = null, release;
+  const gate = new Promise((r) => (release = r));
+  await page.route("**/memes/full/**", async (route) => {
+    const url = route.request().url();
+    first ??= url;
+    if (url !== first) await gate;
+    await route.continue();
+  });
+  await page.locator(".card__btn").first().click();
+  const img = page.locator("[data-lb-img]");
+  await expect(img).not.toHaveClass(/is-loading/);
+  const before = await page.locator("[data-lb-title]").textContent();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator("[data-lb-title]")).not.toHaveText(before);
+  await expect(img).toHaveClass(/is-loading/);
+  await expect(img).toBeHidden();
+  release();
+  await expect(img).not.toHaveClass(/is-loading/);
+  await expect(img).toBeVisible();
+});
+
 test("lightbox closes on a backdrop click", async ({ page }) => {
   await ready(page);
   await page.locator(".card__btn").first().click();

@@ -14,7 +14,7 @@
    `contain` shows the whole trimmed slide; any leftover band is white, like the slide itself. */
 .card__btn img {
   order: 2; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain;
-  background: #fff; outline: 1px solid var(--paper-edge);
+  background: var(--paper); outline: 1px solid var(--paper-edge); /* paper, not white, while it loads */
 }
 .card__btn:hover { transform: rotate(0deg) translateY(-4px); box-shadow: 0 1px 0 var(--paper-edge), 0 16px 28px rgb(0 0 0 / 0.55); }
 .card__btn:focus-visible { transform: rotate(0deg); box-shadow: var(--focus); }

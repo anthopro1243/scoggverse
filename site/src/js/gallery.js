@@ -15,6 +15,9 @@ const countEl = $("[data-count]");
 const emptyEl = $("[data-empty]");
 const lb = $("[data-lightbox]");
 const lbImg = $("[data-lb-img]");
+const lbShown = () => lbImg.classList.remove("is-loading");
+lbImg.addEventListener("load", lbShown);
+lbImg.addEventListener("error", lbShown);
 const toast = $("[data-toast]");
 
 let memes = [];
@@ -87,7 +90,10 @@ function show(i) {
   if (!list.length) return;
   current = (i + list.length) % list.length;
   const m = list[current];
+  // Hide the old picture until the new one has loaded, so the title and the picture change together.
+  lbImg.classList.add("is-loading");
   lbImg.src = m.full;
+  if (lbImg.complete && lbImg.naturalWidth) lbImg.classList.remove("is-loading");
   lbImg.width = m.w;
   lbImg.height = m.h;
   lbImg.alt = m.title;
