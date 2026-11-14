@@ -54,6 +54,14 @@ export const PAL = {
   tablet: "#2b2d3c",
   tabletEdge: "#434a5f",
   outline: "#2a2433",
+
+  // the game-over card: a light paper panel (the platformer's menus are dark navy, so this one isn't)
+  card: "#f6efe0",
+  cardEdge: "#c9b48a",
+  cardText: "#2a2433",
+  cardDim: "#6b5f55",
+  cardGold: "#a86f00",
+  cardRule: "rgba(168, 111, 0, 0.35)",
 };
 
 export const SERIF = '"Kenney Pixel", monospace'; // the title, the score, grades (Kenney's pixel font)
