@@ -20,6 +20,8 @@ const ROOM = Array.from({ length: 18 }, (_, r) => (r === 0 || r >= 16 ? "#".repe
 const COLS = 3, CARD_W = 268, CARD_H = 92, GAP_X = 14, GAP_Y = 12;
 const X0 = (WORLD_W - (COLS * CARD_W + (COLS - 1) * GAP_X)) / 2, Y0 = 100;
 const SUBJECT = { macro: "MACRO", gov: "GOV", both: "MACRO + GOV" };
+// only some cards say their subject; a tag on every card reads like a form
+const TAGGED = new Set(["along-the-curve", "cats-in-a-sack", "quaker-oats-incident", "factor-market"]);
 const STAMP = 0xb02a1a;
 
 export class LevelSelect extends BaseScene {
@@ -91,7 +93,7 @@ export class LevelSelect extends BaseScene {
     add(text(this, x + 26, y + CARD_H / 2, String(i), { size: 20, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }));
     const title = add(text(this, x + 52, y + 30, def.name, { size: 13, serif: true, color: PAL.goldBright, origin: [0, 0.5] }));
     title.setWordWrapWidth(CARD_W - 52 - 64).setLineSpacing(-2);
-    add(text(this, x + 52, y + CARD_H - 30, SUBJECT[def.subject] || "", { size: 9, color: PAL.goldDim, origin: [0, 0.5] }));
+    if (TAGGED.has(name)) add(text(this, x + 52, y + CARD_H - 30, SUBJECT[def.subject] || "", { size: 9, color: PAL.goldDim, origin: [0, 0.5] }));
     add(text(this, x + 52, y + CARD_H - 16, def.teaches || "", { size: 10, color: PAL.text, origin: [0, 0.5] }));
     if (title.height > 22) title.setY(y + 24); // two lines: sit a little higher
     // the grade stamp, or a padlock while it's shut
