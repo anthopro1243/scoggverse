@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // Link previews for group chats, built with ordinary tools (sharp; faces untouched):
 //   public/share-card.jpg            1200x630 card: the Uncle Scogg poster on the dark background + the site name
-//   public/s/<page>/index.html       a tiny page per slide with the slide's title, using the share
-//                                    card as its picture, that sends people on to the gallery
+//   public/s/<page>/index.html       a tiny page per slide with the slide's title and the slide
+//                                    itself as its picture, that sends people on to the gallery
 //                                    viewer (#/scogg/<page>)
-// One shared card instead of a JPEG per slide keeps 1,000 slides inside the size budget
-// (scripts/lib/size.js). JPEG because not every chat app reads WebP.
+// The picture is the gallery's own full-size WebP (no extra files, so the size budget in
+// scripts/lib/size.js doesn't move). Not every chat app reads WebP, so the JPEG card follows it as
+// a second og:image for those. Each page stays short: 1,000 of them count toward the size budget.
 // Runs at the end of `npm run import-deck`, or alone: npm run share-pages
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -14,21 +15,25 @@ import sharp from "sharp";
 const ROOT = resolve(import.meta.dirname, "..");
 const PUB = join(ROOT, "public");
 export const CARD = { path: "/share-card.jpg", width: 1200, height: 630 };
-export const ALT = "The Uncle Scogg poster: I want you to not deny yourself an education";
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export function sharePage(m, { siteUrl }) {
   const title = esc(m.title);
-  const img = `${siteUrl}${CARD.path}`;
+  const card = `${siteUrl}${CARD.path}`;
   const url = `${siteUrl}/s/${m.page}/`;
-  const desc = title;
+  const desc = "From the Scogg Files.";
+  const slide = m.full ? `<meta property="og:image" content="${siteUrl}${m.full}">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="${m.w}">
+<meta property="og:image:height" content="${m.h}">
+` : "";
   const go = `/gallery/#/scogg/${m.page}`;
   return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} · The Scogg Files</title>
+<title>${title} - The Scogg Files</title>
 <meta name="description" content="${desc}">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
@@ -36,11 +41,7 @@ export function sharePage(m, { siteUrl }) {
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${img}">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="${CARD.width}">
-<meta property="og:image:height" content="${CARD.height}">
-<meta property="og:image:alt" content="${ALT}">
+${slide}<meta property="og:image" content="${card}">
 <meta name="twitter:card" content="summary_large_image">
 <meta http-equiv="refresh" content="0; url=${go}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">

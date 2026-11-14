@@ -39,14 +39,18 @@ test("headers: noindex everywhere, CSP on site pages, game left without a CSP", 
   expect(game.headers()["content-security-policy"]).toBeUndefined();
 });
 
-test("share page: the slide's title with the shared JPEG card, then into the gallery viewer", async ({ page, request }) => {
+test("share page: the slide's title with the slide as its picture (and the JPEG card), then into the gallery viewer", async ({ page, request }) => {
   const res = await request.get(`/s/${lisa.page}/`);
   expect(res.status()).toBe(200);
   const html = await res.text();
-  const img = /<meta property="og:image" content="([^"]+)"/.exec(html)[1];
-  expect(img).toMatch(/\/share-card\.jpg$/);
+  const [img, card] = [...html.matchAll(/<meta property="og:image" content="([^"]+)"/g)].map((m) => m[1]);
+  expect(img).toMatch(new RegExp(`/memes/full/${lisa.page}-[0-9a-f]+-v\\d+\\.webp$`));
+  expect(card).toMatch(/\/share-card\.jpg$/);
   expect(html).toContain(`<meta property="og:title" content="Scogga Lisa">`);
-  const jpg = await request.get(local(img));
+  const webp = await request.get(local(img));
+  expect(webp.status()).toBe(200);
+  expect(webp.headers()["content-type"]).toContain("image/webp");
+  const jpg = await request.get(local(card));
   expect(jpg.status()).toBe(200);
   expect(jpg.headers()["content-type"]).toContain("image/jpeg");
   await page.goto(`/s/${lisa.page}/`);
