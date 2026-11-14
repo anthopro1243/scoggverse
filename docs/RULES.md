@@ -10,10 +10,10 @@ A free, non-commercial fan parody of Five Nights at Freddy's (FNAF 1) starring D
 
 - Godot 4.6 (pinned to 4.6.3-stable) + the Cupcakes Framework; typed GDScript.
 - Single-threaded web export (thread support off, so no COOP/COEP headers needed).
-- Hosted on Vercel through Git integration. Vercel has no Godot, so we export the game locally and commit `web/`. Vercel builds the site (`site/`, Vite) and copies `web/` byte for byte into `/game/`; `/embed.html` redirects to `/game/embed.html`.
+- Hosted on Vercel through Git integration: pushes to `main` of the public repo deploy. Vercel has no Godot, so we export the game locally and commit `web/`. Vercel builds the site (`site/`, Vite) and copies `web/` byte for byte into `/game/`; `/embed.html` redirects to `/game/embed.html`.
 - No database, accounts or online features.
 - Out of scope: the platformer, leaderboards. (The meme site was out of scope for the game milestones; it now lives in `site/`.)
-- Art (Milestone 3): the Scoggatronics are life-size cardboard standees of the classmates' slides from `assets/reference/the_scogg_files_copy.pdf` ("Copy of -The Scogg Files-.pdf"; page numbers refer to it), cut out with ordinary image tools, faces never altered. Rooms, props and lighting are Blender scripts (`tools/rerender.sh`). Never use pages 9, 10, 12, 16, 19, 20, 27, 35, 36, 42, 50, 58 in the game (`tools/art/slides.py` refuses them). The deck was updated on 2026-10-04 (bigger faces on Scoggis Khan p. 60 and Kennedy p. 55; p. 61 is now the 1917-style "I WANT YOU" poster): find slides by title or content, not page number, when it changes again.
+- Art: the Scoggatronics are life-size cardboard standees of the classmates' slides from `assets/reference/the_scogg_files_copy.pdf` ("Copy of -The Scogg Files-.pdf"; page numbers refer to it), cut out with ordinary image tools, faces never altered. Rooms, props and lighting are Blender scripts (`tools/rerender.sh`). Never use pages 9, 10, 12, 16, 19, 20, 27, 35, 36, 42, 50, 58 in the game (`tools/art/slides.py` refuses them). The deck was updated on 2026-10-04 (bigger faces on Scoggis Khan p. 60 and Kennedy p. 55; p. 61 is now the 1917-style "I WANT YOU" poster): find slides by title or content, not page number, when it changes again.
 - Uncle Scogg has two pictures: the 1917 poster slide (p. 61, head and shoulders) is the office "I WANT YOU" poster and the title screen; the full-body costume slide (kept as `assets/reference/uncle_scogg_full_body.pdf`, since the new deck dropped it) is his standee everywhere he appears. He always shows his legs.
 
 ## Mechanics spec (match FNAF 1)
@@ -23,7 +23,7 @@ All numbers live in `Scripts/Config/game_config.gd`.
 - The night runs 12 AM to 6 AM at ~90 real seconds per in-game hour.
 - Four bots, each with its own movement timer: leader 3.02 s, left-hall 4.97 s, right-hall 4.98 s, sprinter 5.01 s. On each tick a bot moves if a random integer 1–20 is <= its AI level (0–20).
 - During a night: left-hall AI +1 at 2, 3 and 4 AM; right-hall and sprinter +1 at 3 and 4 AM.
-- Power starts at 99.9% (999 internal units). Usage rises with each closed door, each lit hall light, and the camera tablet. Each usage bar drains 1% per 13 s (FNAF 1 is 9.6 s; slowed in Milestone 2 so Night 1 ends with ~40% power). Extra passive drain every 6/5/4/3 s on nights 2/3/4/5+ (Custom Night counts as 5+).
+- Power starts at 99.9% (999 internal units). Usage rises with each closed door, each lit hall light, and the camera tablet. Each usage bar drains 1% per 13 s (FNAF 1 is 9.6 s; slowed so Night 1 ends with ~40% power). Extra passive drain every 6/5/4/3 s on nights 2/3/4/5+ (Custom Night counts as 5+).
 - At 0% power: doors open, lights and cameras die, the leader appears at the left door in the dark, then attacks.
 - Sprinter: slowed while the player watches cameras; random cooldown after lowering the tablet; charges the left door if ignored.
 - Leader: can't leave the stage until both hall bots have; moves only when its camera isn't being watched.
@@ -68,7 +68,7 @@ A change is done only when every check below passes:
 2. Unit tests: GUT passes headless, with a must-happen and a must-not-happen test for each rule.
 3. Night simulator: `tools/sim_report.sh` plays each of Nights 1–6 1,000 times with the scripted decent player, plus the idle and doors-shut players. Report win rate, power left and most common death. Decent-player win rate targets: N1 95%, N2 85%, N3 65%, N4 45%, N5 25%, N6 10% (±10). Night 1 power left ~35–50%, and power-out should almost never kill on Night 1.
 4. Screenshot sheet: `tools/screenshots.sh` produces `docs/screens/contact_sheet.png` (desktop and 375 px) with no visual bugs.
-5. Real-browser playtest on the Vercel **preview** (`tools/playtest/playtest.mjs`, headless Chromium, real mouse/keyboard input, `?test=1`). Report pass/fail for each scenario:
+5. Real-browser playtest on the local build (`vite preview`) and then the live address (`tools/playtest/playtest.mjs`, headless Chromium, real mouse/keyboard input, `?test=1`). Report pass/fail for each scenario:
    - A full night played well (checks cameras, flicks lights, shuts doors only when a bot is there) survives to 6 AM.
    - Doing nothing dies before 6 AM.
    - A door left open with a bot at it ends in that bot's jumpscare.
