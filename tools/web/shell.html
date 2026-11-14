@@ -307,9 +307,9 @@ const engine = new Engine(GODOT_CONFIG);
 				console.error('Error while registering service worker:', err);
 			});
 		} else {
-			// Display the message as usual
-			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
-			displayFailureNotice(missingMsg + missing.join('\n'));
+			// One plain line instead of Godot's list (the list still goes to the console)
+			console.error('Missing browser features: ' + missing.join(', '));
+			displayFailureNotice('This one needs a newer browser. Try Chrome on a laptop.');
 		}
 	} else {
 		// Five Nights at Scoggy's: phones see a "best on a laptop" notice before the 53 MB
