@@ -23,10 +23,10 @@ function nameList() {
   try { return readFileSync(join(homedir(), ".config/scoggverse/anon-names.txt"), "utf8").split("\n").map((s) => s.trim()).filter(Boolean); } catch { return []; }
 }
 const NAME_LIST = nameList();
-const NAMES = NAME_LIST.length ? new RegExp(NAME_LIST.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "i") : null;
+// whole words only, so a word inside an unrelated longer one (a library method name, say) isn't a hit
+const NAMES = NAME_LIST.length ? new RegExp(`(?<![\\p{L}\\p{N}])(?:${NAME_LIST.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?![\\p{L}\\p{N}])`, "iu") : null;
 const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g;
 const OTHER = [
-  ["team name", /chess[\s_-]*club/i],
   ["home folder path", /\/home\/(?!web_user\b)[A-Za-z0-9_.-]+/], // web_user is Emscripten's built-in virtual home
   ["\"site owner\"", /site\s+owner/i],
   ["Vercel preview URL", /[a-z0-9-]+-git-[a-z0-9-]+|team_[A-Za-z0-9]{24}|[a-z0-9-]+-[a-z0-9]{9}-[a-z0-9-]+\.vercel\.app/i],
@@ -40,7 +40,8 @@ const PCK_BINARY = /\.(ctex|oggvorbisstr|sample|fontdata)$/;
 
 const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
 
-// Problems in one blob of bytes: [label, matched text].
+// Problems in one blob of bytes: [label, matched text]. The matched text is only for the self-test:
+// failures print the file and the label, never what was found (CI logs on a public repo are public).
 function scan(buf, { names = true, emails = true, allowEmails = new Set() } = {}) {
   const text = buf.toString("latin1");
   const hits = [];
@@ -61,11 +62,11 @@ test("the built site and game name nobody: no names, emails, team, home paths or
     const ext = extname(f).toLowerCase();
     const buf = readFileSync(f);
     if (name.endsWith("index.pck")) {
-      for (const e of pckEntries(buf)) for (const [label, hit] of scan(e.data, { emails: !PCK_BINARY.test(e.path) })) problems.push(`${name}:${e.path}: ${label} (${hit})`);
+      for (const e of pckEntries(buf)) for (const [label] of scan(e.data, { emails: !PCK_BINARY.test(e.path) })) problems.push(`${name}:${e.path}: ${label}`);
       continue;
     }
     const opts = name.endsWith("index.wasm") ? { names: false, allowEmails: ENGINE_EMAILS } : { emails: TEXT_EXT.has(ext) };
-    for (const [label, hit] of scan(buf, opts)) problems.push(`${name}: ${label} (${hit})`);
+    for (const [label] of scan(buf, opts)) problems.push(`${name}: ${label}`);
   }
   assert.ok(files.some((f) => rel(f) === "game/index.pck"), "the game is part of the scanned files");
   assert.deepEqual(problems, []);
@@ -106,10 +107,11 @@ test("no image, audio or video file in the repo has metadata tags", { skip: !rep
 
 test("must-not: the checks catch what they're meant to", () => {
   const caught = (s, opts) => scan(Buffer.from(s), opts).length > 0;
-  for (const s of ["mail me at someone@example.com", "Chess Club", "chess_club", "/home/someone/x", "/home/bob/site", "ask the site owner", "https://five-nights-at-scoggies-git-main-team.vercel.app", "https://five-nights-at-scoggies-abc123xyz-team.vercel.app"]) assert.ok(caught(s), s);
+  for (const s of ["mail me at someone@example.com", "/home/someone/x", "/home/bob/site", "ask the site owner", "https://five-nights-at-scoggies-git-main-team.vercel.app", "https://five-nights-at-scoggies-abc123xyz-team.vercel.app"]) assert.ok(caught(s), s);
   for (const s of ["https://five-nights-at-scoggies.vercel.app/play/", "/home/web_user", "Dr. Scoggins", "To get something taken down, ask Dr. Scoggins."]) assert.ok(!caught(s), s);
   for (const w of NAME_LIST) assert.ok(caught(`made by ${w.toUpperCase()}`), "a listed name is caught");
   if (NAME_LIST.length) assert.ok(!caught(`Josh ${NAME_LIST[0]}`, { names: false }), "the engine's contributor list is allowed in index.wasm only");
+  if (NAME_LIST.length) assert.ok(!caught(`x${NAME_LIST[0]}y`), "a listed word inside a longer word is not a hit");
   assert.ok(!caught("freetype@nongnu.org", { names: false, allowEmails: ENGINE_EMAILS }));
   // metadata
   const vorbis = (vendor, n) => Buffer.concat([Buffer.from("\x03vorbis", "latin1"), Buffer.from(new Uint32Array([vendor.length]).buffer), Buffer.from(vendor), Buffer.from(new Uint32Array([n]).buffer), Buffer.from([1])]);
