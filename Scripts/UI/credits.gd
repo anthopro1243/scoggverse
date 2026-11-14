@@ -11,7 +11,7 @@ A free, non-commercial fan parody of [i]Five Nights at Freddy's[/i] by Scott Caw
 •  [b]Godot Engine[/b] (MIT license), godotengine.org
 •  [b]Cupcakes Framework[/b] by [b]Oplexitie[/b] (MIT license): the office, tablet and camera systems
 •  [b]Blender[/b] (GPL): the rooms
-•  Fonts: Open Sans (Godot's built-in font, SIL Open Font License) and DejaVu (free license)
+•  Fonts: Special Elite by Astigmatic (Apache License 2.0) for the headings, Open Sans (Godot's built-in font, SIL Open Font License) and DejaVu (free license)
 
 [color=#ffd95a]Pictures[/color]
 The cutouts are from the class's Scogg Files slides.
@@ -26,7 +26,7 @@ Don't deny yourself an education."""
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(BotStyle.rect(Rect2(0, 0, 1920, 1080), Color(0.04, 0.04, 0.05, 0.97)))
+	add_child(BotStyle.rect(Rect2(0, 0, 1920, 1080), Color(0.04, 0.04, 0.05)))  # solid: the title screen must not show through
 	var title := BotStyle.label("Credits", 72)
 	title.position = Vector2(160, 50)
 	add_child(title)

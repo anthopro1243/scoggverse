@@ -2,6 +2,9 @@ class_name BotStyle
 extends RefCounted
 ## Shared look helpers: each bot's art name and fallback color, labels, rects, and cached art loads.
 
+## Big headings (titles, the clock, menu titles) use the site's typewriter font, Special Elite.
+const HEADING_FONT: FontFile = preload("res://Graphics/Fonts/special_elite.woff2")
+
 ## Sim bot id -> its standee's art name (the files under Graphics/Scogg/ use these).
 const ART: Dictionary[String, String] = {
 	"leader": "uncle_scogg",
@@ -50,6 +53,8 @@ static func color_of(bot: Bot) -> Color:
 static func label(text: String, size: int, color: Color = Color.WHITE) -> Label:
 	var l := Label.new()
 	l.text = text
+	if size >= GameConfig.HEADING_FONT_MIN_SIZE:
+		l.add_theme_font_override("font", HEADING_FONT)
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
 	l.add_theme_color_override("font_outline_color", Color.BLACK)

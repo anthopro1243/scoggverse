@@ -12,6 +12,7 @@ Five Nights at Scoggy's is a free, non-commercial fan parody of Five Nights at F
 
 - **Blender** (GPL), used to model and render every image. https://www.blender.org. All models and materials are built by the scripts in `tools/art/blender/`; no third-party 3D models or textures are used.
 - **DejaVu fonts** (free license, `tools/art/fonts/LICENSE-DejaVu.txt`), for the Uncle Scogg poster and the flyers. https://dejavu-fonts.github.io
+- **Special Elite** by Astigmatic (Apache License 2.0, `Graphics/Fonts/LICENSE-SpecialElite.txt`), the typewriter font for the game's big headings and clock, the same one the site uses.
 - The characters, posters, chalk drawings, flashes and the Scogg Buck bill are the classmates' slides from "The Scogg Files" deck, used with Dr. Scoggins' OK and left uncredited per the deck's rules. They're cut out and placed with ordinary image tools.
 
 ## Sound (Milestone 4)

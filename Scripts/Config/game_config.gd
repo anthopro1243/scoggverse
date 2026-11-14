@@ -80,6 +80,9 @@ const INTRO_CARD_SECONDS: float = 3.0 # "12 AM / Night X" card before the night 
 const JUMPSCARE_SECONDS: float = 1.2
 const SIM_STEP_SECONDS: float = 0.05 # fixed step for the night simulation
 
+## Labels this big or bigger use the typewriter heading font (BotStyle.HEADING_FONT).
+const HEADING_FONT_MIN_SIZE: int = 64
+
 # --- Scares and flavor (cosmetic: they never change the rules) ---
 ## Hallucination flash: a slide picture over the view for a few frames (FNAF 1's "IT'S ME" flashes).
 const HALLUCINATION_CHANCE_PER_SECOND: float = 1.0 / 600.0
