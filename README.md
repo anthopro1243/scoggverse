@@ -11,7 +11,7 @@ Play: https://five-nights-at-scoggies.vercel.app
 | `scogg-boy-girl/` | *Scogg Boy & Scogg Girl*, a two-player platformer (Phaser 4) |
 | `flappy-scogg/` | *Flappy Scogg*, a one-button flying game (TypeScript, canvas) |
 
-Build the site (it builds both small games and copies the FNAF export in): `cd site && npm ci && npm run build`. Each part has its own tests (`npm test` in each folder; GUT for the Godot game). Rules for working on it are in [CLAUDE.md](CLAUDE.md); credits in [CREDITS.md](CREDITS.md) and each game's own CREDITS.md.
+Build the site (it builds both small games and copies the FNAF export in): `cd site && npm ci && npm run build`. Each part has its own tests (`npm test` in each folder; GUT for the Godot game). Rules for working on it are in [docs/RULES.md](docs/RULES.md); credits in [CREDITS.md](CREDITS.md) and each game's own CREDITS.md.
 
 The class deck PDFs and the build notes are kept private and aren't in this repo.
 

@@ -1,6 +1,6 @@
 class_name GameConfig
 extends RefCounted
-## Every tuning number in the game lives here (see CLAUDE.md, "Mechanics spec").
+## Every tuning number in the game lives here (see docs/RULES.md, "Mechanics spec").
 ## Change a number here, never inline in another script.
 
 # --- Night clock ---

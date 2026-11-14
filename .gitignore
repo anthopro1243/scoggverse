@@ -33,3 +33,6 @@ site/blob-report/
 
 # The class deck stays private (tools/art/slides.py reads it when it's here locally)
 assets/reference/
+
+# Working notes for coding sessions stay local (the spec is docs/RULES.md)
+CLAUDE.md
