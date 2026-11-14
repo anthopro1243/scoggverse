@@ -27,7 +27,6 @@
 .tower__play { min-width: 10rem; font-size: 1.2rem; box-shadow: 0 0 0 6px rgb(255 217 90 / 0.18); }
 .tower__play:hover { box-shadow: 0 0 0 9px rgb(255 217 90 / 0.24); }
 .tower__calm { margin: 0; max-width: 18rem; color: var(--text); text-shadow: 0 1px 2px #000; }
-.tower__calm strong { color: var(--gold); }
 
 .tower__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-2) var(--s-1) var(--s-1); }
 .tower__own { font-weight: 700; text-decoration: none; }

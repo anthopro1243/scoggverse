@@ -1,5 +1,5 @@
 // Flappy Scogg on the site: its own page at /play/flappy-scogg/ (click to load, one line of how to
-// play, works on phones, no jump scares), the game at /flappy-scogg/ copied in unchanged, the F0
+// play, works on phones, not scary), the game at /flappy-scogg/ copied in unchanged, the F0
 // replay played both on the game's own URL and inside the page's iframe under the site's real
 // headers, taps on a phone that never scroll or zoom, and links to it from Home and the Play page.
 import { test, expect } from "@playwright/test";
@@ -28,11 +28,11 @@ test("the page: heading, Play marked in the nav, footer, no sideways scroll, no 
   expect(errors).toEqual([]);
 });
 
-test("the page says how to play in one line, that it has no jump scares, and the fan note", async ({ page }) => {
+test("the page says how to play in one line, that it isn't scary, and the fan note", async ({ page }) => {
   await page.goto("/play/flappy-scogg/");
   await expect(page.locator(".fs-how")).toHaveCount(1);
   await expect(page.locator(".fs-how")).toContainText("Space to flap");
-  await expect(page.locator(".tower__calm")).toContainText("No jump scares.");
+  await expect(page.locator(".tower__calm")).toHaveText("It's not scary, it's just his face flying around.");
   await expect(page.locator(".fs-fine")).toHaveText("Unofficial fan parody. Not affiliated with Flappy Bird or its makers. Made with Dr. Scoggins' permission, for fun.");
 });
 
