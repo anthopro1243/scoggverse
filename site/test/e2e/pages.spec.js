@@ -65,7 +65,7 @@ test("Game 2 page: header, nothing downloads until Play, then the frame loads /f
   expect(requests).toEqual([]);
   await expect(page.locator("[data-fullscreen]")).toBeDisabled();
   await page.locator("[data-play]").click();
-  await expect(page.locator("iframe.cam__frame")).toHaveAttribute("src", "/fnas2/");
+  await expect(page.locator("iframe.cam__frame")).toHaveAttribute("src", "/fnas2/index.html");
   await expect(page.locator("[data-fullscreen]")).toBeEnabled();
   expect(errors).toEqual([]);
 });
