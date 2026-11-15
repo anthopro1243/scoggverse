@@ -50,7 +50,8 @@
 .phone-note { display: none; margin: var(--s-3) 0 0; color: var(--gold); font-family: var(--font-type); }
 @media (hover: none) and (pointer: coarse), (max-width: 40rem) { .phone-note { display: block; } }
 @media (max-width: 40rem) {
-  .cam__overlay { gap: var(--s-2); }
+  /* the title sits in the top of the poster: keep the button and the warning under it */
+  .cam__overlay { gap: var(--s-2); justify-content: flex-end; padding-bottom: var(--s-3); }
   .cam__play { min-width: 0; font-size: 1.05rem; min-height: 3rem; padding: var(--s-2) var(--s-5); }
   .cam__warn { font-size: var(--t-sm); }
   .cam__rec, .cam__stamp { font-size: 0.72rem; top: var(--s-2); }
