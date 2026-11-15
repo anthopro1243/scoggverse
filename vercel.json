@@ -31,7 +31,7 @@
   "rewrites": [
     {
       "source": "/fnas2/:path*",
-      "destination": "https://FNAS2_HOST/:path*"
+      "destination": "https://fnas2-files.vercel.app/:path*"
     }
   ],
   "headers": [
