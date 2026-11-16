@@ -1,0 +1,30 @@
+[
+  {
+    "href": "/play/five-nights-at-scoggies/",
+    "name": "Five Nights at Scoggy's",
+    "desc": "The FNAF one. Make it to 6 AM.",
+    "needs": "Laptop. Jump scares.",
+    "img": "/art/game-office.webp", "w": 960, "h": 540
+  },
+  {
+    "href": "/play/five-nights-at-scoggies-2/",
+    "name": "Five Nights at Scoggy's 2",
+    "desc": "The sequel. Two floors, two doors. Make it to 6 AM.",
+    "needs": "Laptop. Jump scares.",
+    "img": "/art/fnas2-title.webp", "w": 1280, "h": 720
+  },
+  {
+    "href": "/play/scogg-boy-girl/",
+    "name": "Scogg Boy & Scogg Girl",
+    "desc": "Two player. He grabs the Scogg Bucks, she grabs the Gavels.",
+    "needs": "Laptop, one keyboard. Not scary.",
+    "img": "/art/sbg-poster.webp", "w": 1280, "h": 720
+  },
+  {
+    "href": "/play/flappy-scogg/",
+    "name": "Flappy Scogg",
+    "desc": "Tap to flap. Works on your phone.",
+    "needs": "Phone or laptop. Not scary.",
+    "img": "/art/fs-cover.webp", "w": 540, "h": 960, "tall": true
+  }
+]

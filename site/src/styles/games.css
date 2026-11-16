@@ -1,0 +1,62 @@
+/* The four games: the cards on Home and the Games page, the strip at the top of each game's page,
+   and the plain row at the bottom of it. All three are built from src/data/games.json. */
+
+.games { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-5) var(--s-4); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 64rem) { .games { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 40rem) { .games { grid-template-columns: 1fr; } }
+.games > li { display: flex; }
+.games__tile { flex: 1; display: flex; flex-direction: column; gap: var(--s-2); text-decoration: none; color: var(--text); font-weight: 700; }
+.games__tile img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; border: 1px solid var(--line-strong); transition: border-color 0.15s var(--ease); }
+.games__tile--tall img { object-position: 50% 21%; }
+.games__tile:hover { color: var(--text); }
+.games__tile:hover img { border-color: var(--manila-dark); }
+.games__tile:hover > span { text-decoration: underline; }
+
+/* ---------- cards: picture, name, the one description, what it needs ---------- */
+.game-card {
+  gap: 0; overflow: hidden; font-weight: 400;
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 8px 22px rgb(0 0 0 / 0.38);
+  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.game-card:hover { transform: translateY(-3px); border-color: var(--manila); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 16px 32px rgb(0 0 0 / 0.5); }
+.game-card:active { transform: none; }
+.game-card:focus-visible { box-shadow: var(--focus); border-radius: var(--radius-lg); }
+.game-card__shot { display: block; overflow: hidden; background: #000; border-bottom: 1px solid var(--line-strong); }
+.game-card .game-card__shot img { border: 0; border-radius: 0; transition: transform 0.5s var(--ease); }
+.game-card:hover .game-card__shot img { transform: scale(1.035); }
+.game-card__body { flex: 1; display: flex; flex-direction: column; gap: var(--s-1); padding: var(--s-4); }
+.game-card__name { font-family: var(--font-type); font-size: 1.2rem; line-height: 1.2; color: var(--text); transition: color 0.2s var(--ease); }
+.game-card:hover .game-card__name { color: var(--gold); text-decoration: none; }
+.game-card__desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.45; }
+.game-card__needs { margin-top: auto; padding-top: var(--s-3); font-family: var(--font-type); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--text-faint); }
+
+/* the Games page: two big ones a row */
+.hub .games { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); }
+@media (max-width: 40rem) { .hub .games { grid-template-columns: 1fr; } }
+.hub .game-card__body { padding: var(--s-4) var(--s-5) var(--s-5); }
+.hub .game-card__name { font-size: var(--t-xl); }
+.hub .game-card__desc { font-size: 1.05rem; }
+.hub-head { padding-bottom: var(--s-5); }
+
+/* ---------- the strip at the top of a game's page ---------- */
+.switch { padding-top: var(--s-4); }
+.switch__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 56rem) { .switch__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.switch__list > li { display: flex; }
+.switch__game {
+  flex: 1; display: flex; align-items: center; gap: var(--s-3); min-height: 2.75rem;
+  padding: var(--s-1) var(--s-3) var(--s-1) var(--s-1);
+  background: rgb(29 24 20 / 0.75); border: 1px solid var(--line); border-radius: var(--radius);
+  color: var(--text-muted); font-size: 0.9rem; font-weight: 700; line-height: 1.2; text-decoration: none; text-wrap: balance;
+  transition: background-color 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.switch__game img { flex: none; width: 3.75rem; height: 2.25rem; object-fit: cover; border-radius: 2px; opacity: 0.75; transition: opacity 0.15s var(--ease); }
+.switch__game.games__tile--tall img { object-position: 50% 21%; }
+.switch__game:hover { background: var(--surface-2); border-color: var(--line-strong); color: var(--text); }
+.switch__game:hover img, .switch__game[aria-current] img { opacity: 1; }
+.switch__game[aria-current] { background: var(--surface-2); border-color: var(--manila); color: var(--text); }
+@media (max-width: 30rem) {
+  .switch__game { gap: var(--s-2); padding-right: var(--s-2); font-size: 0.8rem; }
+  .switch__game img { width: 2.75rem; height: 2rem; }
+}

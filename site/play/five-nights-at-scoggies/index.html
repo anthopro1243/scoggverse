@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play Five Nights at Scoggy's - The Scoggverse</title>
+  <meta name="description" content="The FNAF one. Make it to 6 AM. Play it on a laptop if you can.">
+  <meta name="theme-color" content="#120f0d">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/games.css">
+  <link rel="stylesheet" href="/src/styles/play.css">
+  <script type="module" src="/src/js/play.js"></script>
+</head>
+<body>
+<!--@header-->
+<main id="main">
+<!--@switch-->
+  <section class="wrap page-head play-head">
+    <h1>Five Nights at Scoggy's</h1>
+    <p>The FNAF one. Make it to 6 AM.</p>
+  </section>
+
+  <section class="wrap" aria-label="The game">
+    <div class="cam" data-cam>
+      <div class="cam__screen" data-screen>
+        <div class="cam__cover" data-cover>
+          <img class="cam__poster" src="/art/game-title.webp" width="1280" height="720" alt="">
+          <div class="cam__overlay">
+            <button type="button" class="btn btn--primary btn--big cam__play" data-play>
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>
+              Play
+            </button>
+            <p class="cam__warn"><strong>Heads up:</strong> jump scares, and it gets loud. Turn your volume down if you're in class.</p>
+          </div>
+        </div>
+        <span class="cam__rec" aria-hidden="true"><span class="cam__dot"></span>REC</span>
+        <span class="cam__stamp" aria-hidden="true" data-stamp>CAM 00 · 12:00 AM</span>
+      </div>
+      <div class="cam__bar">
+        <button type="button" class="btn" data-fullscreen disabled>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Full screen
+        </button>
+        <a class="cam__own" href="/game/" target="_blank" rel="noopener">Open the game on its own page</a>
+      </div>
+    </div>
+    <p class="phone-note">Play this on a laptop. It barely works on a phone. On a phone? Play <a href="/play/flappy-scogg/">Flappy Scogg</a> instead.</p>
+  </section>
+
+  <section class="wrap play-info">
+    <div class="paper controls">
+      <h2>Controls</h2>
+      <dl class="keys">
+        <div><dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>Left and right doors</dd></div>
+        <div><dt><kbd>Q</kbd> <kbd>E</kbd></dt><dd>Left and right hall lights</dd></div>
+        <div><dt><kbd>Space</kbd> or <kbd>S</kbd></dt><dd>Cameras (or move the mouse onto the bottom bar)</dd></div>
+        <div><dt><kbd>1</kbd> to <kbd>9</kbd></dt><dd>Pick a camera</dd></div>
+        <div><dt>Mouse</dt><dd>Look around the office, click the buttons</dd></div>
+        <div><dt><kbd>Esc</kbd> or <kbd>P</kbd></dt><dd>Pause</dd></div>
+        <div><dt><kbd>F</kbd></dt><dd>Full screen</dd></div>
+      </dl>
+    </div>
+    <div class="paper survive">
+      <h2>How to survive</h2>
+      <p>Check the hall light before you shut a door, since doors eat your power. Keep an eye on CAM 5, because when the yurt is open Scoggis Khan is about to run at you. Uncle Scogg only moves when you're not looking at him. Each hour is about 90 seconds, and if you make it to 6 AM you get Scogg Bucks. If the power runs out it's pretty much over.</p>
+    </div>
+  </section>
+
+  <section class="wrap cast" aria-labelledby="cast-title">
+    <h2 id="cast-title" class="rule-head">The Scoggatronics</h2>
+    <ul class="cast__list">
+      <li class="cast__card">
+        <img src="/art/cast/scoggcrates.webp" width="527" height="520" alt="Scoggcrates standee" loading="lazy">
+        <h3>Scoggcrates</h3>
+        <p>Comes down the left hall. Shut the left door when you see him.</p>
+      </li>
+      <li class="cast__card">
+        <img src="/art/cast/scogga_lisa.webp" width="376" height="520" alt="Scogga Lisa standee" loading="lazy">
+        <h3>Scogga Lisa</h3>
+        <p>Comes down the right hall. Shut the right door.</p>
+      </li>
+      <li class="cast__card">
+        <img src="/art/cast/scoggis_khan.webp" width="357" height="520" alt="Scoggis Khan standee" loading="lazy">
+        <h3>Scoggis Khan</h3>
+        <p>Hides in the yurt. If you stop checking on him, he runs at the left door.</p>
+      </li>
+      <li class="cast__card">
+        <img src="/art/cast/uncle_scogg.webp" width="226" height="520" alt="Uncle Scogg standee" loading="lazy">
+        <h3>Uncle Scogg</h3>
+        <p>Moves last. If your power runs out, he's the one who gets you.</p>
+      </li>
+    </ul>
+    <p class="cast__secret">There's also a secret one.</p>
+  </section>
+
+  <section class="wrap play-games" aria-labelledby="games-title">
+    <h2 id="games-title" class="rule-head">All four games</h2>
+<!--@games-->
+  </section>
+
+  <p class="wrap fnaf-fine">Unofficial fan parody. Not affiliated with Scott Cawthon or Five Nights at Freddy's. Made with Dr. Scoggins' permission, for fun.</p>
+</main>
+<!--@footer-->
+</body>
+</html>

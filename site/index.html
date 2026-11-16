@@ -9,6 +9,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/cards.css">
+  <link rel="stylesheet" href="/src/styles/games.css">
   <link rel="stylesheet" href="/src/styles/home.css">
   <script type="module" src="/src/js/home.js"></script>
 </head>
@@ -32,6 +33,11 @@
     </figure>
   </section>
 
+  <section class="wrap games-section" aria-labelledby="games-title">
+    <h2 id="games-title" class="rule-head">The games</h2>
+<!--@games-cards-->
+  </section>
+
   <section class="wrap strip-section" aria-labelledby="strip-title">
     <div class="section-head">
       <h2 id="strip-title">Pulled from the files</h2>
@@ -39,10 +45,6 @@
     </div>
     <ul class="strip" data-strip aria-live="polite"></ul>
     <noscript><p class="strip__noscript"><a href="/gallery/">Go to the gallery</a> to see the slides.</p></noscript>
-  </section>
-
-  <section class="wrap games-section" aria-label="The games">
-<!--@games-->
   </section>
 </main>
 <!--@footer-->

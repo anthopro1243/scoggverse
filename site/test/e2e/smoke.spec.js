@@ -4,7 +4,7 @@ import { watchErrors } from "./helpers.js";
 const PAGES = [
   { path: "/", h1: "The Scoggverse" },
   { path: "/gallery/", h1: "The Scogg Files" },
-  { path: "/play/", h1: "Five Nights at Scoggy's" },
+  { path: "/play/", h1: "Games" },
 ];
 
 for (const p of PAGES) {

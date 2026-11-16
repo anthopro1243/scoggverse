@@ -6,7 +6,7 @@
 // played alone and its RMS and peak are logged.
 //
 //   node audio_output.mjs --url=http://localhost:8060            # the game page (/game/ on a deployment)
-//   node audio_output.mjs --play=https://<site>                   # through the site's /play/ iframe
+//   node audio_output.mjs --play=https://<site>                   # through the site's /play/five-nights-at-scoggies/ iframe
 //   node audio_output.mjs --embed=https://<site>                  # through /embed.html
 //   [--share=TOKEN] [--gl=swiftshader] [--out=../../docs/playtest] [--name=audio_output] [--no-sweep]
 //
@@ -234,7 +234,7 @@ async function run() {
 
   try {
     if (args.share) await page.goto(`${BASE}/?_vercel_share=${args.share}`, { waitUntil: "domcontentloaded", timeout: 120000 });
-    const url = MODE === "play" ? `${BASE}/play/?test=1` : MODE === "embed" ? `${BASE}/embed.html?test=1` : `${BASE}/?test=1`;
+    const url = MODE === "play" ? `${BASE}/play/five-nights-at-scoggies/?test=1` : MODE === "embed" ? `${BASE}/embed.html?test=1` : `${BASE}/?test=1`;
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 120000 });
     if (MODE === "play") await page.click("[data-play]");
     await g.attach();
@@ -375,7 +375,7 @@ async function run() {
   const silentSweep = sweep.filter((r) => r.rms < MIN_RMS).map((r) => r.sound);
   const clipSweep = sweep.filter((r) => r.peak > MAX_PEAK).map((r) => r.sound);
   const pass = !fatal && checks.length >= 10 && checks.every((c) => c.pass) && !silentSweep.length && !clipSweep.length && g.errors.length === 0;
-  const where = MODE === "play" ? `${BASE}/play/ (the game in the Play page's iframe)` : MODE === "embed" ? `${BASE}/embed.html` : BASE;
+  const where = MODE === "play" ? `${BASE}/play/five-nights-at-scoggies/ (the game in the Play page's iframe)` : MODE === "embed" ? `${BASE}/embed.html` : BASE;
   const lines = [
     `Measured output in headless Chromium against ${where}: every node feeding \`ctx.destination\` tapped, folded to stereo like the speakers, and metered on the audio thread (an AudioWorklet that sees every sample). RMS is the loudest 2048-sample (43–46 ms) window over both channels; peak is the largest sample on either channel (1.0 = full scale). Pass: RMS ≥ ${MIN_RMS} (−40 dBFS) and peak ≤ ${MAX_PEAK}; the door slam's and camera click's peaks must also be at least 1.5× the peak of the room tone under them.`,
     "",

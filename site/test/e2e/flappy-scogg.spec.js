@@ -122,7 +122,7 @@ test("dist/flappy-scogg is a byte-for-byte copy of the game's own build", async 
 test("Home and the Play page link to it; the other two games stay where they were", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".games__tile", { hasText: "Flappy Scogg" })).toHaveAttribute("href", "/play/flappy-scogg/");
-  await page.goto("/play/");
+  await page.goto("/play/five-nights-at-scoggies/");
   await expect(page.locator("h1")).toHaveText("Five Nights at Scoggy's");
   await expect(page.locator(".games__tile", { hasText: "Scogg Boy" })).toHaveAttribute("href", "/play/scogg-boy-girl/");
   const card = page.locator(".games__tile", { hasText: "Flappy Scogg" });

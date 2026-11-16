@@ -1,5 +1,5 @@
-// Replaces <!--@header-->, <!--@footer--> and <!--@games--> in every page with the shared partials, marks the
-// current page's nav link with aria-current, and fills in build-time values (%SHOWN_COUNT%,
+// Replaces <!--@header-->, <!--@footer-->, <!--@games-->, <!--@games-cards--> and <!--@switch--> in every page
+// with the shared partials, marks the current page's nav link with aria-current, and fills in build-time values (%SHOWN_COUNT%,
 // %SHOWN_NUM%, <!--@addscogg-->) from src/data/deck.json and src/config.json. No runtime JS needed.
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -14,6 +14,7 @@ function pagePath(filename) {
   if (rel.endsWith("play/scogg-boy-girl/index.html")) return "/play/scogg-boy-girl/";
   if (rel.endsWith("play/five-nights-at-scoggies-2/index.html")) return "/play/five-nights-at-scoggies-2/";
   if (rel.endsWith("play/flappy-scogg/index.html")) return "/play/flappy-scogg/";
+  if (rel.endsWith("play/five-nights-at-scoggies/index.html")) return "/play/five-nights-at-scoggies/";
   if (rel.endsWith("gallery/index.html")) return "/gallery/";
   if (rel.endsWith("play/index.html")) return "/play/";
   if (rel.endsWith("404.html")) return "/404";
@@ -34,8 +35,41 @@ export function renderFooter() {
   return readFileSync(resolve(dir, "footer.html"), "utf8");
 }
 
-export function renderGames() {
-  return readFileSync(resolve(dir, "games.html"), "utf8");
+// The four games, in the order they show everywhere: one name, one description and one picture each.
+export const games = () => readJson("../src/data/games.json", []);
+
+const gameImg = (g) => `<img src="${g.img}" width="${g.w}" height="${g.h}" alt="" loading="lazy">`;
+const tall = (g) => (g.tall ? " games__tile--tall" : "");
+
+/** The plain row at the bottom of a game's page: a picture and the name each. */
+export function renderGames(list = games()) {
+  const items = list.map((g) => `  <li><a class="games__tile${tall(g)}" href="${g.href}">
+    ${gameImg(g)}
+    <span>${esc(g.name)}</span>
+  </a></li>`);
+  return `<ul class="games">\n${items.join("\n")}\n</ul>`;
+}
+
+/** The cards on Home and the Games page: picture, name, the game's one description and what it needs. */
+export function renderGameCards(list = games()) {
+  const items = list.map((g) => `  <li><a class="games__tile game-card${tall(g)}" href="${g.href}">
+    <span class="game-card__shot">${gameImg(g)}</span>
+    <span class="game-card__body">
+      <span class="game-card__name">${esc(g.name)}</span>
+      <span class="game-card__desc">${esc(g.desc)}</span>
+      <span class="game-card__needs">${esc(g.needs)}</span>
+    </span>
+  </a></li>`);
+  return `<ul class="games games--cards">\n${items.join("\n")}\n</ul>`;
+}
+
+/** The strip at the top of each game's page: jump to any of the four, the one you're on is marked. */
+export function renderSwitch(current, list = games()) {
+  const items = list.map((g) => `    <li><a class="switch__game${tall(g)}" href="${g.href}"${g.href === current ? ' aria-current="page"' : ""}>
+      ${gameImg(g).replace(' loading="lazy"', "")}
+      <span>${esc(g.name)}</span>
+    </a></li>`);
+  return `<nav class="wrap switch" aria-label="Games">\n  <ul class="switch__list">\n${items.join("\n")}\n  </ul>\n</nav>`;
 }
 
 /** Link-preview and privacy tags for a page, from its own <title> and description. */
@@ -83,7 +117,8 @@ export function partials() {
       order: "pre",
       handler(html, ctx) {
         const current = pagePath(ctx.filename);
-        const filled = fillValues(html.replace("<!--@header-->", renderHeader(current)).replace("<!--@footer-->", renderFooter()).replace("<!--@games-->", renderGames()));
+        const filled = fillValues(html.replace("<!--@header-->", renderHeader(current)).replace("<!--@footer-->", renderFooter()).replace("<!--@games-->", renderGames())
+          .replace("<!--@games-cards-->", renderGameCards()).replace("<!--@switch-->", renderSwitch(current)));
         return filled.replace("</head>", `${headTags(filled, current)}\n</head>`);
       },
     },

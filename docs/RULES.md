@@ -4,7 +4,7 @@ The spec for the Scoggverse: the site and its three games. Change the code and t
 
 # Five Nights at Scoggy's
 
-A free, non-commercial fan parody of Five Nights at Freddy's (FNAF 1) starring Dr. Scoggins, who approved it. Built in Godot 4.6 on the Cupcakes Framework, exported to the web. The game is served at `/game/` and played from `/play/`.
+A free, non-commercial fan parody of Five Nights at Freddy's (FNAF 1) starring Dr. Scoggins, who approved it. Built in Godot 4.6 on the Cupcakes Framework, exported to the web. The game is served at `/game/` and played from `/play/five-nights-at-scoggies/`.
 
 ## Settled decisions
 
@@ -75,7 +75,7 @@ A change is done only when every check below passes:
    - Both doors shut all night runs out of power and plays the power-out sequence.
    - Ignoring the yurt camera (CAM 5) lets Scoggis Khan sprint down the left hall.
    - Every button, key and camera responds, and there are no console errors.
-   - The sound is actually heard: `tools/playtest/audio_output.mjs` measures RMS at the speakers for every key sound (on `/game/` and through `/play/`).
+   - The sound is actually heard: `tools/playtest/audio_output.mjs` measures RMS at the speakers for every key sound (on `/game/` and through `/play/five-nights-at-scoggies/`).
    Add scenarios for new features.
 6. FNAF-feel review: compare what the playtest showed against FNAF 1's rules in this file and list every difference. Fix anything clearly wrong; for judgment calls pick the option closest to FNAF 1.
 
@@ -84,7 +84,8 @@ Gate for every commit: import + tests + web export all pass. CI also runs the si
 # The Scoggverse site (`site/`)
 
 - **The game must not change.** `web/` stays byte for byte as exported; the site build only copies it (`site/scripts/copy-game.mjs`), and a test compares every file. All game tests, CI and browser playtests must keep passing.
-- Vite multi-page site, plain HTML/CSS/JS, no framework. Pages: `/`, `/gallery/`, `/play/`, `/play/scogg-boy-girl/`, `/play/flappy-scogg/`, `404.html` (About was removed on 2026-10-05; `/about/` redirects to Home). The second game, Scogg Boy & Scogg Girl (`scogg-boy-girl/`, Phaser), is built by the site build and copied into `/scogg-boy-girl/` by the same `copy-game.mjs`. The third, Flappy Scogg (`flappy-scogg/`, TypeScript on a canvas), is built and copied into `/flappy-scogg/` the same way. Every footer has the motto and one small fan-made / takedown line (wording in `site/src/partials/footer.html`); each game's "not affiliated" line is only on that game's own Play page. JS per page under 30 KB gzipped. `site/.gdignore` keeps Godot out of it.
+- Vite multi-page site, plain HTML/CSS/JS, no framework. Pages: `/`, `/gallery/`, `/play/` (the Games page: all four games as cards, no game on it), one page per game (`/play/five-nights-at-scoggies/`, `/play/five-nights-at-scoggies-2/`, `/play/scogg-boy-girl/`, `/play/flappy-scogg/`), `404.html` (About was removed on 2026-10-05; `/about/` redirects to Home). The second game, Scogg Boy & Scogg Girl (`scogg-boy-girl/`, Phaser), is built by the site build and copied into `/scogg-boy-girl/` by the same `copy-game.mjs`. The third, Flappy Scogg (`flappy-scogg/`, TypeScript on a canvas), is built and copied into `/flappy-scogg/` the same way. Every footer has the motto and one small fan-made / takedown line (wording in `site/src/partials/footer.html`); each game's "not affiliated" line is only on that game's own Play page. JS per page under 30 KB gzipped. `site/.gdignore` keeps Godot out of it.
+- Getting to a game: the nav says Home, Gallery, Games. The four games are listed once, in `site/src/data/games.json` (name, the one description, what it needs, picture), always in the same order: the two Five Nights games, Scogg Boy & Scogg Girl, Flappy Scogg. The build makes three things from that list (`site/scripts/vite-partials.js`): the cards on Home (right under the poster, above the files) and on the Games page, the strip of all four at the top of every game's page with that page's game marked, and the plain picture-and-name row at the bottom of every game's page. No game is ever more than one click from another.
 - Gallery images come only from the class deck PDF, rendered and compressed with ordinary tools (poppler, sharp). Never alter his face or the classmates' faces; no maker credits; keep Scoggs appropriate.
 - Anonymity rule: nothing public names who made the site: no names, usernames, emails, team name or preview links; the anonymity test enforces it.
 - **Keep real-life details out of everything public**: the school's names and abbreviations, room numbers, his email, students' names or photos. The private terms list is `~/.config/scoggverse/private-terms.txt` (outside the repo, never committed). Never commit the full deck PDF or images of hidden slides. `site/test/unit/class-names.test.js` checks the gallery titles against the class list (`~/.config/scoggverse/class-names.txt`, or the `ANON_CLASS_NAMES` secret in CI; also never committed) and is skipped without it.

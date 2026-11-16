@@ -36,7 +36,7 @@ test("private files answer 404 or 403", async ({ request, isMobile }) => {
 test("no source maps are served for the site's or the game's scripts", async ({ request, page, isMobile }) => {
   test.skip(isMobile, "once");
   const scripts = new Set(["/game/index.js", "/game/index.audio.worklet.js", "/game/index.audio.position.worklet.js"]);
-  for (const path of ["/", "/gallery/", "/play/"]) {
+  for (const path of ["/", "/gallery/", "/play/", "/play/five-nights-at-scoggies/"]) {
     await page.goto(path);
     for (const src of await page.locator("script[src], link[rel=modulepreload]").evaluateAll((els) => els.map((e) => e.getAttribute("src") || e.getAttribute("href")))) {
       if (src.startsWith("/")) scripts.add(src);

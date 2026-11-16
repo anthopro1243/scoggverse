@@ -56,7 +56,7 @@ test("game 2 (/fnas2/): every file revalidates, and it has no CSP of its own", (
 });
 
 test("must-not: nothing without a hash in its name gets a long cache", () => {
-  for (const p of ["/", "/gallery/", "/play/", "/play/scogg-boy-girl/", "/scogg-boy-girl/", "/scogg-boy-girl/index.html", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/", "/flappy-scogg/", "/flappy-scogg/index.html", "/art/fs-poster.webp", "/404.html", "/s/57/", "/share-card.jpg", "/favicon.svg", "/og.png", "/art/poster-uncle.webp", "/game/index.wasm", "/game/index.pck", "/game/index.js", "/game/og.png", "/fnas2/index.wasm", "/fnas2/index.pck"]) {
+  for (const p of ["/", "/gallery/", "/play/", "/play/five-nights-at-scoggies/", "/play/scogg-boy-girl/", "/scogg-boy-girl/", "/scogg-boy-girl/index.html", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/", "/flappy-scogg/", "/flappy-scogg/index.html", "/art/fs-poster.webp", "/404.html", "/s/57/", "/share-card.jpg", "/favicon.svg", "/og.png", "/art/poster-uncle.webp", "/game/index.wasm", "/game/index.pck", "/game/index.js", "/game/og.png", "/fnas2/index.wasm", "/fnas2/index.pck"]) {
     assert.doesNotMatch(cacheControl(p) || "", /max-age=[1-9]/, p);
   }
 });

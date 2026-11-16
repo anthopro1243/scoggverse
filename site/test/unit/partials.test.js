@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { renderHeader, renderFooter, renderGames } from "../../scripts/vite-partials.js";
+import { renderHeader, renderFooter, renderGames, renderGameCards, renderSwitch, games } from "../../scripts/vite-partials.js";
 
 test("header marks only the current page", () => {
   const html = renderHeader("/gallery/");
@@ -57,7 +57,7 @@ test("share page: escaped title, the slide as the picture with the JPEG card aft
 
 test("the games row: the four games, a picture and the name each, no label or pitch", () => {
   const html = renderGames();
-  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]), ["/play/", "/play/scogg-boy-girl/", "/play/flappy-scogg/", "/play/five-nights-at-scoggies-2/"]);
+  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]), ["/play/five-nights-at-scoggies/", "/play/five-nights-at-scoggies-2/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]);
   assert.equal((html.match(/<img /g) || []).length, 4);
   assert.doesNotMatch(html, /label|Case file|Two player|Tap to flap|The FNAF one/);
 });
@@ -72,4 +72,23 @@ test("every share page's pictures are real files in public/", () => {
     assert.equal(images.length, 2, `share page ${p} has the slide and the card`);
     for (const img of images) assert.ok(existsSync(new URL(`../../public${img}`, import.meta.url)), `${p}: ${img}`);
   }
+});
+
+test("the game cards: the same four, each with its one description and what it needs", () => {
+  const html = renderGameCards();
+  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]), ["/play/five-nights-at-scoggies/", "/play/five-nights-at-scoggies-2/", "/play/scogg-boy-girl/", "/play/flappy-scogg/"]);
+  for (const g of games()) {
+    assert.ok(html.includes(g.desc), g.name);
+    assert.ok(html.includes(g.needs), g.name);
+    // one description per game, the same everywhere: the game's own page opens with it
+    const page = readFileSync(new URL(`../..${g.href}index.html`, import.meta.url), "utf8");
+    assert.ok(page.includes(`<p>${g.desc}</p>`), `${g.href} opens with the same description`);
+  }
+});
+
+test("the strip on a game's page marks that game and no other; the Games page marks none", () => {
+  const html = renderSwitch("/play/five-nights-at-scoggies-2/");
+  assert.equal((html.match(/aria-current="page"/g) || []).length, 1);
+  assert.match(html, /href="\/play\/five-nights-at-scoggies-2\/" aria-current="page"/);
+  assert.doesNotMatch(renderSwitch("/play/"), /aria-current/);
 });

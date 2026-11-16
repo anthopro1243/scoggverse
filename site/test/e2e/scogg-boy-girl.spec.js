@@ -127,7 +127,7 @@ test("Home and the Play page link to it; the FNAF game stays where it was", asyn
   await page.goto("/");
   await expect(page.locator(".games__tile", { hasText: "Scogg Boy" })).toHaveAttribute("href", "/play/scogg-boy-girl/");
   await expect(page.locator("main").getByRole("link", { name: /^Play$/ })).toHaveAttribute("href", "/play/");
-  await page.goto("/play/");
+  await page.goto("/play/five-nights-at-scoggies/");
   await expect(page.locator("h1")).toHaveText("Five Nights at Scoggy's");
   await expect(page.locator("[data-play]")).toHaveCount(1);
   const card = page.locator(".games__tile", { hasText: "Scogg Boy" });

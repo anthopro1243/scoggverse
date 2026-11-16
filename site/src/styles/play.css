@@ -1,10 +1,11 @@
 /* Play page: the only page that borrows the game's night-camera look. */
 
-.play-head { padding-bottom: var(--s-4); }
+.play-head { padding-top: var(--s-5); padding-bottom: var(--s-4); }
+.play-head h1 { margin-bottom: var(--s-2); }
 
 .cam {
   background: #0b0a09; border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-  padding: var(--s-2); box-shadow: var(--shadow);
+  padding: var(--s-2); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), var(--shadow);
 }
 .cam__screen {
   position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; background: #000;
@@ -97,8 +98,9 @@ kbd {
 @media (max-width: 40rem) { .cast__card img { height: 9.5rem; } .cast__card p { font-size: 0.85rem; } }
 .cast__secret { margin-top: var(--s-5); font-family: var(--font-type); color: var(--text-faint); text-align: center; }
 
-/* ---------- the three games ---------- */
+/* ---------- the row of games at the bottom ---------- */
 .play-games { margin-top: var(--s-8); }
+.play-games h2, .cast h2 { margin-bottom: var(--s-5); }
 
 .play-how { margin-top: var(--s-7); }
 .play-how p { margin: 0; max-width: 44rem; }
