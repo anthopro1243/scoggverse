@@ -41,9 +41,9 @@ export class Hud {
     this.title.setX(10 + tw / 2);
     // the Scogg Buck's value right now (it drops as the clock runs)
     slab(g, WORLD_W / 2 - 92, 8, 184, 26);
-    scene.add.image(WORLD_W / 2 - 74, 21, "buck").setScale(0.75 / PROP_RES).setDepth(ui);
+    this.valueIcon = scene.add.image(WORLD_W / 2 - 74, 21, "buck").setScale(0.75 / PROP_RES).setDepth(ui);
     this.value = text(scene, WORLD_W / 2 - 60, 21, "", { size: 12, color: PAL.goldBright }).setDepth(ui);
-    this.valueNote = text(scene, WORLD_W / 2 + 84, 21, "each", { size: 10, color: PAL.textDim, origin: [1, 0.5] }).setDepth(ui);
+    this.valueNote = text(scene, WORLD_W / 2 + 84, 21, "each", { size: 10, color: PAL.textDim }).setDepth(ui);
     // what's been picked up, and the clock
     slab(g, WORLD_W - 216, 8, 206, 26);
     scene.add.image(WORLD_W - 198, 21, "buck").setScale(0.7 / PROP_RES).setDepth(ui);
@@ -55,13 +55,24 @@ export class Hud {
     this.last = {};
   }
 
+  /** The coin, its value and "each" as one line, centred in the box whatever the value's width. */
+  centreValue() {
+    const w = (t) => t.width / t.scaleX;
+    const half = this.valueIcon.displayWidth / 2, lead = 14, gap = 7;
+    const total = half + lead + w(this.value) + gap + w(this.valueNote);
+    const left = WORLD_W / 2 - total / 2;
+    this.valueIcon.setX(left + half);
+    this.value.setX(left + half + lead);
+    this.valueNote.setX(left + half + lead + w(this.value) + gap);
+  }
+
   setMuted(m) {
     this.hint.setText(m ? "Sound off (M)" : "");
   }
 
   update({ time, value, bucks, gavels }) {
     const s = { value: money(value), bucks: `${bucks}/${this.totals.bucks}`, gavels: `${gavels}/${this.totals.gavels}`, clock: clock(time) };
-    if (s.value !== this.last.value) this.value.setText(`Coin  ${s.value}`);
+    if (s.value !== this.last.value) { this.value.setText(`Coin  ${s.value}`); this.centreValue(); }
     if (s.bucks !== this.last.bucks) this.bucks.setText(s.bucks);
     if (s.gavels !== this.last.gavels) this.gavels.setText(s.gavels);
     if (s.clock !== this.last.clock) this.clock.setText(s.clock);
