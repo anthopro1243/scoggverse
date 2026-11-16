@@ -22,15 +22,6 @@ export function grade(value, best, cfg = SCORE) {
   return cfg.grades.find(([, min]) => r >= min - 1e-9)[0];
 }
 
-// One line per grade in his voice, taken or adapted from his real phrases (Lore Bible §3).
-export const GRADE_LINES = {
-  A: "Good, that's exactly right.",
-  B: "You're on fire! Excellent.",
-  C: "That's the right idea, close, but missing one thing.",
-  D: "This is a lot.",
-  F: "Don't deny yourself an education.",
-};
-
 /** The end card's numbers from what was picked up. bucks: values when grabbed. */
 export function tally({ bucks, gavels, totalBucks, totalGavels, time }, cfg = SCORE) {
   const buckSum = cents(bucks.reduce((a, b) => a + b, 0));
@@ -38,7 +29,7 @@ export function tally({ bucks, gavels, totalBucks, totalGavels, time }, cfg = SC
   const value = cents(buckSum + gavelSum);
   const best = bestValue(totalBucks, totalGavels, cfg);
   const g = grade(value, best, cfg);
-  return { buckSum, gavelSum, value, best, grade: g, line: GRADE_LINES[g], time };
+  return { buckSum, gavelSum, value, best, grade: g, time };
 }
 
 /** m:ss */

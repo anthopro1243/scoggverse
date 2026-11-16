@@ -61,7 +61,7 @@ export class Hud {
 
   update({ time, value, bucks, gavels }) {
     const s = { value: money(value), bucks: `${bucks}/${this.totals.bucks}`, gavels: `${gavels}/${this.totals.gavels}`, clock: clock(time) };
-    if (s.value !== this.last.value) this.value.setText(`Scogg Buck  ${s.value}`);
+    if (s.value !== this.last.value) this.value.setText(`Coin  ${s.value}`);
     if (s.bucks !== this.last.bucks) this.bucks.setText(s.bucks);
     if (s.gavels !== this.last.gavels) this.gavels.setText(s.gavels);
     if (s.clock !== this.last.clock) this.clock.setText(s.clock);
@@ -139,7 +139,7 @@ export class Buttons {
   }
 }
 
-/** Esc: the game stops, a stone panel offers Resume, Restart, How to Play, Settings and the level select. */
+/** Esc: the game stops, a panel offers Resume, Restart, How to Play, Settings and the level select. */
 export class PauseMenu {
   constructor(scene, { resume, restart, how, settings, levels }) {
     const d = DEPTH.ui + 2;
@@ -149,7 +149,7 @@ export class PauseMenu {
     this.parts.push(slab(scene.add.graphics().setDepth(d), cx - 150, cy - 133, 300, 266, 0.97));
     this.parts.push(text(scene, cx, cy - 105, "PAUSED", { size: 20, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }).setDepth(d));
     this.buttons = new Buttons(scene, d + 0.5);
-    [["Resume  (Esc)", resume], ["Restart  (R)", restart], ["How to Play", how], ["Settings", settings], ["All chambers", levels]]
+    [["Resume  (Esc)", resume], ["Restart  (R)", restart], ["How to Play", how], ["Settings", settings], ["All levels", levels]]
       .forEach(([label, fn], i) => this.buttons.add(cx, cy - 61 + i * 38, 180, label, fn));
     this.hide();
   }
@@ -169,19 +169,18 @@ export class EndCard {
     add(scene.add.rectangle(0, 0, WORLD_W, WORLD_H, PAL.void, 0.55).setOrigin(0));
     add(scene.add.image(cx, cy, "parchment").setScale(1 / 2));
     this.title = add(text(scene, cx, cy - 98, "", { size: 18, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }));
-    this.sub = add(text(scene, cx, cy - 76, "CHAMBER ESCAPED", { size: 10, serif: true, color: PAL.goldDim, origin: [0.5, 0.5] }));
+    this.sub = add(text(scene, cx, cy - 76, "LEVEL DONE", { size: 10, serif: true, color: PAL.goldDim, origin: [0.5, 0.5] }));
     this.rows = [0, 1, 2, 3].map((i) => [
-      add(text(scene, cx - 150, cy - 46 + i * 21, "", { size: 11, color: PAL.text })),
-      add(text(scene, cx + 40, cy - 46 + i * 21, "", { size: 11, color: PAL.goldBright, origin: [1, 0.5] })),
+      add(text(scene, cx - 150, cy - 30 + i * 21, "", { size: 11, color: PAL.text })),
+      add(text(scene, cx + 40, cy - 30 + i * 21, "", { size: 11, color: PAL.goldBright, origin: [1, 0.5] })),
     ]);
-    this.rule = add(scene.add.rectangle(cx - 55, cy + 6.5, 190, 1, PAL.goldDim, 0.9));
-    this.line = add(text(scene, cx, cy + 48, "", { size: 11, color: PAL.text, align: "center", origin: [0.5, 0.5] }));
-    this.lineBy = add(text(scene, cx, cy + 66, "Dr. Scoggins", { size: 9, serif: true, color: PAL.goldDim, origin: [0.5, 0.5] }));
+    this.rule = add(scene.add.rectangle(cx - 55, cy + 22.5, 190, 1, PAL.goldDim, 0.9));
+    this.award = add(text(scene, cx, cy + 66, "", { size: 11, color: PAL.text, origin: [0.5, 0.5] }));
     // the stamp
-    this.stamp = add(scene.add.image(cx + 112, cy - 12, "__DEFAULT").setScale(1 / PROP_RES));
-    // Enter takes the first button: the next chamber, or Play again after the last one
+    this.stamp = add(scene.add.image(cx + 112, cy + 4, "__DEFAULT").setScale(1 / PROP_RES));
+    // Enter takes the first button: the next level, or Play again after the last one
     this.buttons = new Buttons(scene, d + 0.5);
-    const row = [next && ["Next chamber", next], ["Play again (R)", again], ["All chambers", levels]].filter(Boolean);
+    const row = [next && ["Next level", next], ["Play again (R)", again], ["All levels", levels]].filter(Boolean);
     row.forEach(([label, fn], i) => this.buttons.add(cx + (i - (row.length - 1) / 2) * 124, cy + 96, 118, label, fn));
     this.hide();
   }
@@ -192,13 +191,13 @@ export class EndCard {
     const s = this.scene;
     this.title.setText(s.def.name.toUpperCase());
     const rows = [
-      ["Scogg Bucks", `${r.bucks}/${r.totals.bucks}   ${money(r.buckSum)}`],
+      ["Coins", `${r.bucks}/${r.totals.bucks}   ${money(r.buckSum)}`],
       ["Gavels", `${r.gavels}/${r.totals.gavels}   ${money(r.gavelSum)}`],
       ["Time", clock(r.time)],
       ["Total", `${money(r.value)} of ${money(r.best)}`],
     ];
     rows.forEach(([a, b], i) => { this.rows[i][0].setText(a); this.rows[i][1].setText(b); });
-    this.line.setText(`“${r.line}”`);
+    this.award.setText(r.firstWin ? "+1 Scogg Buck" : "");
     this.stamp.setTexture(stampTexture(s, r.grade, 0xb02a1a, 44));
     for (const p of this.parts) p.setVisible(true);
     this.buttons.setActive(true);

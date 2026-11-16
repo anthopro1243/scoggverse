@@ -89,7 +89,6 @@ export class LookSheet extends BaseScene {
       POSES.forEach(([kind, t, x, lift], i) => {
         this.hero(who, x, floor - lift, kind, t, 1.1 + i * 0.37, who === "girl" ? -1 : 1);
         this.tablet(x, floor + 14, kind, { size: 10 });
-        if (kind === "death") this.tablet(x, floor - 66, "Shocker.", { size: 10 });
       });
       this.hero(who, WIN_X, floor, "win", 0.6, 2.2, 1);
       this.tablet(WIN_X, floor + 14, "win", { size: 10 });

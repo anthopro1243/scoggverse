@@ -16,15 +16,15 @@
   {
     "href": "/play/scogg-boy-girl/",
     "name": "Scogg Boy & Scogg Girl",
-    "desc": "Two player. He grabs the Scogg Bucks, she grabs the Gavels.",
-    "needs": "Laptop, one keyboard. Not scary.",
+    "desc": "Two player. He grabs the coins, she grabs the gavels.",
+    "needs": "Laptop, one keyboard.",
     "img": "/art/sbg-poster.webp", "w": 1280, "h": 720
   },
   {
     "href": "/play/flappy-scogg/",
     "name": "Flappy Scogg",
     "desc": "Tap to flap. Works on your phone.",
-    "needs": "Phone or laptop. Not scary.",
+    "needs": "Phone or laptop.",
     "img": "/art/fs-cover.webp", "w": 540, "h": 960, "tall": true
   }
 ]

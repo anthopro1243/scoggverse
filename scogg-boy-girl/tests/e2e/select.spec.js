@@ -30,11 +30,11 @@ test("a shut chamber doesn't open", async ({ page }) => {
   expect(await page.evaluate(() => window.__sbg.scene)).toBe("select");
 });
 
-test("escaping a chamber saves its grade, opens the next one, and Next chamber goes there", async ({ page }) => {
+test("escaping a chamber saves its grade, opens the next one, and Next level goes there", async ({ page }) => {
   await open(page, "&level=priming");
   const s = await playReplay(page, replayOf("priming"));
   expect(s.endCard).toBe(true);
-  await page.keyboard.press("Enter");                       // Next chamber
+  await page.keyboard.press("Enter");                       // Next level
   await inScene(page, "level", ORDER[1]);
   await open(page, "&scene=select");                        // a fresh page load reads it back
   const sel = await select(page);
@@ -57,12 +57,12 @@ test("a worse run never lowers the best grade", async ({ page }) => {
 test("the pause menu and the end card both lead back to the level select", async ({ page }) => {
   await open(page, "&level=priming");
   await press(page, "Escape", (s) => s.state === "paused");
-  await tap(page, "ArrowUp", "Enter");                     // All chambers (the last button)
+  await tap(page, "ArrowUp", "Enter");                     // All levels (the last button)
   await inScene(page, "select");
   await page.keyboard.press("Enter");
   await inScene(page, "level", "priming");
   await playReplay(page, replayOf("priming"));
-  await tap(page, "ArrowRight", "ArrowRight", "Enter");    // All chambers
+  await tap(page, "ArrowRight", "ArrowRight", "Enter");    // All levels
   await inScene(page, "select");
   expect((await select(page)).levels[1].unlocked).toBe(true);
 });
@@ -82,4 +82,19 @@ test("with storage blocked, progress lasts for the visit and the select says so"
   expect(s.levels[0].best).toMatch(/^[AB]$/);
   expect(s.levels[1].unlocked).toBe(true);
   expect(errors).toEqual([]);
+});
+
+test("finishing a level gives one Scogg Buck, once: the end card says so and the select counts it", async ({ page }) => {
+  await open(page, "&scene=select");
+  expect((await select(page)).note).toBe("Finish a level to open the next one.");
+  await open(page, "&level=priming");
+  const first = await playReplay(page, replayOf("priming"));
+  expect([first.endCard, first.award]).toEqual([true, "+1 Scogg Buck"]);
+  await open(page, "&scene=select");
+  expect((await select(page)).note).toBe("Scogg Bucks: 1 of 9");
+  await open(page, "&level=priming");
+  const again = await playReplay(page, replayOf("priming"));
+  expect([again.endCard, again.award]).toEqual([true, ""]);
+  await open(page, "&scene=select");
+  expect((await select(page)).note).toBe("Scogg Bucks: 1 of 9");
 });

@@ -5,7 +5,7 @@ A level is a JSON file in this folder: its name, which subject it leans on, what
 ```json
 {
   "name": "Priming",
-  "teaches": "Pools, Bucks, Gavels, doors",
+  "teaches": "Pools, coins, gavels, doors",
   "subject": "both",
   "wings": "split",
   "signs": [{ "x": 195, "y": 525, "text": "INFLATION: only Scogg Boy" }],

@@ -1,5 +1,5 @@
 // Scogg Boy & Scogg Girl on the site: its own page at /play/scogg-boy-girl/ (click to load, both
-// players' controls, how to play, no jump scares), the game at /scogg-boy-girl/
+// players' controls, how to play), the game at /scogg-boy-girl/
 // copied in unchanged, every level replayed both on the game's own URL and inside the page's
 // iframe under the site's real headers, and links to it from Home and the Play page.
 import { test, expect } from "@playwright/test";
@@ -32,14 +32,14 @@ test("the page: heading, Play marked in the nav, footer, no sideways scroll, no 
   expect(errors).toEqual([]);
 });
 
-test("the page says what the game needs in one paragraph: both players' keys, the rules, no jump scares", async ({ page }) => {
+test("the page says what the game needs in one paragraph: both players' keys and the rules, with no line about jump scares", async ({ page }) => {
   await page.goto("/play/scogg-boy-girl/");
   const how = page.locator(".play-how p");
   await expect(how).toHaveCount(1);
   await expect(how).toContainText("Scogg Boy uses A, D and W. Scogg Girl uses the arrow keys.");
   for (const word of ["Ink", "Inflation", "Recession", "Esc", "R restarts"]) await expect(how).toContainText(word);
   await expect(page.locator(".controls, .survive, kbd")).toHaveCount(0);
-  await expect(page.locator(".vault__calm")).toContainText("No jump scares.");
+  await expect(page.locator(".vault__overlay")).not.toContainText("scare");
   await expect(page.locator(".sbg-fine")).toHaveText("Unofficial fan parody. Not affiliated with Fireboy and Watergirl or its makers. Made with Dr. Scoggins' permission, for fun.");
 });
 

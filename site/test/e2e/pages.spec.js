@@ -166,7 +166,7 @@ test("404 page in the same style", async ({ page }) => {
   const res = await page.goto(process.env.PLAYWRIGHT_BASE_URL ? "/no-such-file/" : "/404.html");
   if (process.env.PLAYWRIGHT_BASE_URL) expect(res.status()).toBe(404);
   await expect(page.locator("h1")).toHaveText("File not found");
-  await expect(page.locator("main")).toContainText("This file got deleted, or it never existed.");
+  await expect(page.locator("main")).toContainText("That page isn't here.");
   await expect(page.locator(".site-nav a")).toHaveCount(3);
 });
 

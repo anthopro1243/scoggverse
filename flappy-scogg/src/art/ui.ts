@@ -3,7 +3,7 @@
 // with dark text, so it doesn't look like the platformer's menus.
 import { CARD_LOCK, CARD_SLIDE, H, W } from "../logic/config.ts";
 import { cardAge, type Game } from "../logic/game.ts";
-import { gradeFor, lineFor } from "../logic/grade.ts";
+import { gradeFor } from "../logic/grade.ts";
 import { TEXT } from "../texts.ts";
 import { FONT, PAL, SERIF, SERIF_SCALE } from "./palette.ts";
 
@@ -34,19 +34,6 @@ function tablet(c: CanvasRenderingContext2D, x: number, y: number, w: number, h:
   c.fillRect(x + 3, y + 3, w - 6, h - 6);
 }
 
-/** Wrap a line to a width; returns the lines. */
-function wrap(c: CanvasRenderingContext2D, s: string, width: number): string[] {
-  const words = s.split(" ");
-  const lines: string[] = [];
-  let cur = "";
-  for (const w of words) {
-    const next = cur ? `${cur} ${w}` : w;
-    if (c.measureText(next).width > width && cur) { lines.push(cur); cur = w; } else cur = next;
-  }
-  if (cur) lines.push(cur);
-  return lines;
-}
-
 export function drawScore(c: CanvasRenderingContext2D, g: Game): void {
   // a thick dark outline and a dark copy just under it, so the number reads over the columns too
   label(c, String(g.score), W / 2, 81, 60, { stroke: 10, color: PAL.outline });
@@ -67,7 +54,7 @@ export function drawCard(c: CanvasRenderingContext2D, g: Game, o: UiOptions): vo
   const t = Math.min(1, age / CARD_SLIDE);
   const ease = 1 - (1 - t) ** 3;
   const dy = o.reduceMotion ? 0 : (1 - ease) * (H - 150);
-  const cw = 316, ch = 344;
+  const cw = 316, ch = 226;
   const x = (W - cw) / 2, y = 150 + dy;
   c.save();
   if (o.reduceMotion) c.globalAlpha = ease;
@@ -95,12 +82,6 @@ export function drawCard(c: CanvasRenderingContext2D, g: Game, o: UiOptions): vo
 
   c.fillStyle = PAL.cardRule;
   c.fillRect(x + 30, y + 138, cw - 60, 1);
-
-  // his line
-  c.font = `400 19px ${FONT}`;
-  const lines = wrap(c, `"${lineFor(g.score)}"`, cw - 56);
-  lines.forEach((l, i) => label(c, l, W / 2, y + 180 + i * 27 - (lines.length - 1) * 13, 19, { font: FONT, weight: 400, color: PAL.cardText }));
-  label(c, TEXT.quoteBy, W / 2, y + 232, 14, { font: SERIF, weight: 700, color: PAL.cardGold });
 
   const ready = age >= CARD_SLIDE + CARD_LOCK;
   const pulse = !ready ? 0.35 : o.reduceMotion ? 1 : 0.75 + 0.25 * Math.sin(g.frame / 16);

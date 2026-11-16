@@ -24,9 +24,6 @@
 }
 .vault__play { min-width: 12rem; font-size: 1.25rem; box-shadow: 0 0 0 6px rgb(255 217 90 / 0.18); }
 .vault__play:hover { box-shadow: 0 0 0 9px rgb(255 217 90 / 0.24); }
-.vault__calm { margin: 0; max-width: 30rem; text-shadow: 0 1px 2px #000; }
-.vault__calm { color: var(--text); }
-.vault__calm strong { color: var(--gold); }
 
 .vault__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-2) var(--s-1) var(--s-1); }
 .vault__own { font-weight: 700; text-decoration: none; }
@@ -35,7 +32,6 @@
 @media (max-width: 40rem) {
   .vault__overlay { gap: var(--s-2); }
   .vault__play { min-width: 0; font-size: 1.05rem; min-height: 3rem; padding: var(--s-2) var(--s-5); }
-  .vault__calm { font-size: var(--t-sm); }
 }
 
 .sbg-fine { margin-top: var(--s-7); color: var(--text-faint); font-size: var(--t-sm); text-align: center; }

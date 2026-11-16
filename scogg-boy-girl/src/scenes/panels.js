@@ -38,14 +38,14 @@ export class HowToPanel extends Panel {
       this.add(text(s, x, y0, name, { size: 14, serif: true, color, origin: [0.5, 0.5] }));
       lines.forEach((l, i) => this.add(text(s, x, y0 + 24 + i * 19, l, { size: 11, color: i === 1 ? PAL.goldBright : PAL.text, origin: [0.5, 0.5] })));
     };
-    col(CX - 150, "SCOGG BOY", 0xffb35c, ["AP Macro", "W jump   A D move", "Grabs the Scogg Bucks", "Ink kills him"]);
-    col(CX + 150, "SCOGG GIRL", 0x9fd2ff, ["AP Gov", "Up jump   Left Right move", "Grabs the Gavels", "Inflation kills her"]);
+    col(CX - 150, "SCOGG BOY", 0xffb35c, ["AP Macro", "W jump   A D move", "Grabs the coins", "Ink kills him"]);
+    col(CX + 150, "SCOGG GIRL", 0x9fd2ff, ["AP Gov", "Up jump   Left Right move", "Grabs the gavels", "Inflation kills her"]);
     this.add(s.add.rectangle(CX, y0 + 108, this.w - 80, 1, PAL.goldDim, 0.7));
     [
-      "Recession takes anyone. Plates, levers, crates and scales open the way,",
+      "Recession kills both of you. Plates, levers, crates and scales open the way,",
       "and most of them need both of you.",
-      "Bucks lose value the longer you take.",
-      "Both stand at your own door to escape the chamber.",
+      "Coins lose value the longer you take.",
+      "Both stand at your own door to finish the level.",
     ].forEach((l, i) => this.add(text(s, CX, y0 + 128 + i * 19, l, { size: 11, color: PAL.text, origin: [0.5, 0.5] })));
     this.add(text(s, CX, y0 + 216, "Esc pause   R restart   M sound   F full screen   Two gamepads work too", { size: 10, color: PAL.textDim, origin: [0.5, 0.5] }));
     this.backButton();

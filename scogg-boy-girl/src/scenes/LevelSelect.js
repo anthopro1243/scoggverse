@@ -37,7 +37,7 @@ export class LevelSelect extends BaseScene {
     const head = this.add.graphics().setDepth(d);
     slab(head, WORLD_W / 2 - 200, 22, 400, 58, 0.94);
     text(this, WORLD_W / 2, 44, "SCOGG BOY & SCOGG GIRL", { size: 22, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }).setDepth(d);
-    text(this, WORLD_W / 2, 67, "Choose a chamber", { size: 11, color: PAL.text, origin: [0.5, 0.5] }).setDepth(d);
+    text(this, WORLD_W / 2, 67, "Pick a level", { size: 11, color: PAL.text, origin: [0.5, 0.5] }).setDepth(d);
 
     const p = progress.get();
     this.cards = ORDER.map((name, i) => this.card(name, i, p));
@@ -52,7 +52,8 @@ export class LevelSelect extends BaseScene {
     this.add.graphics().setDepth(d).fillStyle(PAL.tablet, 0.92).fillRoundedRect(WORLD_W / 2 - 250, 411, 500, 44, 6);
     text(this, WORLD_W / 2, 424, "Arrow keys or the mouse to choose  ·  Enter to play  ·  Esc title", { size: 11, color: PAL.text, origin: [0.5, 0.5] }).setDepth(d);
     this.note = text(this, WORLD_W / 2, 444, "", { size: 10, color: PAL.textDim, origin: [0.5, 0.5] }).setDepth(d);
-    this.note.setText("Escape a chamber to open the next one.");
+    const done = Object.keys(p.best).length;
+    this.note.setText(done ? `Scogg Bucks: ${done} of ${ORDER.length}` : "Finish a level to open the next one.");
 
     const move = (dx, dy) => {
       const col = this.focus % COLS, row = Math.floor(this.focus / COLS);
@@ -79,7 +80,7 @@ export class LevelSelect extends BaseScene {
       scene: "select",
       ready: true,
       /** What the level select shows: each chamber, open or not, its best grade, and which one is chosen. */
-      select: () => ({ focus: ORDER[this.focus], saved: progress.saved, levels: this.cards.map((c) => ({ name: c.name, unlocked: c.open, best: c.best ?? null })) }),
+      select: () => ({ focus: ORDER[this.focus], saved: progress.saved, note: this.note.text, levels: this.cards.map((c) => ({ name: c.name, unlocked: c.open, best: c.best ?? null })) }),
     };
   }
 

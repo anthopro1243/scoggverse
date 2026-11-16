@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buckValue, grade, tally, bestValue, GRADE_LINES, clock, nextDropIn } from "../../src/logic/score.js";
+import { buckValue, grade, tally, bestValue, clock, nextDropIn } from "../../src/logic/score.js";
 import { SCORE } from "../../src/logic/config.js";
 
 describe("Scogg Bucks and inflation", () => {
@@ -50,10 +50,6 @@ describe("the grade", () => {
     expect(grade(89.9, 100)).toBe("B");
     expect(grade(68, 100)).toBe("C");
     expect(grade(51.9, 100)).toBe("F");
-  });
-  it("every grade has his line, with no em dashes", () => {
-    for (const g of "ABCDF") { expect(GRADE_LINES[g]).toBeTruthy(); expect(GRADE_LINES[g]).not.toMatch(/—/); }
-    expect(GRADE_LINES.F).toBe("Don't deny yourself an education.");
   });
   it("clock reads m:ss", () => {
     expect(clock(0)).toBe("0:00");

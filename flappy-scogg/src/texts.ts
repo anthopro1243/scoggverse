@@ -9,7 +9,6 @@ export const TEXT = {
   newBest: "New best",
   againTouch: "Tap to try again",
   againMouse: "Click or press Space to try again",
-  quoteBy: "Dr. Scoggins",
   paused: "Paused",
   resumeTouch: "Tap to keep going",
   resumeMouse: "Press Esc or P to keep going",

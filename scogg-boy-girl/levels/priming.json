@@ -1,6 +1,6 @@
 {
  "name": "Priming",
- "teaches": "Pools, Bucks, Gavels, doors",
+ "teaches": "Pools, coins, gavels, doors",
  "subject": "both",
  "wings": "split",
  "signs": [
@@ -27,7 +27,7 @@
   {
    "x": 780,
    "y": 190,
-   "text": "Scogg Bucks lose value as time runs."
+   "text": "Coins lose value the longer you take."
   },
   {
    "x": 240,

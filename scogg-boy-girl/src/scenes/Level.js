@@ -60,8 +60,7 @@ export class Level extends BaseScene {
       body.setMaxVelocityY(MOVE.maxFall);
       this.physics.add.collider(body, this.solids);
       const hero = new Hero(this, spawn.x, spawn.y, who).setDepth(DEPTH.heroes);
-      const quip = this.tablet(0, 0, "Shocker.", { size: 12 }).setOrigin(0.5, 1).setVisible(false);
-      return { who, spawn, body, hero, quip };
+      return { who, spawn, body, hero };
     });
     this.mech = new Mechanisms(this, grid, this.def.objects || [], this.players, this.solidRects);
     for (const p of this.players) {
@@ -133,7 +132,6 @@ export class Level extends BaseScene {
       p.hero.facing = p.who === "girl" && p.spawn.x > this.grid.w * TILE / 2 ? -1 : 1;
       p.hero.setPosition(p.spawn.x + this.startNudge(p), p.spawn.y);
       p.hero.play("idle");
-      p.quip.setVisible(false);
     }
     for (const it of this.pickups) { it.taken = false; it.obj.setVisible(true); }
     this.mech.reset();
@@ -256,7 +254,6 @@ export class Level extends BaseScene {
     p.body.enable = false;
     p.hero.play("death");
     audio.play(p.who === "boy" ? "ember" : "splash", { x: p.body.center.x });
-    p.quip.setPosition(p.hero.x, p.hero.y - 70).setVisible(true);
     this.state = "dying";
     for (const o of this.players) if (o !== p) { o.body.stop(); o.hero.play("idle"); }
   }
@@ -309,7 +306,8 @@ export class Level extends BaseScene {
     this.result.bucks = this.got.bucks.length;
     this.result.gavels = this.got.gavels;
     this.result.totals = this.totals;
-    progress.record(this.levelName, this.result.grade); // the best grade, and the next chamber opens
+    this.result.firstWin = !(this.levelName in progress.get().best); // the one Scogg Buck is for the first finish only
+    progress.record(this.levelName, this.result.grade); // the best grade, and the next level opens
     audio.play("win");
     for (const p of this.players) {
       const d = this.doors.find((q) => q.who === p.who);
@@ -343,6 +341,7 @@ export class Level extends BaseScene {
       })),
       result: this.result,
       endCard: this.endCard.visible,
+      award: this.endCard.award.text,
       panel: this.panel || null,
       rng: this.rng.state,
     };
