@@ -41,3 +41,12 @@ func test_screams_and_doors_play_at_their_game_levels() -> void:
 	assert_eq(SoundCheck.level_db("scream_uncle_scogg"), GameConfig.SOUND_DB["scream"])
 	assert_eq(SoundCheck.level_db("door_close"), GameConfig.SOUND_DB["door_close"])
 	assert_eq(SoundCheck.level_db("menu"), GameConfig.MENU_MUSIC_DB)
+
+
+func test_real_steps_get_their_lift_and_scrapes_do_not() -> void:
+	var corner: float = GameConfig.STEP_DB[Rooms.LEFT_CORNER]
+	assert_eq(SoundCheck.level_db("steps_1"), corner + GameConfig.STEP_FILE_DB["steps_1"])
+	assert_eq(SoundCheck.level_db("scrape_1"), corner, "a scrape plays at its room level")
+	for file in GameConfig.STEP_FILE_DB:
+		assert_true(GameConfig.STEP_DB[Rooms.LEFT_DOOR] + GameConfig.STEP_FILE_DB[file] <= -1.0,
+			"%s at a door stays under -1 dB" % file)

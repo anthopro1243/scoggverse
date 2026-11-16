@@ -17,5 +17,5 @@ Five Nights at Scoggy's is a free, non-commercial fan parody of Five Nights at F
 
 ## Sound (Milestone 4)
 
-- Every sound effect and the menu music are synthesized from scratch by `tools/audio/make_sounds.py` (numpy DSP in `tools/audio/dsp.py`). No recordings or samples. The nightly call is captions over a synthesized phone-line sound.
+- The sound effects and the menu music are made by `tools/audio/make_sounds.py` (numpy DSP in `tools/audio/dsp.py`). Most are synthesized from scratch. The four screams and the footsteps are cut and layered from CC0 (public domain) recordings on Freesound; each one's title and page is in `tools/audio/recordings/SOURCES.md`. The nightly call is captions over a synthesized phone-line sound.
 - **The Stars and Stripes Forever** by John Philip Sousa (1896, public domain): the power-out march plays its trio on a synthesized music box. The notes come from the Mutopia Project's public-domain LilyPond edition (piece 626), https://www.mutopiaproject.org, read as text; no recording was used.

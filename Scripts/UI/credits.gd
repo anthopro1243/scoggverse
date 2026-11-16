@@ -17,7 +17,7 @@ A free, non-commercial fan parody of [i]Five Nights at Freddy's[/i] by Scott Caw
 The cutouts are from the class's Scogg Files slides.
 
 [color=#ffd95a]Sound and music[/color]
-Every sound is made in code, no recordings. The nightly call is captions over a phone-line sound.
+Most sounds are made in code. The screams and footsteps are cut from free CC0 recordings on Freesound. The nightly call is captions over a phone-line sound.
 The power-out march is [b]The Stars and Stripes Forever[/b] by John Philip Sousa (1896, public domain), played on a synthesized music box from the notes of the Mutopia Project's public-domain edition.
 
 Don't deny yourself an education."""

@@ -126,7 +126,7 @@ static func level_db(file: String) -> float:
 	if file.begins_with("scream_"):
 		return GameConfig.SOUND_DB["scream"]
 	if file.begins_with("steps_") or file.begins_with("scrape_"):
-		return GameConfig.STEP_DB[Rooms.LEFT_CORNER]
+		return GameConfig.STEP_DB[Rooms.LEFT_CORNER] + GameConfig.STEP_FILE_DB.get(file, 0.0)
 	return GameConfig.SOUND_DB.get(file, -6.0)
 
 

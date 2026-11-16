@@ -112,7 +112,7 @@ const JUMPSCARE_SHAKE_PX: float = 26.0
 ## Audio: the ambience fades out over this long once a bot is inside (silence before the scare).
 const HUM_FADE_SECONDS: float = 1.5
 
-# --- Sound (Milestone 4; levels in dB, all sounds synthesized by tools/audio/make_sounds.py) ---
+# --- Sound (Milestone 4; levels in dB, all made by tools/audio/make_sounds.py; the screams and steps from CC0 recordings) ---
 ## Every jumpscare comes after at least this much silence: the ambience cuts out, then the scare.
 const JUMPSCARE_SILENCE_SECONDS: float = 1.0
 ## Loops: office room tone, the desk fan, the emptier camera room tone, the menu music.
@@ -122,13 +122,14 @@ const AMB_CAMS_DB: float = -14.0
 const AMB_FADE_SECONDS: float = 0.25 # crossfade between office and camera room tone
 const MENU_MUSIC_DB: float = -10.0
 ## How loud each one-shot plays. Measured in the browser (tools/playtest/audio_output.mjs):
-## screams at -4 keep their peak under full scale once resampled to 48 kHz (at 0 they reached
-## 1.4 and clipped); the camera click at -6 is heard over the camera room tone (at -12 it wasn't).
+## the screams are real recordings now and their files peak at -1 dB, so -0.5 keeps them under full
+## scale (the old synthesized ones peaked over it and needed -4); the camera click at -6 is heard over
+## the camera room tone (at -12 it wasn't).
 const SOUND_DB: Dictionary[String, float] = {
 	"door_close": -3.0, "door_open": -6.0, "light_on": -8.0, "light_off": -10.0, "light_buzz": -17.0,
 	"denied": -8.0, "tablet_up": -6.0, "tablet_down": -8.0, "cam_switch": -6.0, "cam_garble": -10.0,
 	"gallop": -2.0, "door_bang": -1.0, "scuttle": -12.0, "power_down": -2.0, "march": -6.0,
-	"scream": -4.0, "sting_scoggema": -3.0, "whisper": -6.0, "glitch": -16.0, "chime_6am": -4.0,
+	"scream": -0.5, "sting_scoggema": -3.0, "whisper": -6.0, "glitch": -16.0, "chime_6am": -4.0,
 	"phone_ring": -9.0, "phone_pickup": -10.0, "phone_line": -12.0, "phone_hangup": -12.0, "voice": -2.0,
 	"ui_click": -14.0,
 }
@@ -139,6 +140,9 @@ const STEP_DB: Dictionary[int, float] = {
 	Rooms.LEFT_DOOR: -4.0, Rooms.RIGHT_DOOR: -4.0,
 }
 const STEP_FAR_DB: float = -24.0
+## Added to a step file's room level: the real steps have sharper peaks than the scrapes they're mixed
+## with, so at the same peak they sound quieter. Kept so a step at a door still peaks under -2 dB.
+const STEP_FILE_DB: Dictionary[String, float] = {"steps_1": 2.0, "steps_2": 2.5}
 ## Scoggis Khan's gallop swells from this level to SOUND_DB.gallop as he reaches the door.
 const GALLOP_START_DB: float = -22.0
 ## Power out: the march starts when Uncle Scogg reaches the dark doorway, then slows and sags in

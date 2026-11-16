@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Every sound in the game, synthesized from scratch with numpy (oscillators, noise, filters and
-a synthetic reverb; no recordings, no samples). Writes Audio/*.ogg (Vorbis).
+"""Every sound in the game. Most are synthesized from scratch with numpy (oscillators, noise, filters and
+a synthetic reverb); the four screams and the footsteps are cut and layered from CC0 recordings (takes.py,
+recordings/SOURCES.md), the same ones game 2 uses. Writes Audio/*.ogg (Vorbis).
 
   python3 tools/audio/make_sounds.py            # all sounds
   python3 tools/audio/make_sounds.py march fan  # just these
@@ -23,6 +24,7 @@ from strip_metadata import strip_ogg  # noqa: E402
 from dsp import (SR, bandpass, convolve, decay, drive, env_adsr, fade, highpass, impulse,  # noqa: E402
                  loop_freq, lowpass, mix, noise, norm, phase_of, place, resonate, reverb, rng,
                  saw, silence, sine, spectral, square, stft_filter, t, write_wav)
+import takes  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "Audio"
@@ -214,38 +216,26 @@ def cam_garble():
 
 # ================================================================= bots
 
-def footstep(heavy=1.0):
-    s = t(0.25)
-    heel = bandpass(noise(0.25), 1800, 5500) * np.exp(-s * 140)
-    body = np.sin(phase_of(140 * heavy ** -0.5 * (1 + 0.3 * np.exp(-s * 40)))) * np.exp(-s * 30)
-    return heel * 0.6 + body * heavy
-
-
 def hallway(x, wet=0.55):
     return reverb(x, 1.8, wet, 2200, early=0.6)
 
 
-def steps(n, gap, heavy):
-    x = silence(n * gap + 0.4)
-    for i in range(n):
-        place(x, footstep(heavy) * rng.uniform(0.7, 1.0), i * gap + rng.uniform(-0.02, 0.02))
-    return hallway(x)
-
-
 @sound("steps_1")
 def steps_1():
-    return steps(3, 0.42, 1.0)
+    """Sneakers on tile, slow."""
+    return takes.hallway(takes.walk("steps_sneakers_slow", 3, 0.42))
 
 
 @sound("steps_2")
 def steps_2():
-    return steps(4, 0.36, 0.8)
+    """Sneakers on tile, quicker."""
+    return takes.hallway(takes.walk("steps_sneakers_fast", 4, 0.36))
 
 
 @sound("steps_heavy")
 def steps_heavy():
-    """Uncle Scogg: slower, heavier steps."""
-    return steps(3, 0.6, 1.6)
+    """Uncle Scogg: slower, heavier boots that drag a little."""
+    return takes.hallway(takes.walk("steps_boots_tile", 3, 0.6, 0.9, drag="steps_dragging_boots"))
 
 
 def scrape(seconds):
@@ -470,46 +460,60 @@ def menu():
 
 # ================================================================= scares
 
-def screech(L, f0, contour, grit, ring_hz, formants, noise_amt=0.5):
-    """A distorted animatronic screech: a buzzing source with vibrato and a pitch contour, ring
-    modulated, pushed through resonances and hard distortion."""
-    s = t(L)
-    f = f0 * contour(s / L) * (1 + 0.03 * np.sin(2 * math.pi * 13 * s) + 0.015 * noise(L).cumsum() / SR)
-    src = saw(f) + 0.5 * square(f * 1.01) + noise_amt * noise(L)
-    src *= 1 + 0.8 * np.sin(2 * math.pi * ring_hz * s)
-    x = resonate(src, formants, floor=0.15)
-    x = drive(x / np.abs(x).max() * grit, 1.0)
-    env = np.minimum(1, s / 0.015) * np.exp(-np.maximum(0, s - L * 0.65) * 7)
-    x = x * env
-    return np.clip(reverb(x, 0.7, 0.15, 5000) * 1.3, -1, 1)
+def creak(seconds, f0=55, f1=95, tone=(720, 1500, 2600)):
+    """A dry hinge: stick-slip ticks at a wandering rate, rung through the hinge and frame resonances."""
+    s = t(seconds)
+    rate = f0 + (f1 - f0) * s / seconds + 12 * np.sin(2 * math.pi * 2.3 * s)
+    ph = np.cumsum(rate * (1 + 0.15 * rng.standard_normal(len(s)))) / SR
+    ticks = (np.diff(np.floor(ph), prepend=0) > 0) * rng.uniform(0.5, 1.0, len(s))
+    x = resonate(ticks, [(tone[0], 60, 1.0), (tone[1], 90, 0.7), (tone[2], 140, 0.4)])
+    return norm(x, 1.0) * env_adsr(len(s), 0.06, 0.1, 0.8, 0.12)
 
+
+# Each scare is one man's voice, picked to fit the figure the standee is dressed as (every standee wears the
+# teacher's face; the voices are strangers, never his): (recording, from s, to s, pitch, starts at s, level dB).
+# takes.scream lands it on a thud, drives it a little hot and cuts it off fast. Same as game 2.
+
+
+def scare(x, keep=1.75):
+    """Ends a scream's room tail at `keep` seconds (the scare is over at 1.2 s). The screams are game 2's; only the
+    tail is shorter, which keeps the site's size projection inside its budget."""
+    x = x[: int(keep * SR)].copy()
+    n = int(0.2 * SR)
+    x[-n:] *= np.linspace(1, 0, n) ** 2
+    return x
 
 @sound("scream_scoggcrates")
 def scream_scoggcrates():
-    """Scoggcrates: a low, gritty roar that rips upward."""
-    return screech(1.3, 210, lambda u: 1 + 1.6 * np.sin(math.pi * np.minimum(u * 1.4, 1)), 6.0, 57,
-                   [(600, 200, 1), (1100, 300, .8), (2600, 600, .5)])
+    """Scoggcrates (the old philosopher): one hoarse roar, pitched well down and blown out, so it hits as a screech
+    rather than a man screaming. A single voice: two layered voices sounded like two people (silly)."""
+    return scare(takes.scream([("war_cry_gruff", 2.77, 4.35, 0.85, 0.0, 0)], length=1.3, grit=4.0))
 
 
 @sound("scream_scogga_lisa")
 def scream_scogga_lisa():
-    """Scogga Lisa: a thin, shrill shriek with a metallic ring."""
-    return screech(1.3, 720, lambda u: 1 + 0.5 * np.sin(math.pi * u) - 0.2 * u, 5.0, 131,
-                   [(1400, 300, 1), (2900, 500, .9), (4800, 900, .5)], 0.35)
+    """Scogga Lisa (his face in the painting): a man's high, cracking falsetto, and the frame creaking."""
+    frame = creak(0.55, 60, 140, tone=(900, 1900, 3200))
+    return scare(takes.scream([("man_scream_high", 0.39, 1.84, 1.0, 0.0, 0),
+                         ("man_scream_pain", 0.66, 1.51, 1.0, 0.1, -5),
+                         (frame, 0, 0, 1.0, 0.05, -13)], length=1.35, grit=2.2))
 
 
 @sound("scream_scoggis_khan")
 def scream_scoggis_khan():
-    """Scoggis Khan: a ragged war cry that whinnies down at the end."""
-    return screech(1.3, 400, lambda u: 1.6 - 0.9 * u + 0.25 * np.sign(np.sin(2 * math.pi * 9 * u)), 7.0, 83,
-                   [(800, 250, 1), (1600, 400, .8), (3300, 700, .4)], 0.6)
+    """Scoggis Khan (the conqueror): a battle war cry, a second rider behind it and a horse rearing underneath."""
+    return scare(takes.scream([("war_cry_battle", 5.71, 7.16, 1.0, 0.0, 0),
+                         ("war_cry_elf", 0.58, 1.53, 0.95, 0.15, -6),
+                         ("horse_whinnies", 7.04, 7.66, 1.0, 0.65, -10)], length=1.35, grit=2.6))
 
 
 @sound("scream_uncle_scogg")
 def scream_uncle_scogg():
-    """Uncle Scogg: a brassy, blown-out bugle blast sliding into a siren wail."""
-    return screech(1.4, 260, lambda u: 1 + 1.2 * np.minimum(u * 2, 1) + 0.3 * np.sin(2 * math.pi * 3 * u), 8.0, 41,
-                   [(500, 150, 1), (1200, 250, .9), (2400, 500, .6)], 0.4)
+    """Uncle Scogg (the poster): a deep, commanding bellow, and his march grinding to a halt under it."""
+    tune = march()[int(8.0 * SR):int(9.5 * SR)]
+    return scare(takes.scream([("kingly_yell", 1.54, 3.0, 0.92, 0.0, 0),
+                         ("war_cry_gruff", 0.70, 2.15, 0.95, 0.05, -6),
+                         (takes.tape_stop(tune, 0.8), 0, 0, 1.0, 0.0, -7)], length=1.45, grit=2.8))
 
 
 @sound("sting_scoggema")
@@ -666,13 +670,30 @@ def ui_click():
 
 # ================================================================= output
 
+PEAK = 0.89  # -1 dB: the most a shipped file may reach after Vorbis decoding
+
+
+def decoded(path: Path) -> np.ndarray:
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-f", "f32le", "-ac", "1", "-"],
+                         check=True, capture_output=True).stdout
+    return np.frombuffer(raw, dtype=np.float32)
+
+
 def encode(name: str, x: np.ndarray, quality: float) -> Path:
+    """Writes the Vorbis file. Lossy coding overshoots on dense sounds, so it re-encodes quieter until the
+    decoded file peaks at -1 dB or under."""
     path = OUT / f"{name}.ogg"
-    with tempfile.TemporaryDirectory() as d:
-        wav = Path(d) / f"{name}.wav"
-        write_wav(wav, x, 0.89)
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(wav), "-c:a", "libvorbis",
-                        "-q:a", str(quality), str(path)], check=True)
+    level = PEAK
+    for _ in range(8):
+        with tempfile.TemporaryDirectory() as d:
+            wav = Path(d) / f"{name}.wav"
+            write_wav(wav, x, level)
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(wav), "-c:a", "libvorbis",
+                            "-q:a", str(quality), str(path)], check=True)
+        peak = float(np.abs(decoded(path)).max())
+        if peak <= PEAK:
+            break
+        level *= PEAK / peak * 0.98
     # no tags in the shipped files (ffmpeg writes its name and version into the comment header)
     path.write_bytes(strip_ogg(path.read_bytes()))
     return path

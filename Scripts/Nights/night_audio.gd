@@ -105,7 +105,7 @@ func _on_cue(cue: Dictionary, sim: NightSim) -> void:
 	match s:
 		"step":
 			var file := "steps_heavy" if cue.bot == "leader" else STEP_SOUNDS[randi() % STEP_SOUNDS.size()]
-			play(file, cue.db, cue.bus, randf_range(0.94, 1.06), "step")
+			play(file, cue.db + GameConfig.STEP_FILE_DB.get(file, 0.0), cue.bus, randf_range(0.94, 1.06), "step")
 		"gallop_start":
 			_gallop.volume_db = GameConfig.GALLOP_START_DB
 			if _gallop.stream:
