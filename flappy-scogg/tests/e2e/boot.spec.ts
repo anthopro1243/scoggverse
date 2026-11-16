@@ -35,15 +35,17 @@ test("laptop: the field sits in the middle with the dark page either side", asyn
   expect(px).toEqual([0x12, 0x0f, 0x0d]);
 });
 
-test("phone: the field fills the width, the page never scrolls", async ({ browser }) => {
+test("phone: the field fills the width with sky above and ground below, the page never scrolls", async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true, deviceScaleFactor: 3 });
   const page = await ctx.newPage();
   await open(page);
   const l = await page.evaluate(() => (window as any).__fs.layout);
   expect(l.x).toBe(0);
-  expect(l.y).toBe(0);
   expect(l.scale).toBeCloseTo(375 / 405, 5);
-  expect(l.extraBottom).toBeGreaterThan(100);
+  // the spare height goes mostly to sky above the field, the rest to ground below it
+  expect(l.extraTop + l.extraBottom).toBeGreaterThan(100);
+  expect(l.extraTop).toBeGreaterThan(l.extraBottom);
+  expect(l.y).toBeCloseTo(l.extraTop * l.scale, 0);
   const sizes = await page.evaluate(() => ({ sh: document.documentElement.scrollHeight, sw: document.documentElement.scrollWidth, h: innerHeight, w: innerWidth }));
   expect(sizes.sh).toBeLessThanOrEqual(sizes.h);
   expect(sizes.sw).toBeLessThanOrEqual(sizes.w);

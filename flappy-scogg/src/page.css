@@ -1,6 +1,7 @@
 /* The page around the game: the whole window, the site's dark background, one canvas, and a few
    real buttons over it (pause, sound, credits). No scrolling, no zooming, no text selection or tap
-   highlight, so taps only ever flap. The field's position comes from main.ts as --fx, --fy, --fw. */
+   highlight, so taps only ever flap. The field's position comes from main.ts as --fx, --fy, --fw (and
+   --top, the top of the drawing, which is above the field on a tall phone). */
 html, body {
   margin: 0; height: 100%; overflow: hidden; background: #120f0d;
   overscroll-behavior: none; touch-action: none;
@@ -9,7 +10,7 @@ html, body {
 #game { display: block; width: 100vw; height: 100vh; height: 100dvh; touch-action: none; cursor: pointer; }
 [hidden] { display: none !important; }
 
-#hud { position: fixed; top: calc(var(--fy, 0px) + 10px); left: calc(var(--fx, 0px) + var(--fw, 100vw) - 10px); transform: translateX(-100%); display: flex; gap: 8px; }
+#hud { position: fixed; top: calc(var(--top, 0px) + 10px); left: calc(var(--fx, 0px) + var(--fw, 100vw) - 10px); transform: translateX(-100%); display: flex; gap: 8px; }
 .hud-btn, #credits-link, #credits-close {
   font: 600 15px/1 "Noto Sans", system-ui, sans-serif; color: #f3d58b; cursor: pointer;
   background: rgb(18 14 10 / 0.82); border: 1.5px solid #6e5428; border-radius: 8px;

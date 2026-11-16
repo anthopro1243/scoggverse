@@ -74,6 +74,7 @@ async function boot(): Promise<void> {
     const root = document.documentElement.style;
     root.setProperty("--fx", `${l.x}px`);
     root.setProperty("--fy", `${l.y}px`);
+    root.setProperty("--top", `${l.y - l.extraTop * l.scale}px`); // the top of what's drawn (above the field on a tall phone)
     root.setProperty("--fw", `${l.scale * 405}px`);
   };
   resize();

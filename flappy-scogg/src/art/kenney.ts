@@ -34,5 +34,5 @@ export function drawTile(c: CanvasRenderingContext2D, id: number, x: number, y: 
   c.drawImage(src, (id % cols) * s + 1, Math.floor(id / cols) * s + 1, s - 2, s - 2, x, y, w, h);
 }
 
-/** Kenney's outline and wood colors, for the few shapes drawn by hand to match the tiles. */
-export const KP = { outline: "#434a5f", woodDark: "#6f3e43", wood: "#9f5a52", woodLit: "#cb815e", sand: "#f4ac66", white: "#ffffff", slate: "#2b2d3c", gold: "#f4b41b", goldLit: "#fee481" };
+/** Kenney's outline, wood and plain sky colors, for the few shapes drawn by hand to match the tiles. */
+export const KP = { outline: "#434a5f", woodDark: "#6f3e43", wood: "#9f5a52", woodLit: "#cb815e", sand: "#f4ac66", white: "#ffffff", slate: "#2b2d3c", gold: "#f4b41b", goldLit: "#fee481", sky: "#dff6f5" };

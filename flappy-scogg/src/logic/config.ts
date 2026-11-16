@@ -58,6 +58,7 @@ export const CARD_LOCK = 30; // taps are ignored for half a second after the car
 export const PARALLAX_FAR = 0.08;
 export const PARALLAX_MID = 0.3;
 export const TITLE_SCROLL = 0.5; // the scenery drifts at half speed on the title screen
+export const TALL_SKY = 0.6; // on a screen taller than the field, this share of the spare height is sky above it, the rest ground below
 
 // Grades: the lowest score for each grade
 export const GRADES: ReadonlyArray<readonly [string, number]> = [

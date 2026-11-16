@@ -47,15 +47,15 @@ export function drawPillarArt(k: number): PillarArt {
   return { shaft: drawShaft(k, false), bronzeShaft: drawShaft(k, true), cap: drawCap(k), dollar: drawDollar(k) };
 }
 
-/** Draw one column pair in field units. */
-export function drawColumn(ctx: CanvasRenderingContext2D, art: PillarArt, col: Column): void {
+/** Draw one column pair in field units; the top column reaches `above` units over the field's top edge. */
+export function drawColumn(ctx: CanvasRenderingContext2D, art: PillarArt, col: Column, above = 0): void {
   const x = col.x;
   const top = col.gapY - col.gap / 2;
   const bottom = col.gapY + col.gap / 2;
   const shaft = col.bronze ? art.bronzeShaft : art.shaft;
   const sk = shaft.canvas.height / shaft.h; // device pixels per unit in the shaft canvas
   // top column: from above the field down to its capital
-  const topLen = Math.max(0, top - CAP_H + 2);
+  const topLen = Math.max(0, top - CAP_H + 2 + above);
   ctx.drawImage(shaft.canvas, 0, 0, shaft.canvas.width, Math.min(shaft.canvas.height, topLen * sk), x, top - CAP_H + 2 - topLen, COL_W, topLen);
   // bottom column: from its capital down into the terrace
   const botLen = FLOOR_Y - bottom - CAP_H + 2;

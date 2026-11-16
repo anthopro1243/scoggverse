@@ -131,7 +131,7 @@ export class Level extends BaseScene {
       p.body.enable = true;
       p.body.reset(p.spawn.x - MOVE.bodyW / 2, p.spawn.y - MOVE.bodyH);
       p.hero.facing = p.who === "girl" && p.spawn.x > this.grid.w * TILE / 2 ? -1 : 1;
-      p.hero.setPosition(p.spawn.x, p.spawn.y);
+      p.hero.setPosition(p.spawn.x + this.startNudge(p), p.spawn.y);
       p.hero.play("idle");
       p.quip.setVisible(false);
     }
@@ -214,14 +214,25 @@ export class Level extends BaseScene {
     this.render_();
   }
 
+  /**
+   * Drawing only: heroes who start a tile apart would overlap, so each is drawn a few px further out
+   * until either one moves. Bodies, hitboxes and replays are untouched.
+   */
+  startNudge(p) {
+    const o = this.players.find((q) => q !== p);
+    const home = (q) => Math.abs(q.body.center.x - q.spawn.x) < 0.5 && Math.abs(q.body.bottom - q.spawn.y) < 0.5;
+    if (!o || Math.abs(p.spawn.x - o.spawn.x) > 2 * TILE || !home(p) || !home(o)) return 0;
+    return Math.sign(p.spawn.x - o.spawn.x) * 6;
+  }
+
   updatePlayer(p, dt) {
     const { body, hero } = p;
     if (p.dead || this.state !== "play") {
-      if (!p.dead && this.state === "dying") hero.setPosition(body.center.x, body.bottom); // the other one waits where they are
+      if (!p.dead && this.state === "dying") hero.setPosition(body.center.x + this.startNudge(p), body.bottom); // the other one waits where they are
       hero.tickPose(dt, this.tick);
       return;
     }
-    hero.setPosition(body.center.x, body.bottom);
+    hero.setPosition(body.center.x + this.startNudge(p), body.bottom);
     const onFloor = body.blocked.down;
     if (!onFloor) {
       p.air = true;

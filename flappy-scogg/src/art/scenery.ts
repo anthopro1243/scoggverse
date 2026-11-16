@@ -1,6 +1,7 @@
 // The backdrop, from Kenney's "Pixel Platformer" tiles (CC0), drawn once per screen size into
-// offscreen canvases: a daytime sky, a far band of hills, pine trees in the middle distance, and the
-// grass-topped ground. Each frame only copies them.
+// offscreen canvases: a far band of hills, pine trees in the middle distance, and the grass-topped
+// ground (the plain sky behind them is one flat color, filled by the renderer). Each frame only
+// copies them. Tiles land on whole device pixels, so they meet without seams at any size.
 import { FLOOR_Y, H, W } from "../logic/config.ts";
 import { createRng } from "../logic/rng.ts";
 import { drawTile } from "./kenney.ts";
@@ -23,11 +24,10 @@ export function makeLayer(w: number, h: number, k: number): [Layer, CanvasRender
   return [{ canvas, w, h }, ctx];
 }
 
-/** Plain sky (Kenney background tile 0), with a hair of overlap so no seams show. */
-export function drawSky(k: number): Layer {
-  const [layer, c] = makeLayer(W, FLOOR_Y, k);
-  for (let y = 0; y < FLOOR_Y; y += BG) for (let x = 0; x < W; x += BG) drawTile(c, 0, x, y, BG + 0.5, BG + 0.5, "bg");
-  return layer;
+/** A tile on whole pixels of a layer drawn at k pixels per unit, so neighbouring tiles meet exactly. */
+function tileOn(c: CanvasRenderingContext2D, k: number, id: number, x: number, y: number, w: number, h: number, sheet?: "bg"): void {
+  const x0 = Math.round(x * k) / k, y0 = Math.round(y * k) / k;
+  drawTile(c, id, x0, y0, Math.round((x + w) * k) / k - x0, Math.round((y + h) * k) / k - y0, sheet);
 }
 
 /** A band of cloud-and-hill tiles just above the ground, the paler hill color under it. */
@@ -36,8 +36,8 @@ export function drawFar(k: number): Layer {
   const rng = createRng("far");
   const band = FLOOR_Y - BG * 3;
   for (let x = 0; x < TILE; x += BG) {
-    drawTile(c, rng.int(8, 11), x, band, BG + 0.5, BG + 0.5, "bg");
-    for (let y = band + BG; y < FLOOR_Y; y += BG) drawTile(c, 16, x, y, BG + 0.5, BG + 0.5, "bg");
+    tileOn(c, k, rng.int(8, 11), x, band, BG, BG, "bg");
+    for (let y = band + BG; y < FLOOR_Y; y += BG) tileOn(c, k, 16, x, y, BG, BG, "bg");
   }
   return layer;
 }
@@ -58,8 +58,8 @@ export function drawMid(k: number): Layer {
 export function drawFloor(k: number): Layer {
   const [layer, c] = makeLayer(FLOOR_TILE, FLOOR_DEPTH, k);
   for (let x = 0; x < FLOOR_TILE; x += GROUND) {
-    drawTile(c, 22, x, 0, GROUND + 0.3, GROUND + 0.3);
-    for (let y = GROUND; y < FLOOR_DEPTH; y += GROUND) drawTile(c, 122, x, y, GROUND + 0.3, GROUND + 0.3);
+    tileOn(c, k, 22, x, 0, GROUND, GROUND);
+    for (let y = GROUND; y < FLOOR_DEPTH; y += GROUND) tileOn(c, k, 122, x, y, GROUND, GROUND);
   }
   return layer;
 }
@@ -69,8 +69,15 @@ export function drawVignette(k: number): Layer {
   return makeLayer(W, H, Math.min(k, 1))[0];
 }
 
-/** Copy a repeating layer across the field, scrolled by `offset` units. */
+/**
+ * Copy a repeating layer across the field, scrolled by `offset` units. Each copy is drawn pixel for
+ * pixel on whole device pixels (the field itself sits on whole pixels), so copies meet without a seam.
+ */
 export function blitRepeat(ctx: CanvasRenderingContext2D, layer: Layer, offset: number, y: number, viewW = W): void {
-  let x = -(((offset % layer.w) + layer.w) % layer.w);
-  for (; x < viewW; x += layer.w) ctx.drawImage(layer.canvas, x, y, layer.w, layer.h);
+  const k = ctx.getTransform().a; // device pixels per unit
+  const pw = Math.round(layer.w * k), ph = layer.canvas.height;
+  const span = pw / k;
+  const py = Math.round(y * k) / k;
+  let x = Math.round(-(((offset % span) + span) % span) * k) / k;
+  for (; x < viewW; x += span) ctx.drawImage(layer.canvas, 0, 0, pw, ph, x, py, span, ph / k);
 }

@@ -48,7 +48,9 @@ function wrap(c: CanvasRenderingContext2D, s: string, width: number): string[] {
 }
 
 export function drawScore(c: CanvasRenderingContext2D, g: Game): void {
-  label(c, String(g.score), W / 2, 78, 60, { stroke: 7 });
+  // a thick dark outline and a dark copy just under it, so the number reads over the columns too
+  label(c, String(g.score), W / 2, 81, 60, { stroke: 10, color: PAL.outline });
+  label(c, String(g.score), W / 2, 78, 60, { stroke: 10 });
 }
 
 export function drawTitle(c: CanvasRenderingContext2D, g: Game, o: UiOptions): void {
@@ -107,10 +109,12 @@ export function drawCard(c: CanvasRenderingContext2D, g: Game, o: UiOptions): vo
   c.restore();
 }
 
-export function drawPaused(c: CanvasRenderingContext2D, o: UiOptions): void {
+/** The pause screen: everything drawn from `top` to `bottom` dimmed, and the box above or below his face. */
+export function drawPaused(c: CanvasRenderingContext2D, o: UiOptions, faceY: number, top = 0, bottom = H): void {
   c.fillStyle = "rgba(6, 8, 14, 0.55)";
-  c.fillRect(0, 0, W, H);
-  tablet(c, 72, 270, W - 144, 130);
-  label(c, TEXT.paused, W / 2, 318, 34);
-  label(c, o.touch ? TEXT.resumeTouch : TEXT.resumeMouse, W / 2, 364, 15, { font: FONT, weight: 600, color: PAL.text });
+  c.fillRect(0, top, W, bottom - top);
+  const y = faceY < H / 2 ? 420 : 150;
+  tablet(c, 72, y, W - 144, 130);
+  label(c, TEXT.paused, W / 2, y + 48, 34);
+  label(c, o.touch ? TEXT.resumeTouch : TEXT.resumeMouse, W / 2, y + 94, 15, { font: FONT, weight: 600, color: PAL.text });
 }

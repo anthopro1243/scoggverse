@@ -33,7 +33,7 @@ export class Hud {
     // the level's name: the tablet grows with it, and a long name gets a smaller letter so it
     // never runs into the value tablet in the middle
     const room = WORLD_W / 2 - 92 - 10 - 8;
-    let size = 13;
+    let size = 15;
     this.title = text(scene, 0, 21, title.toUpperCase(), { size, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }).setDepth(ui);
     while (this.title.width / this.title.scaleX + 26 > room && size > 9) this.title.setFontSize(`${--size}px`);
     const tw = Math.max(150, Math.ceil(this.title.width / this.title.scaleX) + 26);

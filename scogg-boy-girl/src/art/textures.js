@@ -25,10 +25,10 @@ export function makeTextures(scene) {
   add("glow-boy", glow(PAL.boy.glow));
   add("glow-girl", glow(PAL.girl.glow));
   add("ember-dollar", ember());
-  add("door-vault", door("tiles", false));
-  add("door-vault-lit", door("tiles", true));
-  add("door-chamber", door("blue", false));
-  add("door-chamber-lit", door("blue", true));
+  add("door-vault", door("tiles", false, FLAME));
+  add("door-vault-lit", door("tiles", true, FLAME));
+  add("door-chamber", door("blue", false, DROP));
+  add("door-chamber-lit", door("blue", true, DROP));
   add("buck", tileCanvas([[151]], 18, PROP_RES));
   add("gavel", gavel());
   add("crate", tileCanvas([[26]], 18, PROP_RES));
@@ -58,11 +58,50 @@ function ember() {
   return cv;
 }
 
+// whose door it is, painted on the door: a flame for Scogg Boy, a drop of water for Scogg Girl
+const FLAME = {
+  px: [
+    "...o...",
+    "..oRo..",
+    "..oRo..",
+    ".oRYRo.",
+    ".oRYRo.",
+    "oRYYYRo",
+    "oRYYYRo",
+    ".oRRRo.",
+    "..ooo..",
+  ],
+  colors: { o: KP.outline, R: "#e4572e", Y: "#ffd23f" },
+};
+const DROP = {
+  px: [
+    "...o...",
+    "..oBo..",
+    "..oBo..",
+    ".oBWBo.",
+    "oBBWBBo",
+    "oBWBBBo",
+    "oBBBBBo",
+    ".oBBBo.",
+    "..ooo..",
+  ],
+  colors: { o: KP.outline, B: "#2c8cf6", W: "#bfe6ff" },
+};
+
+function pixels(ctx, { px, colors }, x, y, size) {
+  px.forEach((row, r) => [...row].forEach((ch, c) => {
+    if (ch === ".") return;
+    ctx.fillStyle = colors[ch];
+    ctx.fillRect(x + c * size, y + r * size, size + 0.02, size + 0.02);
+  }));
+}
+
 /**
  * A Kenney door with a flagpole beside it; the flag is up once its hero is in.
- * Scogg Boy's flag is Kenney's red one, Scogg Girl's the same flag in blue.
+ * Scogg Boy's flag is Kenney's red one, Scogg Girl's the same flag in blue, and each door has its
+ * hero's mark on it.
  */
-function door(flagSheet, lit) {
+function door(flagSheet, lit, mark) {
   const { w, h } = DOOR.vault;
   const { cv, ctx } = canvas(w, h);
   const x = (w - DOOR_CELL * 2) / 2, y = h - DOOR_CELL * 2;
@@ -70,6 +109,8 @@ function door(flagSheet, lit) {
   drawTile(ctx, 150, x, y + DOOR_CELL, DOOR_CELL);
   drawTile(ctx, lit ? 111 : 131, x + DOOR_CELL, y, DOOR_CELL, DOOR_CELL, flagSheet);
   drawTile(ctx, 131, x + DOOR_CELL, y + DOOR_CELL, DOOR_CELL);
+  const size = 2.5;
+  pixels(ctx, mark, x + DOOR_CELL / 2 - 3.5 * size, y + DOOR_CELL * 0.62, size);
   return cv;
 }
 
@@ -79,22 +120,31 @@ export function mottoSign(w) {
   const { cv, ctx } = canvas(w, h);
   ctx.fillStyle = KP.outline; ctx.fillRect(0, 0, w, h);
   ctx.fillStyle = KP.woodLit; ctx.fillRect(2, 2, w - 4, h - 4);
-  ctx.fillStyle = KP.wood; ctx.fillRect(2, h / 2, w - 4, 1); ctx.fillRect(2, h - 4, w - 4, 2);
+  ctx.fillStyle = KP.wood; ctx.fillRect(2, h - 4, w - 4, 2);
   ctx.fillStyle = KP.sand; ctx.fillRect(2, 2, w - 4, 1.5);
   ctx.fillStyle = KP.woodDark;
   for (const nx of [5, w - 7]) { ctx.fillRect(nx, 5, 2, 2); ctx.fillRect(nx, h - 8, 2, 2); }   // nails
-  ctx.textAlign = "center"; ctx.textBaseline = "middle";
-  let size = 26;
-  ctx.font = `${size}px ${SERIF}`;
+  // dark letters, as big as the plank allows, kept inside its rims: one line when that reads bigger
+  ctx.fillStyle = css(PAL.tablet);
+  ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+  const capOf = (size) => { ctx.font = `${size}px ${SERIF}`; return ctx.measureText("D").actualBoundingBoxAscent || size * 0.45; };
+  const fit = (lines, gaps) => {
+    let size = 30;
+    const wide = (z) => { ctx.font = `${z}px ${SERIF}`; return Math.max(...lines.map((m) => ctx.measureText(m).width)) > w - 18; };
+    while (size > 6 && (wide(size) || capOf(size) * gaps > h - 12)) size -= 0.5;
+    return size;
+  };
   const line = MOTTO.join(" ");
-  if (ctx.measureText(line).width <= w - 20) { ctx.fillText(line, w / 2, h / 2 + 1); return cv; }
-  size = (h - 4) * 0.55; // two lines have to share the plank
-  ctx.font = `${size}px ${SERIF}`;
-  const widest = Math.max(...MOTTO.map((m) => ctx.measureText(m).width));
-  if (widest > w - 16) size *= (w - 16) / widest;
-  ctx.font = `${size}px ${SERIF}`;
-  ctx.fillText(MOTTO[0], w / 2, h / 2 - size * 0.42);
-  ctx.fillText(MOTTO[1], w / 2, h / 2 + size * 0.5);
+  const one = fit([line], 1), two = fit(MOTTO, 2.5);
+  if (one >= two) {
+    ctx.font = `${one}px ${SERIF}`;
+    ctx.fillText(line, w / 2, (h + capOf(one)) / 2);
+    return cv;
+  }
+  const cap = capOf(two), top = (h - cap * 2.5) / 2;
+  ctx.font = `${two}px ${SERIF}`;
+  ctx.fillText(MOTTO[0], w / 2, top + cap);
+  ctx.fillText(MOTTO[1], w / 2, top + cap * 2.5);
   return cv;
 }
 

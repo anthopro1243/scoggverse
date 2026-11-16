@@ -1,5 +1,5 @@
 /* Flappy Scogg's page: the game is tall like a phone, so it sits in a tall bronze-edged frame with
-   the how-to-play beside it on a laptop and under it on a phone. */
+   the Full screen button and the how-to-play beside it on a laptop and under it on a phone. */
 
 .fs-layout { display: grid; gap: var(--s-5); align-items: start; }
 @media (min-width: 52rem) { .fs-layout { grid-template-columns: auto minmax(0, 1fr); } }
@@ -13,6 +13,10 @@
   /* as tall as fits on screen (with the heading above it), never wider than the column */
   position: relative; aspect-ratio: 9 / 16; width: min(calc(100vw - 2 * var(--s-4) - 2 * var(--s-2) - 2px), 26rem, calc(70vh * 9 / 16)); overflow: hidden;
   background: #120f0d; border-radius: 2px;
+}
+/* on a laptop the whole game fits in the window under the heading (about 18.5rem above and around it) */
+@media (min-width: 52rem) {
+  .tower__screen { width: min(26rem, max(12rem, calc((100svh - 18.5rem) * 9 / 16))); }
 }
 .tower__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 1; }
 .tower__cover { position: absolute; inset: 0; }
@@ -28,7 +32,7 @@
 .tower__play:hover { box-shadow: 0 0 0 9px rgb(255 217 90 / 0.24); }
 .tower__calm { margin: 0; max-width: 18rem; color: var(--text); text-shadow: 0 1px 2px #000; }
 
-.tower__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-2) var(--s-1) var(--s-1); }
+.tower__bar { display: flex; align-items: center; gap: var(--s-3) var(--s-5); flex-wrap: wrap; }
 .tower__own { font-weight: 700; text-decoration: none; }
 .tower__own:hover { text-decoration: underline; }
 

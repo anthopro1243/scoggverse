@@ -92,8 +92,8 @@ export class LevelSelect extends BaseScene {
     const parts = [];
     const add = (o) => { parts.push(o.setDepth(d + 0.1)); return o; };
     // the number in a ring, the name, the subject and what it teaches
-    add(text(this, x + 26, y + CARD_H / 2, String(i), { size: 20, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }));
-    const title = add(text(this, x + 52, y + 30, def.name, { size: 13, serif: true, color: PAL.goldBright, origin: [0, 0.5] }));
+    add(text(this, x + 26, y + CARD_H / 2, String(i + 1), { size: 20, serif: true, color: PAL.goldBright, origin: [0.5, 0.5] }));
+    const title = add(text(this, x + 52, y + 30, def.name, { size: 15, serif: true, color: PAL.goldBright, origin: [0, 0.5] }));
     title.setWordWrapWidth(CARD_W - 52 - 64).setLineSpacing(-2);
     if (TAGGED.has(name)) add(text(this, x + 52, y + CARD_H - 30, SUBJECT[def.subject] || "", { size: 9, color: PAL.goldDim, origin: [0, 0.5] }));
     add(text(this, x + 52, y + CARD_H - 16, def.teaches || "", { size: 10, color: PAL.text, origin: [0, 0.5] }));
@@ -124,7 +124,7 @@ export class LevelSelect extends BaseScene {
       slab(g, c.x, c.y, CARD_W, CARD_H, 0.94);
       g.lineStyle(1, PAL.goldDim, 0.6).strokeCircle(c.x + 26, c.y + CARD_H / 2, 16);
       if (on) g.lineStyle(2, c.open ? PAL.goldBright : PAL.goldDim, 1).strokeRoundedRect(c.x - 2, c.y - 2, CARD_W + 4, CARD_H + 4, 5);
-      const a = c.open ? 1 : 0.42;
+      const a = c.open ? 1 : 0.7;
       for (const o of c.parts) o.setAlpha(a);
       c.mark.setAlpha(c.open ? 1 : 0.8);
     });

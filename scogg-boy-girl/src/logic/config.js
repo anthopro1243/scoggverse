@@ -53,7 +53,7 @@ export const LEVEL = {
 // The one "Don't deny yourself an education" sign per chamber (G3): it spans both exits when they
 // stand close together on one floor, otherwise it hangs alone halfway between them.
 export const MOTTO_SIGN = {
-  h: 32,              // px tall
+  h: 40,              // px tall (two lines of the pixel font, big enough to read)
   pad: 6,             // px past each outer door edge
   spanMax: 420,       // px: wider than this and it would cross the level, so it hangs alone
   soloW: 170,         // px: the lone sign (motto on two lines)
